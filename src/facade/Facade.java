@@ -29,7 +29,7 @@ public class Facade {
     private Connection connection;
     //facade instance
     private static Facade instance = null;
-    
+
     private Facade() {
         this.monthMapper = new MonthMapper();
         this.monthTransactionMapper = new MonthTransactionMapper();
@@ -40,16 +40,20 @@ public class Facade {
             CategoryMapper categoryMapper) {
         //logger initialization
         performanceLogger = new PerformanceLogger();
-        logger = performanceLogger.initLogger( loggerName, loggerPath );
+        logger = performanceLogger.initLogger(loggerName, loggerPath);
         //mappers initialization
         this.monthMapper = monthMapper;
         this.monthTransactionMapper = monthTransactionMapper;
         this.categoryMapper = categoryMapper;
     }
 
-    public static Facade getInstance() {
+    public static Facade getInstance(MonthMapper monthMapper, MonthTransactionMapper monthTransactionMapper,
+            CategoryMapper categoryMapper) {
         if (instance == null) {
             instance = new Facade(monthMapper, monthTransactionMapper, categoryMapper);
+            monthTransactionMapper = monthTransactionMapper;
+            monthMapper = monthMapper;
+            categoryMapper = categoryMapper;
         }
         return instance;
     }
@@ -68,6 +72,10 @@ public class Facade {
 
     public List<Month> getMonths() {
         return monthMapper.getMonths(connection);
+    }
+
+    public Month getMonthByID(int monthId) {
+        return monthMapper.getMonthByID(connection, monthId);
     }
 
     public int insertMonth(Month object) {
