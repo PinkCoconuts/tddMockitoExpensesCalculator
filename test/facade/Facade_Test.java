@@ -24,7 +24,7 @@ public class Facade_Test {
     @BeforeClass
     public static void setUpClass() {
         mockMonthMapper = Mockito.mock( MonthMapper.class );
-        facade = new Facade( null, null, mockMonthMapper );
+        facade = new Facade( mockMonthMapper, null );
     }
 
     @AfterClass
