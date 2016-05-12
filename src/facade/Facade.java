@@ -18,15 +18,23 @@ public class Facade {
     //logger
     private String loggerName = "expensesCalculator";
     private String loggerPath = "/ExpensesCalculator.log";
-    private Logger logger = null;
-    private PerformanceLogger performanceLogger = null;
+    private static Logger logger = null;
+    private static PerformanceLogger performanceLogger = null;
+
     //mappers
     private static MonthTransactionMapper monthTransactionMapper;
     private static MonthMapper monthMapper;
     private static CategoryMapper categoryMapper;
-    //DB connection
+
+    //Database Connection
     private DBconnector databaseConnector = null;
-    private Connection connection;
+    private Connection connection = null;
+
+    //Database authentication
+    private static String[] databaseHost = { "jdbc:oracle:thin:@127.0.0.1:1521:XE", "jdbc:oracle:thin:@datdb.cphbusiness.dk:1521:dat" };
+    private static String[] databaseUsername = { "bobkoo", "cphbs96" };
+    private static String[] databasePassword = { "qwerty12345", "cphbs96" };
+
     //facade instance
     private static Facade instance = null;
 
@@ -36,42 +44,47 @@ public class Facade {
         this.categoryMapper = new CategoryMapper();
     }
 
-    private Facade(MonthMapper monthMapper, MonthTransactionMapper monthTransactionMapper,
-            CategoryMapper categoryMapper) {
+    private Facade( MonthMapper monthMapper, MonthTransactionMapper monthTransactionMapper,
+            CategoryMapper categoryMapper ) {
+
         //logger initialization
         performanceLogger = new PerformanceLogger();
-        logger = performanceLogger.initLogger(loggerName, loggerPath);
+        logger = performanceLogger.initLogger( loggerName, loggerPath );
+
         //mappers initialization
         this.monthMapper = monthMapper;
         this.monthTransactionMapper = monthTransactionMapper;
         this.categoryMapper = categoryMapper;
+
+        this.performanceLogger = new PerformanceLogger();
+        this.logger = performanceLogger.initLogger( loggerName, loggerPath );
+
+        this.databaseConnector = new DBconnector( databaseHost[ 1 ], databaseUsername[ 1 ], databasePassword[ 1 ], null );
+
     }
 
-    public static Facade getInstance(MonthMapper monthMapper, MonthTransactionMapper monthTransactionMapper,
-            CategoryMapper categoryMapper) {
-        if (instance == null) {
-            instance = new Facade(monthMapper, monthTransactionMapper, categoryMapper);
-            monthTransactionMapper = monthTransactionMapper;
-            monthMapper = monthMapper;
-            categoryMapper = categoryMapper;
+    public static Facade getInstance( MonthMapper monthMapper, MonthTransactionMapper monthTransactionMapper,
+            CategoryMapper categoryMapper ) {
+        if ( instance == null ) {
+            instance = new Facade( monthMapper, monthTransactionMapper, categoryMapper );
         }
         return instance;
     }
 
     public Boolean initializeConnection() {
-        if (connection != null) {
-            System.out.println("Connection already existing");
-            logger.info("Connection with database is already existing!");
+        if ( connection != null ) {
+            System.out.println( "Connection already existing" );
+            logger.info( "Connection with database is already existing!" );
             return true;
         } else {
-            connection = databaseConnector.getConnection(logger);
-            logger.info("Connection with database initialized");
+            connection = databaseConnector.getConnection( logger );
+            logger.info( "Connection with database initialized" );
         }
         return true;
     }
 
     public List<Month> getMonths() {
-        return monthMapper.getMonths(connection);
+        return monthMapper.getMonths( connection );
     }
 
     public Month getMonthByID( int monthId ) {
@@ -82,47 +95,47 @@ public class Facade {
         return monthMapper.insertMonth( connection, object );
     }
 
-    public int updateMonth(int monthId, Month newObject) {
-        return monthMapper.updateMonth(connection, monthId, newObject);
+    public int updateMonth( int monthId, Month newObject ) {
+        return monthMapper.updateMonth( connection, monthId, newObject );
     }
 
-    public int deleteMonth(int monthId) {
-        return monthMapper.deleteMonth(connection, monthId);
+    public int deleteMonth( int monthId ) {
+        return monthMapper.deleteMonth( connection, monthId );
     }
 
-    public List<MonthTransaction> getSpecificTransactionsByMonthID(int monthId, String type) {
-        return monthTransactionMapper.getSpecificTransactionsByMonthID(connection, monthId, type);
+    public List<MonthTransaction> getSpecificTransactionsByMonthID( int monthId, String type ) {
+        return monthTransactionMapper.getSpecificTransactionsByMonthID( connection, monthId, type );
     }
 
-    public int insertMonthTransaction(MonthTransaction object) {
-        return monthTransactionMapper.insertMonthTransaction(connection, object);
+    public int insertMonthTransaction( MonthTransaction object ) {
+        return monthTransactionMapper.insertMonthTransaction( connection, object );
     }
 
-    public int updateMonthTransaction(int monthTransactionID, MonthTransaction newObject) {
-        return monthTransactionMapper.updateMonthTransaction(connection, monthTransactionID, newObject);
+    public int updateMonthTransaction( int monthTransactionID, MonthTransaction newObject ) {
+        return monthTransactionMapper.updateMonthTransaction( connection, monthTransactionID, newObject );
     }
 
-    public int deleteMonthTransaction(int monthTransactionID) {
-        return monthTransactionMapper.deleteMonthTransaction(connection, monthTransactionID);
+    public int deleteMonthTransaction( int monthTransactionID ) {
+        return monthTransactionMapper.deleteMonthTransaction( connection, monthTransactionID );
     }
 
     public List<Category> getCategories() {
-        return categoryMapper.getCategories(connection);
+        return categoryMapper.getCategories( connection );
     }
 
-    public Category getCategoryByID(int categoryId) {
-        return categoryMapper.getCategoryByID(connection, categoryId);
+    public Category getCategoryByID( int categoryId ) {
+        return categoryMapper.getCategoryByID( connection, categoryId );
     }
 
-    public int insertCategory(Category object) {
-        return categoryMapper.insertCategory(connection, object);
+    public int insertCategory( Category object ) {
+        return categoryMapper.insertCategory( connection, object );
     }
 
-    public int updateCategory(int categoryId, Category newObject) {
-        return categoryMapper.updateCategory(connection, categoryId, newObject);
+    public int updateCategory( int categoryId, Category newObject ) {
+        return categoryMapper.updateCategory( connection, categoryId, newObject );
     }
 
-    public int deleteCategory(int categoryID) {
-        return categoryMapper.deleteCategory(connection, categoryID);
+    public int deleteCategory( int categoryID ) {
+        return categoryMapper.deleteCategory( connection, categoryID );
     }
 }
