@@ -33,6 +33,10 @@ public class Facade {
         return monthMapper.getMonths( connection );
     }
 
+    public Month getMonthByID( int monthId ) {
+        return monthMapper.getMonthByID( connection, monthId );
+    }
+
     public int insertMonth( Month object ) {
         return monthMapper.insertMonth( connection, object );
     }
