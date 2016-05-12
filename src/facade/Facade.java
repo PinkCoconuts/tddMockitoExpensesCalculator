@@ -82,10 +82,6 @@ public class Facade {
         return monthMapper.insertMonth( connection, object );
     }
 
-    public int insertMonth(Month object) {
-        return monthMapper.insertMonth(connection, object);
-    }
-
     public int updateMonth(int monthId, Month newObject) {
         return monthMapper.updateMonth(connection, monthId, newObject);
     }
