@@ -11,10 +11,11 @@ import mappers.MonthMapper;
 
 public class Facade {
 
-    private final MonthTransactionMapper monthTransactionMapper;
-    private final MonthMapper monthMapper;
-    private final CategoryMapper categoryMapper;
+    private static MonthTransactionMapper monthTransactionMapper;
+    private static MonthMapper monthMapper;
+    private static CategoryMapper categoryMapper;
     private Connection connection;
+    private static Facade instance = null;
 
     public Facade() {
         this.monthMapper = new MonthMapper();
@@ -22,13 +23,20 @@ public class Facade {
         this.categoryMapper = new CategoryMapper();
     }
 
-    public Facade( MonthMapper monthMapper, MonthTransactionMapper monthTransactionMapper,
+    private Facade( MonthMapper monthMapper, MonthTransactionMapper monthTransactionMapper,
             CategoryMapper categoryMapper ) {
         this.monthMapper = monthMapper;
         this.monthTransactionMapper = monthTransactionMapper;
         this.categoryMapper = categoryMapper;
     }
 
+    public static Facade getInstance(){
+        if (instance == null) {
+            instance = new Facade(monthMapper, monthTransactionMapper, categoryMapper);
+        }
+        return instance;
+    }
+    
     public List<Month> getMonths() {
         return monthMapper.getMonths( connection );
     }
