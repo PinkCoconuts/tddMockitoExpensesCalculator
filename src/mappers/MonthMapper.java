@@ -13,7 +13,7 @@ public class MonthMapper {
         return new ArrayList<Month>();
     }
 
-    public Month getMonthByID( int monthId ) {
+    public Month getMonthByID( Connection connection, int monthId ) {
         return new Month();
     }
 
@@ -35,11 +35,11 @@ public class MonthMapper {
         }
     }
 
-    public int updateMonth( int monthId ) {
+    public int updateMonth( Connection connection, int monthId ) {
         return 1;
     }
 
-    public int deleteMonth( int monthId ) {
+    public int deleteMonth( Connection connection, int monthId ) {
         return 1;
     }
 }
