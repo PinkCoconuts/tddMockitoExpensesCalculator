@@ -37,8 +37,8 @@ public class Facade {
         return monthMapper.insertMonth( connection, object );
     }
 
-    public int updateMonth( int monthId ) {
-        return monthMapper.updateMonth( connection, monthId );
+    public int updateMonth( int monthId, Month newObject ) {
+        return monthMapper.updateMonth( connection, monthId, newObject );
     }
 
     public int deleteMonth( int monthId ) {
@@ -53,8 +53,8 @@ public class Facade {
         return monthTransactionMapper.insertMonthTransaction( connection, object );
     }
 
-    public int updateMonthTransaction( int monthTransactionID ) {
-        return monthTransactionMapper.updateMonthTransaction( connection, monthTransactionID );
+    public int updateMonthTransaction( int monthTransactionID, MonthTransaction newObject ) {
+        return monthTransactionMapper.updateMonthTransaction( connection, monthTransactionID, newObject );
     }
 
     public int deleteMonthTransaction( int monthTransactionID ) {
@@ -73,8 +73,8 @@ public class Facade {
         return categoryMapper.insertCategory( connection, object );
     }
 
-    public int updateCategory( int categoryId ) {
-        return categoryMapper.updateCategory( connection, categoryId );
+    public int updateCategory( int categoryId, Category newObject ) {
+        return categoryMapper.updateCategory( connection, categoryId, newObject );
     }
 
     public int deleteCategory( int categoryID ) {

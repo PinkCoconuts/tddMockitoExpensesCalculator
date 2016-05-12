@@ -35,7 +35,7 @@ public class MonthMapper {
         }
     }
 
-    public int updateMonth( Connection connection, int monthId ) {
+    public int updateMonth( Connection connection, int monthId, Month newObject ) {
         return 1;
     }
 

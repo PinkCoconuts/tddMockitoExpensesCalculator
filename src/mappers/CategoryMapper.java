@@ -19,7 +19,7 @@ public class CategoryMapper {
         return 1;
     }
 
-    public int updateCategory( Connection connection, int categoryId ) {
+    public int updateCategory( Connection connection, int categoryId, Category newObject ) {
         return 1;
     }
 

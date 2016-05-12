@@ -16,7 +16,8 @@ public class MonthTransactionMapper {
         return 1;
     }
 
-    public int updateMonthTransaction( Connection connection, int monthTransactionId ) {
+    public int updateMonthTransaction( Connection connection, int monthTransactionId,
+            MonthTransaction newObject ) {
         return 1;
     }
 
