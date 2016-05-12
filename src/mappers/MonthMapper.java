@@ -9,7 +9,7 @@ import java.util.List;
 
 public class MonthMapper {
 
-    public List<Month> getMonths() {
+    public List<Month> getMonths( Connection connection ) {
         return new ArrayList<Month>();
     }
 

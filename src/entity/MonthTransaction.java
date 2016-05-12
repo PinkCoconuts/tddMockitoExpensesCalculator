@@ -6,16 +6,19 @@ public class MonthTransaction {
     private String name;
     private String type;
     private int monthId;
+    private int categoryId;
     private double amount;
 
     public MonthTransaction() {
     }
 
-    public MonthTransaction( int id, String name, String type, int monthId, double amount ) {
+    public MonthTransaction( int id, String name, String type, int monthId,
+            int categoryId, double amount ) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.monthId = monthId;
+        this.categoryId = categoryId;
         this.amount = amount;
     }
 
@@ -35,6 +38,10 @@ public class MonthTransaction {
         return monthId;
     }
 
+    public int getCategoryId() {
+        return categoryId;
+    }
+
     public double getAmount() {
         return amount;
     }
@@ -42,7 +49,8 @@ public class MonthTransaction {
     @Override
     public String toString() {
         return "MonthTransaction{" + "id=" + id + ", name=" + name + ", type=" + type
-                + ", monthId=" + monthId + ", amount=" + amount + '}';
+                + ", monthId=" + monthId + ", categoryId=" + categoryId
+                + ", amount=" + amount + '}';
     }
 
 }

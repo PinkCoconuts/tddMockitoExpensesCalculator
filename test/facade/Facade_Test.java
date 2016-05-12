@@ -24,7 +24,7 @@ public class Facade_Test {
     @BeforeClass
     public static void setUpClass() {
         mockMonthMapper = Mockito.mock( MonthMapper.class );
-        facade = new Facade( mockMonthMapper, null );
+        facade = new Facade( mockMonthMapper, null, null );
     }
 
     @AfterClass
@@ -43,26 +43,9 @@ public class Facade_Test {
     }
 
     @Test
-    public void testInsertMonth() {
-        Month monthObj = new Month( 1, "May 2016" );
-        Mockito.when( mockMonthMapper.insertMonth( null, monthObj ) ).thenReturn( 35 );
-
-        assertEquals( 35, facade.insertMonth( monthObj ) );
-    }
-
-    /*
-     @Test
-     public void testInsertMonthSQLFailure() throws Exception {
-     Month monthObj = new Month( 1, "May 2016" );
-        
-     Mockito.when( mockMonthMapper.insertMonth( null, monthObj ) ).thenThrow( new SQLException() );
-     assertEquals( -1, facade.insertMonth( monthObj ) );
-     }
-     */
-    @Test
     public void testGetMonths() {
 
-        Mockito.when( mockMonthMapper.getMonths() ).thenAnswer( new Answer() {
+        Mockito.when( mockMonthMapper.getMonths( null ) ).thenAnswer( new Answer() {
 
             List<Month> months = new ArrayList();
 
@@ -77,4 +60,38 @@ public class Facade_Test {
         assertEquals( 2, facade.getMonths().size() );
         assertEquals( 3, facade.getMonths().size() );
     }
+
+    @Test
+    public void testInsertMonth() {
+        Month monthObj = new Month( 1, "May 2016" );
+        Mockito.when( mockMonthMapper.insertMonth( null, monthObj ) ).thenReturn( 35 );
+
+        assertEquals( 35, facade.insertMonth( monthObj ) );
+    }
+
+    @Test
+    public void testUpdateMonth() {
+        int monthId = 23;
+        Mockito.when( mockMonthMapper.updateMonth( null, monthId ) ).thenReturn( 2 );
+
+        assertEquals( 2, facade.updateMonth( monthId ) );
+    }
+
+    @Test
+    public void testDeleteMonth() {
+        int monthId = 13;
+        Mockito.when( mockMonthMapper.deleteMonth( null, monthId ) ).thenReturn( 5 );
+
+        assertEquals( 5, facade.deleteMonth( monthId ) );
+    }
+
+    /*
+     @Test
+     public void testInsertMonthSQLFailure() throws Exception {
+     Month monthObj = new Month( 1, "May 2016" );
+        
+     Mockito.when( mockMonthMapper.insertMonth( null, monthObj ) ).thenThrow( new SQLException() );
+     assertEquals( -1, facade.insertMonth( monthObj ) );
+     }
+     */
 }
