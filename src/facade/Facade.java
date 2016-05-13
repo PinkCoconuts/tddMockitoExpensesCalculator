@@ -56,9 +56,6 @@ public class Facade {
         this.monthTransactionMapper = monthTransactionMapper;
         this.categoryMapper = categoryMapper;
 
-        this.performanceLogger = new PerformanceLogger();
-        this.logger = performanceLogger.initLogger( loggerName, loggerPath );
-
         this.databaseConnector = new DBconnector( databaseHost[ 1 ], databaseUsername[ 1 ], databasePassword[ 1 ], null );
 
     }
@@ -120,22 +117,22 @@ public class Facade {
     }
 
     public List<Category> getCategories() {
-        return categoryMapper.getCategories( connection );
+        return categoryMapper.getCategories( connection, logger );
     }
 
     public Category getCategoryByID( int categoryId ) {
-        return categoryMapper.getCategoryByID( connection, categoryId );
+        return categoryMapper.getCategoryByID( connection, logger, categoryId );
     }
 
     public int insertCategory( Category object ) {
-        return categoryMapper.insertCategory( connection, object );
+        return categoryMapper.insertCategory( connection, logger, object );
     }
 
     public int updateCategory( int categoryId, Category newObject ) {
-        return categoryMapper.updateCategory( connection, categoryId, newObject );
+        return categoryMapper.updateCategory( connection, logger, categoryId, newObject );
     }
 
     public int deleteCategory( int categoryID ) {
-        return categoryMapper.deleteCategory( connection, categoryID );
+        return categoryMapper.deleteCategory( connection, logger, categoryID );
     }
 }
