@@ -145,9 +145,9 @@ public class MonthMapper {
 
     public int deleteAllMonths( Connection connection ) {
         PreparedStatement preparedStatement;
-        String deleleStatement = "delete from Month_tbl";
+        String deleteStatement = "delete from Month_tbl";
         try {
-            preparedStatement = connection.prepareStatement( deleleStatement );
+            preparedStatement = connection.prepareStatement( deleteStatement );
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch ( Exception e ) {
