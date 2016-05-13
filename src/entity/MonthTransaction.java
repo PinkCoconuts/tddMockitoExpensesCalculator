@@ -46,6 +46,30 @@ public class MonthTransaction {
         return amount;
     }
 
+    public void setId( int id ) {
+        this.id = id;
+    }
+
+    public void setName( String name ) {
+        this.name = name;
+    }
+
+    public void setType( String type ) {
+        this.type = type;
+    }
+
+    public void setMonthId( int monthId ) {
+        this.monthId = monthId;
+    }
+
+    public void setCategoryId( int categoryId ) {
+        this.categoryId = categoryId;
+    }
+
+    public void setAmount( double amount ) {
+        this.amount = amount;
+    }
+
     @Override
     public String toString() {
         return "MonthTransaction{" + "id=" + id + ", name=" + name + ", type=" + type

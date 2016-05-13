@@ -126,9 +126,9 @@ public class Facade_Test {
     @Test
     public void testInsertMonthTransaction() {
         MonthTransaction monthTransObj = new MonthTransaction( 1, "Burger", "Expense", 2, 3, 300 );
-        Mockito.when( mockMonthTransactionMapper.insertMonthTransaction( null, monthTransObj ) ).thenReturn( 2 );
+        Mockito.when( mockMonthTransactionMapper.insertMonthTransaction( null, monthTransObj ) ).thenReturn( monthTransObj );
 
-        assertEquals( 2, facade.insertMonthTransaction( monthTransObj ) );
+        assertEquals( monthTransObj, facade.insertMonthTransaction( monthTransObj ) );
     }
 
     @Test

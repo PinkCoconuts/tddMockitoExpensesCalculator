@@ -104,7 +104,7 @@ public class Facade {
         return monthTransactionMapper.getSpecificTransactionsByMonthID( connection, monthId, type );
     }
 
-    public int insertMonthTransaction( MonthTransaction object ) {
+    public MonthTransaction insertMonthTransaction( MonthTransaction object ) {
         return monthTransactionMapper.insertMonthTransaction( connection, object );
     }
 
