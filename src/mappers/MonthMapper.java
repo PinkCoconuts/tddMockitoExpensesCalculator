@@ -94,8 +94,32 @@ public class MonthMapper {
         }
     }
 
-    public int updateMonth( Connection connection, int monthId, Month newObject ) {
-        return 1;
+    public Month updateMonth( Connection connection, int monthId, Month newObject ) {
+        Month month = new Month();
+        PreparedStatement preparedStatement = null;
+        String updateQuery = "UPDATE MONTH_TBL SET NAME = ? WHERE ID = ?";
+
+        try {
+            preparedStatement = connection.prepareStatement( updateQuery );
+
+            preparedStatement.setString( 1, newObject.getName() );
+            preparedStatement.setInt( 2, monthId );
+
+            preparedStatement.executeUpdate();
+            month.setId( monthId );
+            month.setName( newObject.getName() );
+        } catch ( SQLException e ) {
+            System.out.println( "Error in the update method of the Month mapper: " + e );
+        } finally {
+            try {
+                if ( preparedStatement != null ) {
+                    preparedStatement.close();
+                }
+            } catch ( SQLException e ) {
+                System.out.println( "Error in the update method of the Month mapper: " + e );
+            }
+        }
+        return month;
     }
 
     public int deleteMonth( Connection connection, int monthId ) {

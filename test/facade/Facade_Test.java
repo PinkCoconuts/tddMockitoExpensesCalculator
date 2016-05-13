@@ -90,9 +90,9 @@ public class Facade_Test {
     public void testUpdateMonth() {
         int monthId = 23;
         Month newObject = new Month( 1, "May 2016" );
-        Mockito.when( mockMonthMapper.updateMonth( null, monthId, newObject ) ).thenReturn( 2 );
+        Mockito.when( mockMonthMapper.updateMonth( null, monthId, newObject ) ).thenReturn( newObject );
 
-        assertEquals( 2, facade.updateMonth( monthId, newObject ) );
+        assertEquals( newObject, facade.updateMonth( monthId, newObject ) );
     }
 
     @Test

@@ -53,6 +53,7 @@ public class MonthMapperTest {
     public void setUp() {
         month = new Month();
         month.setName( "July 2016" );
+        //should also delete the month transactions 
 //        System.out.println( "Result from the delete: " + monthMapper.deleteAllMonths( dbConnection ) );
         month = monthMapper.insertMonth( dbConnection, month );
     }
@@ -71,6 +72,13 @@ public class MonthMapperTest {
     public void testGetMonthById() {
         assertEquals( month.getId(), monthMapper.getMonthByID( dbConnection, month.getId() ).getId() );
         assertEquals( month.getName(), monthMapper.getMonthByID( dbConnection, month.getId() ).getName() );
+    }
+
+    @Test
+    public void testUpdateMonth() {
+        month.setName( "updated name" );
+        assertEquals( month.getId(), monthMapper.updateMonth( dbConnection, month.getId(), month ).getId() );
+        assertEquals( month.getName(), monthMapper.updateMonth( dbConnection, month.getId(), month ).getName() );
     }
 
     @Test
