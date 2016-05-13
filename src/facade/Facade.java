@@ -124,7 +124,7 @@ public class Facade {
         return categoryMapper.getCategoryByID( connection, logger, categoryId );
     }
 
-    public int insertCategory( Category object ) {
+    public Category insertCategory( Category object ) {
         return categoryMapper.insertCategory( connection, logger, object );
     }
 

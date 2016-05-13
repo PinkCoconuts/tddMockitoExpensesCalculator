@@ -179,7 +179,7 @@ public class Facade_Test {
     @Test
     public void testInsertCategory() {
         Category categoryObj = new Category( 2, "Music" );
-        Mockito.when( mockCategoryMapper.insertCategory( null, null, categoryObj ) ).thenReturn( 3 );
+        Mockito.when( mockCategoryMapper.insertCategory( null, null, categoryObj ) ).thenReturn( categoryObj );
 
         assertEquals( 3, facade.insertCategory( categoryObj ) );
     }
