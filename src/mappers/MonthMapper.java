@@ -17,11 +17,30 @@ public class MonthMapper {
     }
 
     public List<Month> getMonths( Connection connection ) {
-        return new ArrayList<Month>();
+        ArrayList<Month> months = new ArrayList();
+
+        Month month = new Month();
+        PreparedStatement preparedStatement = null;
+        String selectSQL = "SELECT ID, NAME FROM MONTH_TBL ";
+        try {
+            preparedStatement = connection.prepareStatement( selectSQL );
+            ResultSet rs = preparedStatement.executeQuery();
+            while ( rs.next() ) {
+                month.setId( rs.getInt( "ID" ) );
+                month.setName( rs.getString( "NAME" ) );
+                months.add( month );
+            }
+            rs.close();
+            preparedStatement.close();
+        } catch ( SQLException ex ) {
+            System.out.println( "Error in the getMonthById method: " + ex );
+            Logger.getLogger( MonthMapper.class.getName() ).log( Level.SEVERE, null, ex );
+        }
+        return months;
     }
 
     public Month getMonthByID( Connection connection, int monthId ) {
-        Month month= new Month();
+        Month month = new Month();
         PreparedStatement preparedStatement = null;
         String selectSQL = "SELECT NAME FROM MONTH_TBL "
                 + "WHERE ID = ?";
@@ -31,11 +50,12 @@ public class MonthMapper {
             ResultSet rs = preparedStatement.executeQuery();
             if ( rs.next() ) {
                 month.setId( monthId );
-                month.setName(rs.getString( "NAME" ) );
+                month.setName( rs.getString( "NAME" ) );
             }
             rs.close();
             preparedStatement.close();
         } catch ( SQLException ex ) {
+            System.out.println( "Error in the getMonthById method: " + ex );
             Logger.getLogger( MonthMapper.class.getName() ).log( Level.SEVERE, null, ex );
         }
         return month;

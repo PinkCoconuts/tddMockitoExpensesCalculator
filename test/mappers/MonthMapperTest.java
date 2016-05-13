@@ -42,6 +42,11 @@ public class MonthMapperTest {
 
     @AfterClass
     public static void tearDownClass() {
+        try {
+            dbConnection.close();
+        } catch ( SQLException ex ) {
+            logger.info( "Error closing the connection" );
+        }
     }
 
     @Before
@@ -54,18 +59,19 @@ public class MonthMapperTest {
 
     @After
     public void tearDown() {
-        try {
-            dbConnection.close();
-        } catch ( SQLException ex ) {
-            logger.info( "Error closing the connection" );
-        }
     }
 
-//    @Test
-//    public void testGetMonthById() {
-////        month = new Month(1, "July 2016");
-//        assertEquals( month.getId(), monthMapper.getMonthByID(dbConnection, month.getId()) );
-//    }
+    @Test
+    public void testGetAllMonths() {
+        assertEquals( month.getId(), monthMapper.getMonths( dbConnection ).get( 0 ).getId() );
+        assertEquals( month.getName(), monthMapper.getMonths( dbConnection ).get( 0 ).getName() );
+    }
+
+    @Test
+    public void testGetMonthById() {
+        assertEquals( month.getId(), monthMapper.getMonthByID( dbConnection, month.getId() ).getId() );
+        assertEquals( month.getName(), monthMapper.getMonthByID( dbConnection, month.getId() ).getName() );
+    }
 
     @Test
     public void testDeleteMonth() {
