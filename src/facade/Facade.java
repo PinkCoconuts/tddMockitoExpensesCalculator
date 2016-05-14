@@ -60,6 +60,10 @@ public class Facade {
 
     }
 
+    public static Logger getLogger() {
+        return logger;
+    }
+
     public static Facade getInstance( MonthMapper monthMapper, MonthTransactionMapper monthTransactionMapper,
             CategoryMapper categoryMapper ) {
         if ( instance == null ) {

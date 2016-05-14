@@ -148,58 +148,58 @@ public class Facade_Test {
         assertEquals( 2, facade.deleteMonthTransaction( monthTransactionId ) );
     }
 
-//    @Test
-//    public void testGetCategories() {
-//
-//        Mockito.when( mockCategoryMapper.getCategories( null, null ) ).thenAnswer( new Answer() {
-//
-//            List<Category> categories = new ArrayList();
-//
-//            @Override
-//            public Object answer( InvocationOnMock invocation ) throws Throwable {
-//                categories.add( new Category( 1, "Food" ) );
-//                return categories;
-//            }
-//        } );
-//
-//        assertEquals( 1, facade.getCategories().size() );
-//        assertEquals( 2, facade.getCategories().size() );
-//        assertEquals( 3, facade.getCategories().size() );
-//    } 
+    @Test
+    public void testGetCategories() {
 
-//    @Test
-//    public void testGetCategoryByID() {
-//        int categoryId = 23;
-//        Category categoryObj = new Category( 2, "Music" );
-//        Mockito.when( mockCategoryMapper.getCategoryByID( null, null, categoryId ) ).thenReturn( categoryObj );
-//
-//        assertEquals( categoryObj, facade.getCategoryByID( categoryId ) );
-//    }
+        Mockito.when( mockCategoryMapper.getCategories( null, facade.getLogger() ) ).thenAnswer( new Answer() {
 
-//    @Test
-//    public void testInsertCategory() {
-//        Category categoryObj = new Category( 2, "Music" );
-//        Mockito.when( mockCategoryMapper.insertCategory( null, null, categoryObj ) ).thenReturn( categoryObj );
-//
-//        assertEquals( 3, facade.insertCategory( categoryObj ) );
-//    }
+            List<Category> categories = new ArrayList();
 
-//    @Test
-//    public void testUpdateCategory() {
-//        int categoryId = 2;
-//        Category categoryObj = new Category( 2, "Music" );
-//        Mockito.when( mockCategoryMapper.updateCategory( null, null, categoryId, categoryObj ) ).thenReturn( 4 );
-//
-//        assertEquals( 4, facade.updateCategory( categoryId, categoryObj ) );
-//    }
+            @Override
+            public Object answer( InvocationOnMock invocation ) throws Throwable {
+                categories.add( new Category( 1, "Food" ) );
+                return categories;
+            }
+        } );
 
-//    @Test
-//    public void testDeletCategory() {
-//        int categoryId = 2;
-//        Mockito.when( mockCategoryMapper.deleteCategory( null, null, categoryId ) ).thenReturn( 3 );
-//
-//        assertEquals( 3, facade.deleteCategory( categoryId ) );
-//    }
+        assertEquals( 1, facade.getCategories().size() );
+        assertEquals( 2, facade.getCategories().size() );
+        assertEquals( 3, facade.getCategories().size() );
+    } 
+
+    @Test
+    public void testGetCategoryByID() {
+        int categoryId = 23;
+        Category categoryObj = new Category( 2, "Music" );
+        Mockito.when( mockCategoryMapper.getCategoryByID( null, facade.getLogger(), categoryId ) ).thenReturn( categoryObj );
+
+        assertEquals( categoryObj, facade.getCategoryByID( categoryId ) );
+    }
+
+    @Test
+    public void testInsertCategory() {
+        Category categoryObj = new Category( 2, "Music" );
+        Mockito.when( mockCategoryMapper.insertCategory( null, facade.getLogger(), categoryObj ) ).thenReturn( categoryObj );
+
+        assertEquals( categoryObj, facade.insertCategory( categoryObj ) );
+    }
+
+    @Test
+    public void testUpdateCategory() {
+        int categoryId = 2;
+        Category categoryObj = new Category( 2, "Music" );
+        Mockito.when( mockCategoryMapper.updateCategory( null, facade.getLogger(), categoryId, categoryObj ) ).thenReturn( 4 );
+
+        assertEquals( 4, facade.updateCategory( categoryId, categoryObj ) );
+    }
+
+    @Test
+    public void testDeletCategory() {
+        int categoryId = 2;
+        Mockito.when( mockCategoryMapper.deleteCategory( null, facade.getLogger(), categoryId ) ).thenReturn( 3 );
+
+        assertEquals( 3, facade.deleteCategory( categoryId ) );
+    }
 
     /*
      @Test
