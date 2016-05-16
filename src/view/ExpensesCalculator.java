@@ -1,14 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package view;
 
-/**
- *
- * @author root
- */
+import entity.MonthTransaction;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.AbstractTableModel;
+
 public class ExpensesCalculator extends javax.swing.JFrame {
 
     /**
@@ -16,6 +13,48 @@ public class ExpensesCalculator extends javax.swing.JFrame {
      */
     public ExpensesCalculator() {
         initComponents();
+        initMonths();
+        this.setLocationRelativeTo( null );
+    }
+
+    private void initMonths() {
+        String[] months = new String[ 3 ];
+        months[ 0 ] = "Jan 2016";
+        months[ 1 ] = "Feb 2016";
+        months[ 2 ] = "Mar 2016";
+
+        jComboBoxMonths.setModel( new javax.swing.DefaultComboBoxModel( months ) );
+    }
+
+    class CustomModel extends AbstractTableModel {
+
+        private Object[][] result;
+        private String[] columnNames;
+
+        public CustomModel( Object[][] result, String[] columnNames ) {
+            this.result = result;
+            this.columnNames = columnNames;
+        }
+
+        @Override
+        public int getRowCount() {
+            return result.length;
+        }
+
+        @Override
+        public int getColumnCount() {
+            return columnNames.length;
+        }
+
+        @Override
+        public String getColumnName( int col ) {
+            return columnNames[ col ];
+        }
+
+        @Override
+        public Object getValueAt( int i, int i1 ) {
+            return result[ i ][ i1 ];
+        }
     }
 
     /**
@@ -27,21 +66,160 @@ public class ExpensesCalculator extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jComboBoxMonths = new javax.swing.JComboBox();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableMonthTransactions = new javax.swing.JTable();
+        jComboBoxCategory = new javax.swing.JComboBox();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jComboBoType = new javax.swing.JComboBox();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jComboBoxMonths.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Month1", "Month2", "Month3" }));
+        jComboBoxMonths.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jComboBoxMonthsMouseReleased(evt);
+            }
+        });
+        jComboBoxMonths.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBoxMonthsItemStateChanged(evt);
+            }
+        });
+        jComboBoxMonths.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxMonthsActionPerformed(evt);
+            }
+        });
+        jComboBoxMonths.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jComboBoxMonthsPropertyChange(evt);
+            }
+        });
+
+        jTableMonthTransactions.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Name", "Type", "Month", "Category", "Amount"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTableMonthTransactions);
+        if (jTableMonthTransactions.getColumnModel().getColumnCount() > 0) {
+            jTableMonthTransactions.getColumnModel().getColumn(3).setResizable(false);
+        }
+
+        jComboBoxCategory.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Food", "Drinks", "Soviet" }));
+
+        jLabel1.setText("Month/Year");
+
+        jLabel2.setText("Transaction Category");
+
+        jLabel3.setText("Transaction Type");
+
+        jComboBoType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jComboBoxMonths, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(80, 80, 80)
+                                .addComponent(jComboBoxCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel2)
+                                .addGap(0, 0, 0)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(jComboBoType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel3)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(90, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxMonths, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jComboBoxMonthsMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBoxMonthsMouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxMonthsMouseReleased
+
+    private void jComboBoxMonthsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxMonthsItemStateChanged
+
+    }//GEN-LAST:event_jComboBoxMonthsItemStateChanged
+
+    private void jComboBoxMonthsPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jComboBoxMonthsPropertyChange
+
+    }//GEN-LAST:event_jComboBoxMonthsPropertyChange
+
+    private void jComboBoxMonthsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxMonthsActionPerformed
+        System.out.println( "Action Performed : " + jComboBoxMonths.getSelectedItem() );
+
+        fillMonthTable( jComboBoxMonths.getSelectedItem().toString() );
+    }//GEN-LAST:event_jComboBoxMonthsActionPerformed
+
+    private void fillMonthTable( String month ) {
+        List<MonthTransaction> monthTransactions = new ArrayList();
+        monthTransactions.add( new MonthTransaction( 1, "Chips", "Food", 1, 2, 50 ) );
+        monthTransactions.add( new MonthTransaction( 2, "Vodka", "Drinks", 1, 3, 200 ) );
+        monthTransactions.add( new MonthTransaction( 3, "Tekilla - Havana Tropikana", "Drinks", 1, 2, 250 ) );
+
+        Object[][] twoDimensionalArrayForTables = new Object[ monthTransactions.size() ][ 9 ];
+        for ( int i = 0; i < monthTransactions.size(); i++ ) {
+            twoDimensionalArrayForTables[ i ][ 0 ] = monthTransactions.get( i ).getName();
+            twoDimensionalArrayForTables[ i ][ 1 ] = monthTransactions.get( i ).getType();
+            twoDimensionalArrayForTables[ i ][ 2 ] = monthTransactions.get( i ).getMonthId();
+            twoDimensionalArrayForTables[ i ][ 3 ] = monthTransactions.get( i ).getCategoryId();
+            twoDimensionalArrayForTables[ i ][ 4 ] = monthTransactions.get( i ).getAmount();
+        }
+
+        String[] rowNames = new String[]{ "Name", "Type", "Month", "Category", "Amount" };
+        jTableMonthTransactions.setModel( new CustomModel( twoDimensionalArrayForTables, rowNames ) );
+        jTableMonthTransactions.getTableHeader().setReorderingAllowed( false );
+    }
 
     /**
      * @param args the command line arguments
@@ -79,5 +257,13 @@ public class ExpensesCalculator extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox jComboBoType;
+    private javax.swing.JComboBox jComboBoxCategory;
+    private javax.swing.JComboBox jComboBoxMonths;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTableMonthTransactions;
     // End of variables declaration//GEN-END:variables
 }
