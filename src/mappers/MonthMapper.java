@@ -19,15 +19,15 @@ public class MonthMapper {
     public List<Month> getMonths( Connection connection ) {
         ArrayList<Month> months = new ArrayList();
 
-        Month month = new Month();
+//        Month month = new Month();
+        Month month = null;
         PreparedStatement preparedStatement = null;
         String selectSQL = "SELECT ID, NAME FROM MONTH_TBL ";
         try {
             preparedStatement = connection.prepareStatement( selectSQL );
             ResultSet rs = preparedStatement.executeQuery();
             while ( rs.next() ) {
-                month.setId( rs.getInt( "ID" ) );
-                month.setName( rs.getString( "NAME" ) );
+                month = new Month( rs.getInt( "ID" ), rs.getString( "NAME" ) );
                 months.add( month );
             }
             rs.close();

@@ -52,11 +52,25 @@ public class Facade {
         logger = performanceLogger.initLogger( loggerName, loggerPath );
 
         //mappers initialization
-        this.monthMapper = monthMapper;
-        this.monthTransactionMapper = monthTransactionMapper;
-        this.categoryMapper = categoryMapper;
+        if ( monthMapper == null ) {
+            this.monthMapper = new MonthMapper();
+        } else {
+            this.monthMapper = monthMapper;
+        }
 
-        this.databaseConnector = new DBconnector( databaseHost[ 1 ], databaseUsername[ 2 ], databasePassword[ 2 ], null );
+        if ( monthTransactionMapper == null ) {
+            this.monthTransactionMapper = new MonthTransactionMapper();
+        } else {
+            this.monthTransactionMapper = monthTransactionMapper;
+        }
+
+        if ( categoryMapper == null ) {
+            this.categoryMapper = new CategoryMapper();
+        } else {
+            this.categoryMapper = categoryMapper;
+        }
+
+        this.databaseConnector = new DBconnector( databaseHost[ 1 ], databaseUsername[ 1 ], databasePassword[ 1 ], null );
 
     }
 
@@ -104,8 +118,20 @@ public class Facade {
         return monthMapper.deleteMonth( connection, monthId );
     }
 
-    public List<MonthTransaction> getSpecificTransactionsByMonthID( int monthId) {
+    public List<MonthTransaction> getMonthTransactions() {
+        return monthTransactionMapper.getAllTransactions( connection );
+    }
+
+    public List<MonthTransaction> getSpecificTransactionsByMonthID( int monthId ) {
         return monthTransactionMapper.getSpecificTransactionsByMonthID( connection, monthId );
+    }
+
+    public List<MonthTransaction> getSpecificTransactionsByCategoryID( int categoryId ) {
+        return monthTransactionMapper.getSpecificTransactionsByCategoryID( connection, categoryId );
+    }
+    
+     public List<MonthTransaction> getSpecificTransactionsByType( String type ) {
+        return monthTransactionMapper.getSpecificTransactionsByType(connection, type );
     }
 
     public MonthTransaction insertMonthTransaction( MonthTransaction object ) {

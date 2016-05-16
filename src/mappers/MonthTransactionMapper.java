@@ -17,19 +17,17 @@ public class MonthTransactionMapper {
     public List<MonthTransaction> getAllTransactions( Connection connection ) {
         ArrayList<MonthTransaction> monthTransactions = new ArrayList();
 
-        MonthTransaction monthTransaction = new MonthTransaction();
+        MonthTransaction monthTransaction = null;
         PreparedStatement preparedStatement = null;
         String selectSQL = "SELECT ID, MONTH_ID, NAME, AMOUNT, TYPE, CATEGORY_ID FROM MONTH_TRANSACTION_TBL ";
         try {
             preparedStatement = connection.prepareStatement( selectSQL );
             ResultSet rs = preparedStatement.executeQuery();
             while ( rs.next() ) {
-                monthTransaction.setId( rs.getInt( "ID" ) );
-                monthTransaction.setMonthId( rs.getInt( "MONTH_ID" ) );
-                monthTransaction.setName( rs.getString( "NAME" ) );
-                monthTransaction.setAmount( rs.getDouble( "AMOUNT" ) );
-                monthTransaction.setType( rs.getString( "TYPE" ) );
-                monthTransaction.setCategoryId( rs.getInt( "CATEGORY_ID" ) );
+                monthTransaction = new MonthTransaction( rs.getInt( "ID" ),
+                                                         rs.getString( "NAME" ), rs.getString( "TYPE" ),
+                                                         rs.getInt( "MONTH_ID" ), rs.getInt( "CATEGORY_ID" ),
+                                                         rs.getDouble( "AMOUNT" ) );
                 monthTransactions.add( monthTransaction );
             }
             rs.close();
@@ -72,8 +70,64 @@ public class MonthTransactionMapper {
         }
         return monthTransactions;
     }
+
+    public List<MonthTransaction> getSpecificTransactionsByCategoryID( Connection connection,
+            int categoryId ) {
+        ArrayList<MonthTransaction> monthTransactions = new ArrayList();
+        MonthTransaction monthTransaction = null;
+
+        PreparedStatement preparedStatement = null;
+        String selectSQL = "SELECT ID, NAME, AMOUNT, TYPE, MONTH_ID FROM MONTH_TRANSACTION_TBL "
+                + "WHERE CATEGORY_ID = ?";
+        try {
+            preparedStatement = connection.prepareStatement( selectSQL );
+            preparedStatement.setInt( 1, categoryId );
+            ResultSet rs = preparedStatement.executeQuery();
+            while ( rs.next() ) {
+                monthTransaction = new MonthTransaction( rs.getInt( "ID" ),
+                                                         rs.getString( "NAME" ), rs.getString( "TYPE" ),
+                                                         rs.getInt( "MONTH_ID" ), categoryId,
+                                                         rs.getDouble( "AMOUNT" ) );
+                monthTransactions.add( monthTransaction );
+            }
+            rs.close();
+            preparedStatement.close();
+        } catch ( SQLException ex ) {
+            System.out.println( "Error in the getSpecificTransactionsByMonthID method: " + ex );
+            Logger.getLogger( MonthTransactionMapper.class.getName() ).log( Level.SEVERE, null, ex );
+        }
+        return monthTransactions;
+    }
     
-     public MonthTransaction getSpecificTransactionsByID( Connection connection,
+    public List<MonthTransaction> getSpecificTransactionsByType( Connection connection,
+            String type ) {
+        ArrayList<MonthTransaction> monthTransactions = new ArrayList();
+        MonthTransaction monthTransaction = null;
+
+        PreparedStatement preparedStatement = null;
+        String selectSQL = "SELECT ID, NAME, AMOUNT, CATEGORY_ID, MONTH_ID FROM MONTH_TRANSACTION_TBL "
+                + "WHERE TYPE = ?";
+        try {
+            preparedStatement = connection.prepareStatement( selectSQL );
+            preparedStatement.setString(1, type );
+            ResultSet rs = preparedStatement.executeQuery();
+            while ( rs.next() ) {
+                monthTransaction = new MonthTransaction( rs.getInt( "ID" ),
+                                                         rs.getString( "NAME" ), type,
+                                                         rs.getInt( "MONTH_ID" ), rs.getInt("CATEGORY_ID" ),
+                                                         rs.getDouble( "AMOUNT" ) );
+                monthTransactions.add( monthTransaction );
+            }
+            rs.close();
+            preparedStatement.close();
+        } catch ( SQLException ex ) {
+            System.out.println( "Error in the getSpecificTransactionsByType method: " + ex );
+            Logger.getLogger( MonthTransactionMapper.class.getName() ).log( Level.SEVERE, null, ex );
+        }
+        return monthTransactions;
+    }
+
+    public MonthTransaction getSpecificTransactionsByID( Connection connection,
             int id ) {
         MonthTransaction monthTransaction = new MonthTransaction();
 
