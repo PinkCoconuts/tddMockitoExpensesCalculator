@@ -156,4 +156,9 @@ public class CategoryMapper_Test {
         }
 
     }
+
+    @Test
+    public void testwipeCategoryTable() {
+        assertEquals( 1, categoryMapper.wipeCategoryTable(connection, logger ) );
+    }
 }
