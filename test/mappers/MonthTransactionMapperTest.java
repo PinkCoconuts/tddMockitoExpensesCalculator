@@ -19,7 +19,7 @@ public class MonthTransactionMapperTest {
 
     private static MonthTransactionMapper monthTransactionMapper;
     private static Month month;
-    private static Category category; 
+    private static Category category;
     private static MonthMapper monthMapper;
     private static CategoryMapper categoryMapper;
     private static DBconnector databaseConnector;
@@ -59,20 +59,24 @@ public class MonthTransactionMapperTest {
     @Before
     public void setUp() {
 //        would be nice to make triggers to delete the month and catgory on month transaction deletion
+//        delete all months and categories
         monthMapper.deleteAllMonths( dbConnection );
-//        categoryMapper.deleteAllCategories(); //to be implemented
+        categoryMapper.wipeCategoryTable( dbConnection, logger );
+        monthTransactionMapper.deleteAllMonthTransactions( dbConnection );
 
 //      insert a month in the db, whose id will be used for the month transaction
         month = new Month();
-        month.setName( "July 2016" );
+        month.setName( "August 2016" );
         monthMapper.insertMonth( dbConnection, month );
         int monthId = monthMapper.getMonths( dbConnection ).get( 0 ).getId();
+
 //      insert a category in the db, whose id will be used for the month transaction
         category = new Category();
-        month.setName( "July 2016" );
-        categoryMapper.insertCategory(dbConnection, logger, category );
-        int categoryId = categoryMapper.getCategories(dbConnection, logger ).get( 0 ).getId();
-//        insert a month transaction in the db
+        category.setName( "food" );
+        categoryMapper.insertCategory( dbConnection, logger, category );
+        int categoryId = categoryMapper.getCategories( dbConnection, logger ).get( 0 ).getId();
+
+//      insert a month transaction in the db
         monthTransaction = new MonthTransaction();
         monthTransaction.setName( "bread" );
         monthTransaction.setType( "food" );
@@ -88,7 +92,26 @@ public class MonthTransactionMapperTest {
     }
 
     @Test
-    public void getAllMonthTransactions() {
-        assertEquals( monthTransaction, monthTransactionMapper.getAllTransactions( dbConnection).get( 0));
+    public void getAllMonthsTransactions() {
+        MonthTransaction firstMonthTransaction = monthTransactionMapper.getAllTransactions( dbConnection ).get( 0 );
+        assertEquals( monthTransaction.getId(), firstMonthTransaction.getId() );
+        assertEquals( monthTransaction.getMonthId(), firstMonthTransaction.getMonthId() );
+        assertEquals( monthTransaction.getName(), firstMonthTransaction.getName() );
+        assertEquals( monthTransaction.getAmount(), firstMonthTransaction.getAmount(), 0);
+        assertEquals( monthTransaction.getType(), firstMonthTransaction.getType() );
+        assertEquals( monthTransaction.getCategoryId(), firstMonthTransaction.getCategoryId() );
+    }
+
+    @Test
+    public void testGetMonthTransactionById() {
+        System.out.println( "Month id: "+ month.getId() );
+        MonthTransaction actualMonthTransaction = monthTransactionMapper.getSpecificTransactionsByMonthID( dbConnection, month.getId() ).get( 0 );
+        assertEquals( monthTransaction.getId(), actualMonthTransaction.getId() );
+        assertEquals( monthTransaction.getMonthId(), actualMonthTransaction.getMonthId());
+        assertEquals( monthTransaction.getName(), actualMonthTransaction.getName() );
+        assertEquals( monthTransaction.getAmount(), actualMonthTransaction.getAmount(), 0 );
+        assertEquals( monthTransaction.getType(), actualMonthTransaction.getType());
+        assertEquals( monthTransaction.getCategoryId(), actualMonthTransaction.getCategoryId());
+        
     }
 }

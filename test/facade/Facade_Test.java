@@ -107,7 +107,7 @@ public class Facade_Test {
     public void testGetSpecificTransactionsByMonthID() {
         int monthTransactionId = 2;
         String type = "expenses";
-        Mockito.when( mockMonthTransactionMapper.getSpecificTransactionsByMonthID( null, monthTransactionId, type ) ).thenAnswer( new Answer() {
+        Mockito.when( mockMonthTransactionMapper.getSpecificTransactionsByMonthID( null, monthTransactionId ) ).thenAnswer( new Answer() {
 
             List<MonthTransaction> monthTransactions = new ArrayList();
 
@@ -118,9 +118,9 @@ public class Facade_Test {
             }
         } );
 
-        assertEquals( 1, facade.getSpecificTransactionsByMonthID( monthTransactionId, type ).size() );
-        assertEquals( 2, facade.getSpecificTransactionsByMonthID( monthTransactionId, type ).size() );
-        assertEquals( 3, facade.getSpecificTransactionsByMonthID( monthTransactionId, type ).size() );
+        assertEquals( 1, facade.getSpecificTransactionsByMonthID( monthTransactionId ).size() );
+        assertEquals( 2, facade.getSpecificTransactionsByMonthID( monthTransactionId ).size() );
+        assertEquals( 3, facade.getSpecificTransactionsByMonthID( monthTransactionId ).size() );
     }
 
     @Test

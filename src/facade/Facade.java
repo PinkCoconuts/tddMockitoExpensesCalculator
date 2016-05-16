@@ -32,8 +32,8 @@ public class Facade {
 
     //Database authentication
     private static String[] databaseHost = { "jdbc:oracle:thin:@127.0.0.1:1521:XE", "jdbc:oracle:thin:@datdb.cphbusiness.dk:1521:dat" };
-    private static String[] databaseUsername = { "bobkoo", "cphbs96" };
-    private static String[] databasePassword = { "qwerty12345", "cphbs96" };
+    private static String[] databaseUsername = { "bobkoo", "cphbs96", "cphcd77" };
+    private static String[] databasePassword = { "qwerty12345", "cphbs96", "cphcd77" };
 
     //facade instance
     private static Facade instance = null;
@@ -56,7 +56,7 @@ public class Facade {
         this.monthTransactionMapper = monthTransactionMapper;
         this.categoryMapper = categoryMapper;
 
-        this.databaseConnector = new DBconnector( databaseHost[ 1 ], databaseUsername[ 1 ], databasePassword[ 1 ], null );
+        this.databaseConnector = new DBconnector( databaseHost[ 1 ], databaseUsername[ 2 ], databasePassword[ 2 ], null );
 
     }
 
@@ -104,8 +104,8 @@ public class Facade {
         return monthMapper.deleteMonth( connection, monthId );
     }
 
-    public List<MonthTransaction> getSpecificTransactionsByMonthID( int monthId, String type ) {
-        return monthTransactionMapper.getSpecificTransactionsByMonthID( connection, monthId, type );
+    public List<MonthTransaction> getSpecificTransactionsByMonthID( int monthId) {
+        return monthTransactionMapper.getSpecificTransactionsByMonthID( connection, monthId );
     }
 
     public MonthTransaction insertMonthTransaction( MonthTransaction object ) {

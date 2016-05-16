@@ -1,25 +1,114 @@
 package mappers;
 
+import entity.Month;
 import entity.MonthTransaction;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MonthTransactionMapper {
 
     //here I think we also need get AllTransactions by category
-    public List<MonthTransaction> getAllTransactions( Connection connection) {
-        return new ArrayList<MonthTransaction>();
+    public List<MonthTransaction> getAllTransactions( Connection connection ) {
+        ArrayList<MonthTransaction> monthTransactions = new ArrayList();
+
+        MonthTransaction monthTransaction = new MonthTransaction();
+        PreparedStatement preparedStatement = null;
+        String selectSQL = "SELECT ID, MONTH_ID, NAME, AMOUNT, TYPE, CATEGORY_ID FROM MONTH_TRANSACTION_TBL ";
+        try {
+            preparedStatement = connection.prepareStatement( selectSQL );
+            ResultSet rs = preparedStatement.executeQuery();
+            while ( rs.next() ) {
+                monthTransaction.setId( rs.getInt( "ID" ) );
+                monthTransaction.setMonthId( rs.getInt( "MONTH_ID" ) );
+                monthTransaction.setName( rs.getString( "NAME" ) );
+                monthTransaction.setAmount( rs.getDouble( "AMOUNT" ) );
+                monthTransaction.setType( rs.getString( "TYPE" ) );
+                monthTransaction.setCategoryId( rs.getInt( "CATEGORY_ID" ) );
+                monthTransactions.add( monthTransaction );
+            }
+            rs.close();
+            preparedStatement.close();
+        } catch ( SQLException ex ) {
+            System.out.println( "Error in the getMonthById method: " + ex );
+            Logger.getLogger( MonthMapper.class.getName() ).log( Level.SEVERE, null, ex );
+        }
+        return monthTransactions;
     }
+
     //here I think it should be category instead of type. 
     //And again, we need one more method for getting all transactions for one specific month, without taking into consideration the category
     public List<MonthTransaction> getSpecificTransactionsByMonthID( Connection connection,
-            int monthId, String type ) {
-        return new ArrayList<MonthTransaction>();
+            int monthId ) {
+        ArrayList<MonthTransaction> monthTransactions = new ArrayList();
+        MonthTransaction monthTransaction = new MonthTransaction();
+
+        PreparedStatement preparedStatement = null;
+        String selectSQL = "SELECT ID, NAME, AMOUNT, TYPE, CATEGORY_ID FROM MONTH_TRANSACTION_TBL "
+                + "WHERE MONTH_ID = ?";
+        try {
+            preparedStatement = connection.prepareStatement( selectSQL );
+            preparedStatement.setInt( 1, monthId );
+            ResultSet rs = preparedStatement.executeQuery();
+            while ( rs.next() ) {
+                monthTransaction.setId( rs.getInt( "ID" ) );
+                monthTransaction.setMonthId( monthId );
+                monthTransaction.setName( rs.getString( "NAME" ) );
+                monthTransaction.setAmount( rs.getDouble( "AMOUNT" ) );
+                monthTransaction.setType( rs.getString( "TYPE" ) );
+                monthTransaction.setCategoryId( rs.getInt( "CATEGORY_ID" ) );
+                monthTransactions.add( monthTransaction );
+            }
+            rs.close();
+            preparedStatement.close();
+        } catch ( SQLException ex ) {
+            System.out.println( "Error in the getSpecificTransactionsByMonthID method: " + ex );
+            Logger.getLogger( MonthTransactionMapper.class.getName() ).log( Level.SEVERE, null, ex );
+        }
+        return monthTransactions;
     }
 
     public MonthTransaction insertMonthTransaction( Connection connection, MonthTransaction object ) {
-        return new MonthTransaction();
+        int nextId = 0;
+        String sqlIdentifier = "select MONTH_TRANSACTION_ID_SEQ.nextval from dual";
+        PreparedStatement pst;
+        try {
+            pst = connection.prepareStatement( sqlIdentifier );
+            ResultSet rs = pst.executeQuery();
+            if ( rs.next() ) {
+                nextId = rs.getInt( 1 );
+            }
+        } catch ( SQLException ex ) {
+            Logger.getLogger( MonthMapper.class.getName() ).log( Level.SEVERE, null, ex );
+        }
+        String insertTableSQL;
+        PreparedStatement preparedStatement;
+        insertTableSQL = "INSERT INTO MONTH_TRANSACTION_TBL (id, month_id, name, amount, type, category_id) "
+                + "VALUES (?, ?, ?, ?, ?, ?)";
+        try {
+            preparedStatement = connection.prepareStatement( insertTableSQL );
+
+            preparedStatement.setInt( 1, nextId );
+            preparedStatement.setInt( 2, object.getMonthId() );
+            preparedStatement.setString( 3, object.getName() );
+            preparedStatement.setDouble( 4, object.getAmount() );
+            preparedStatement.setString( 5, object.getType() );
+            preparedStatement.setInt( 6, object.getCategoryId() );
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            object.setId( nextId );
+
+            return object;
+        } catch ( SQLException e ) {
+            System.out.println( "Exception in insert Month transaction mapper: " + e );
+            return null;
+        }
     }
 
     public int updateMonthTransaction( Connection connection, int monthTransactionId,
@@ -28,6 +117,20 @@ public class MonthTransactionMapper {
     }
 
     public int deleteMonthTransaction( Connection connection, int monthTransactionId ) {
+        return 1;
+    }
+
+    public int deleteAllMonthTransactions( Connection connection ) {
+        PreparedStatement preparedStatement;
+        String deleteStatement = "delete from MONTH_TRANSACTION_TBL";
+        try {
+            preparedStatement = connection.prepareStatement( deleteStatement );
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch ( Exception e ) {
+            System.out.println( "Exception in delete all method in the Month transaction mapper: " + e );
+            return -1;
+        }
         return 1;
     }
 }
