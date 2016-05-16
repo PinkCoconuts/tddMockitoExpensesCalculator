@@ -72,6 +72,34 @@ public class MonthTransactionMapper {
         }
         return monthTransactions;
     }
+    
+     public MonthTransaction getSpecificTransactionsByID( Connection connection,
+            int id ) {
+        MonthTransaction monthTransaction = new MonthTransaction();
+
+        PreparedStatement preparedStatement = null;
+        String selectSQL = "SELECT ID, MONTH_ID, NAME, AMOUNT, TYPE, CATEGORY_ID FROM MONTH_TRANSACTION_TBL "
+                + "WHERE ID = ?";
+        try {
+            preparedStatement = connection.prepareStatement( selectSQL );
+            preparedStatement.setInt( 1, id );
+            ResultSet rs = preparedStatement.executeQuery();
+            while ( rs.next() ) {
+                monthTransaction.setId( rs.getInt( "ID" ) );
+                monthTransaction.setMonthId( rs.getInt( "MONTH_ID" ) );
+                monthTransaction.setName( rs.getString( "NAME" ) );
+                monthTransaction.setAmount( rs.getDouble( "AMOUNT" ) );
+                monthTransaction.setType( rs.getString( "TYPE" ) );
+                monthTransaction.setCategoryId( rs.getInt( "CATEGORY_ID" ) );
+            }
+            rs.close();
+            preparedStatement.close();
+        } catch ( SQLException ex ) {
+            System.out.println( "Error in the getSpecificTransactionsByMonthID method: " + ex );
+            Logger.getLogger( MonthTransactionMapper.class.getName() ).log( Level.SEVERE, null, ex );
+        }
+        return monthTransaction;
+    }
 
     public MonthTransaction insertMonthTransaction( Connection connection, MonthTransaction object ) {
         int nextId = 0;
@@ -103,7 +131,6 @@ public class MonthTransactionMapper {
             preparedStatement.executeUpdate();
             preparedStatement.close();
             object.setId( nextId );
-
             return object;
         } catch ( SQLException e ) {
             System.out.println( "Exception in insert Month transaction mapper: " + e );

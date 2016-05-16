@@ -65,15 +65,15 @@ public class MonthTransactionMapperTest {
         monthTransactionMapper.deleteAllMonthTransactions( dbConnection );
 
 //      insert a month in the db, whose id will be used for the month transaction
-        month = new Month();
-        month.setName( "August 2016" );
-        monthMapper.insertMonth( dbConnection, month );
+        Month toInsertmonth = new Month();
+        toInsertmonth.setName( "August 2016" );
+        month = monthMapper.insertMonth( dbConnection, toInsertmonth );
         int monthId = monthMapper.getMonths( dbConnection ).get( 0 ).getId();
 
 //      insert a category in the db, whose id will be used for the month transaction
-        category = new Category();
-        category.setName( "food" );
-        categoryMapper.insertCategory( dbConnection, logger, category );
+        Category toInsertcategory = new Category();
+        toInsertcategory.setName( "food" );
+        category = categoryMapper.insertCategory( dbConnection, logger, toInsertcategory );
         int categoryId = categoryMapper.getCategories( dbConnection, logger ).get( 0 ).getId();
 
 //      insert a month transaction in the db
@@ -128,26 +128,23 @@ public class MonthTransactionMapperTest {
         assertEquals( monthTransaction.getCategoryId(), actualMonthTransaction.getCategoryId() );
     }
 
-//    @Test
-//    public void testInsertMonthTransaction() {
-//        MonthTransaction newMonthTransaction= new MonthTransaction();
-//        newMonthTransaction.setAmount( 10);
-//        newMonthTransaction.setCategoryId( category.getId() );
-//        newMonthTransaction.setMonthId( month.getId());
-//        newMonthTransaction.setName( "coke");
-//        newMonthTransaction.setType( "drinks");
-//        int id= 0;
-//        MonthTransaction mtransaction= monthTransactionMapper.insertMonthTransaction(dbConnection, newMonthTransaction );
-//        id= mtransaction.getId();
-//        System.out.println( "Transaction id: "+ id );
-//        MonthTransaction actualMonthTransaction = monthTransactionMapper.getSpecificTransactionsByMonthID( dbConnection, id ).get( 0);
-//        assertEquals( newMonthTransaction.getId(), actualMonthTransaction.getId());
-//        assertEquals( id, newMonthTransaction.getMonthId() );
-//        assertEquals( newMonthTransaction.getName(), actualMonthTransaction.getName() );
-//        assertEquals( newMonthTransaction.getAmount(), actualMonthTransaction.getAmount(), 0 );
-//        assertEquals( newMonthTransaction.getType(), actualMonthTransaction.getType() );
-//        assertEquals( newMonthTransaction.getCategoryId(), actualMonthTransaction.getCategoryId() );
-//    }
+    @Test
+    public void testInsertMonthTransaction() {
+       
+        MonthTransaction newMonthTransaction= new MonthTransaction();
+        newMonthTransaction.setAmount( 10);
+        newMonthTransaction.setCategoryId( category.getId() );
+        newMonthTransaction.setMonthId( month.getId());
+        newMonthTransaction.setName( "coke");
+        newMonthTransaction.setType( "drinks");
+        
+        MonthTransaction mt = monthTransactionMapper.insertMonthTransaction(dbConnection, newMonthTransaction );
+        
+        MonthTransaction insertedMonthTransaction = monthTransactionMapper.getSpecificTransactionsByID(dbConnection, mt.getId() );
+
+        assertEquals( mt.getId(), insertedMonthTransaction.getId() );
+    }
+    
     @Test
     public void testDeleteMonthTransaction() {
         assertEquals( 1, monthTransactionMapper.deleteMonthTransaction(dbConnection, monthTransaction.getId() ) );
