@@ -8,21 +8,33 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class CategoryMapper {
 
     public List<Category> getCategories( Connection connection, Logger logger ) {
         List<Category> categories = new ArrayList();
-        categories.add( new Category( 1, "Music" ) );
-        categories.add( new Category( 2, "Food" ) );
-        categories.add( new Category( 3, "Bills" ) );
+
+        Category category = null;
+        PreparedStatement preparedStatement = null;
+        String selectSQL = "SELECT ID, NAME FROM CATEGORY_TBL ";
+        try {
+            preparedStatement = connection.prepareStatement( selectSQL );
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while ( resultSet.next() ) {
+                category = new Category( resultSet.getInt( "ID" ), resultSet.getString( "NAME" ) );
+                categories.add( category );
+            }
+            resultSet.close();
+            preparedStatement.close();
+        } catch ( SQLException e ) {
+            System.out.println( "Exception - getCategories - SQL Exception : " + e );
+        }
+        logger.info( "Successfully retrieved categories (size) : " + categories.size() );
         return categories;
     }
 
     public Category getCategoryByID( Connection connection, Logger logger, int categoryId ) {
-        System.out.println( "hi" );
         PreparedStatement preparedStatement = null;
         String SQLString = "SELECT * FROM Category_TBL WHERE ID = ?";
         Category foundCategory = new Category();
@@ -149,6 +161,28 @@ public class CategoryMapper {
     }
 
     public int deleteCategory( Connection connection, Logger logger, int categoryId ) {
+        PreparedStatement preparedStatement = null;
+        String deleleStatement = "delete from CATEGORY_TBL where id = ?";
+        try {
+            preparedStatement = connection.prepareStatement( deleleStatement );
+            preparedStatement.setInt( 1, categoryId );
+
+            preparedStatement.executeUpdate();
+        } catch ( SQLException e ) {
+            logger.severe( "Method deleteCategory - SQL Exception :"
+                    + " [ " + e + " ], Category id : [" + categoryId + "]" );
+            return -1;
+        } finally {
+            try {
+                if ( preparedStatement != null ) {
+                    preparedStatement.close();
+                }
+            } catch ( SQLException e ) {
+                logger.warning( "Method deleteCategory - Closing Statement exception :"
+                        + " [ " + e + " ], Category id : [" + categoryId + "]" );
+            }
+        }
+        logger.info( "Successfully deleted Category id : [" + categoryId + "]" );
         return 1;
     }
 

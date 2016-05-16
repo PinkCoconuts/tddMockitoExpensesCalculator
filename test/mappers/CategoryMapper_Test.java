@@ -98,50 +98,62 @@ public class CategoryMapper_Test {
         assertEquals( insertedCategory.getId(), dbCategory.getId() );
         assertEquals( newCategory.getName(), dbCategory.getName() );
     }
-//
-//    @Test
-//    public void testDeleteCategory() {
-//        Category category = new Category( 1, "Music" );
-//        int insertResult = categoryMapper.insertCategory( connection, logger, category );
-//        int insertExpectedResult = 1;
-//
-//        int deleteResult = categoryMapper.deleteCategory( connection, logger, category.getId() );
-//        int deleteExpectedResult = 1;
-//
-//        assertEquals( insertExpectedResult, insertResult );
-//        assertEquals( deleteResult, deleteExpectedResult );
-//
-//    }
-//
-//    @Test
-//    public void testGetCategoryByID() {
-//        Category category = new Category( 1, "Music" );
-//        int insertResult = categoryMapper.insertCategory( connection, logger, category );
-//        int insertExpectedResult = 1;
-//
-//        Category dbCategory = categoryMapper.getCategoryByID( connection, logger, category.getId() );
-//
-//        assertEquals( insertExpectedResult, insertResult );
-//        assertEquals( category.getId(), dbCategory.getId() );
-//        assertEquals( category.getName(), dbCategory.getName() );
-//    }
-//
-//    @Test
-//    public void testGetCategories() {
-//        List<Category> categories = new ArrayList();
-//        categories.add( new Category( 1, "Music" ) );
-//        categories.add( new Category( 2, "Food" ) );
-//        categories.add( new Category( 3, "Bills" ) );
-//
-//        categoryMapper.insertCategory( connection, logger, categories.get( 0 ) );
-//        categoryMapper.insertCategory( connection, logger, categories.get( 1 ) );
-//        categoryMapper.insertCategory( connection, logger, categories.get( 2 ) );
-//
-//        List<Category> dbCategories = categoryMapper.getCategories( connection, logger );
-//
-//        for ( int i = 0; i < dbCategories.size(); i++ ) {
-//            assertEquals( categories.get( i ).getId(), dbCategories.get( i ).getId() );
-//            assertEquals( categories.get( i ).getName(), dbCategories.get( i ).getName() );
-//        }
-//    }
+
+    @Test
+    public void testDeleteCategory() {
+        Category category = new Category( 1, "Music" );
+        Category insertedCategory = categoryMapper.insertCategory( connection, logger, category );
+
+        Category dbCategory = categoryMapper.getCategoryByID( connection, logger, insertedCategory.getId() );
+
+        int deleteResult = categoryMapper.deleteCategory( connection, logger, dbCategory.getId() );
+        int deleteExpectedResult = 1;
+
+        assertEquals( deleteResult, deleteExpectedResult );
+        Category dbCategoryDeleted = categoryMapper.getCategoryByID( connection, logger, insertedCategory.getId() );
+
+        assertEquals( null, dbCategoryDeleted );
+    }
+
+    @Test
+    public void testGetCategoryByID() {
+        Category category = new Category( 1, "Music" );
+        Category insertedCategory = categoryMapper.insertCategory( connection, logger, category );
+
+        Category dbCategory = categoryMapper.getCategoryByID( connection, logger, insertedCategory.getId() );
+
+        assertEquals( insertedCategory.getId(), dbCategory.getId() );
+        assertEquals( category.getName(), dbCategory.getName() );
+    }
+
+    @Test
+    public void testGetCategories() {
+        List<Category> categories = new ArrayList();
+        categories.add( new Category( 1, "Music" ) );
+        categories.add( new Category( 2, "Food" ) );
+        categories.add( new Category( 3, "Bills" ) );
+
+        List<Category> insertedCategories = new ArrayList();
+        insertedCategories.add( categoryMapper.insertCategory( connection, logger, categories.get( 0 ) ) );
+        insertedCategories.add( categoryMapper.insertCategory( connection, logger, categories.get( 1 ) ) );
+        insertedCategories.add( categoryMapper.insertCategory( connection, logger, categories.get( 2 ) ) );
+
+        List<Category> dbCategories = categoryMapper.getCategories( connection, logger );
+
+        for ( int m = 0; m < insertedCategories.size(); m++ ) {
+            boolean isIdMatching = false, isNameMatching = false;
+            for ( int i = 0; i < dbCategories.size(); i++ ) {
+                if ( insertedCategories.get( m ).getId() == dbCategories.get( i ).getId() ) {
+                    isIdMatching = true;
+                }
+                if ( insertedCategories.get( m ).getName().equals( dbCategories.get( i ).getName() ) ) {
+                    isNameMatching = true;
+                }
+            }
+            assertEquals( isIdMatching, true );
+            assertEquals( isNameMatching, true );
+
+        }
+
+    }
 }
