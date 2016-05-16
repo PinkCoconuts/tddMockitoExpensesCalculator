@@ -112,7 +112,7 @@ public class Facade {
         return monthTransactionMapper.insertMonthTransaction( connection, object );
     }
 
-    public int updateMonthTransaction( int monthTransactionID, MonthTransaction newObject ) {
+    public MonthTransaction updateMonthTransaction( int monthTransactionID, MonthTransaction newObject ) {
         return monthTransactionMapper.updateMonthTransaction( connection, monthTransactionID, newObject );
     }
 

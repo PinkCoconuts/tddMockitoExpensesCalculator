@@ -111,12 +111,62 @@ public class MonthTransactionMapper {
         }
     }
 
-    public int updateMonthTransaction( Connection connection, int monthTransactionId,
+    public MonthTransaction updateMonthTransaction( Connection connection, int monthTransactionId,
             MonthTransaction newObject ) {
-        return 1;
+        MonthTransaction monthTransaction = new MonthTransaction();
+        PreparedStatement preparedStatement = null;
+        String updateQuery = "UPDATE MONTH_TRANSACTION_TBL SET MONTH_ID = ?, NAME = ?, AMOUNT = ?, TYPE = ?, CATEGORY_ID = ? WHERE ID = ?";
+
+        try {
+            preparedStatement = connection.prepareStatement( updateQuery );
+
+            preparedStatement.setInt( 1, newObject.getMonthId() );
+            preparedStatement.setString( 2, newObject.getName() );
+            preparedStatement.setDouble( 3, newObject.getAmount() );
+            preparedStatement.setString( 4, newObject.getType() );
+            preparedStatement.setInt( 5, newObject.getCategoryId() );
+            preparedStatement.setInt( 6, monthTransactionId );
+
+            preparedStatement.executeUpdate();
+            monthTransaction.setId( monthTransactionId );
+            monthTransaction.setMonthId( newObject.getMonthId() );
+            monthTransaction.setName( newObject.getName() );
+            monthTransaction.setAmount( newObject.getAmount() );
+            monthTransaction.setType( newObject.getType() );
+            monthTransaction.setCategoryId( newObject.getCategoryId() );
+
+        } catch ( SQLException e ) {
+            System.out.println( "Error in the update method of the Month mapper: " + e );
+        } finally {
+            try {
+                if ( preparedStatement != null ) {
+                    preparedStatement.close();
+                }
+            } catch ( SQLException e ) {
+                System.out.println( "Error in the update method of the Month mapper: " + e );
+            }
+        }
+        return monthTransaction;
     }
 
     public int deleteMonthTransaction( Connection connection, int monthTransactionId ) {
+        PreparedStatement preparedStatement;
+        String deleteStatement = "delete from Month_transaction_tbl where id = ?";
+        try {
+            preparedStatement = connection.prepareStatement( deleteStatement );
+            preparedStatement.setInt( 1, monthTransactionId );
+        } catch ( Exception e ) {
+            System.out.println( "Exception in the delete month method in the Month mapper: " + e );
+            return -1;
+        }
+        try {
+            System.out.println( "I should update it right now" );
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch ( SQLException ex ) {
+            System.out.println( "Exception in the delete month method: " + ex );
+            return -2;
+        }
         return 1;
     }
 

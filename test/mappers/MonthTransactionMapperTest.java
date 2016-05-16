@@ -97,21 +97,64 @@ public class MonthTransactionMapperTest {
         assertEquals( monthTransaction.getId(), firstMonthTransaction.getId() );
         assertEquals( monthTransaction.getMonthId(), firstMonthTransaction.getMonthId() );
         assertEquals( monthTransaction.getName(), firstMonthTransaction.getName() );
-        assertEquals( monthTransaction.getAmount(), firstMonthTransaction.getAmount(), 0);
+        assertEquals( monthTransaction.getAmount(), firstMonthTransaction.getAmount(), 0 );
         assertEquals( monthTransaction.getType(), firstMonthTransaction.getType() );
         assertEquals( monthTransaction.getCategoryId(), firstMonthTransaction.getCategoryId() );
     }
 
     @Test
     public void testGetMonthTransactionById() {
-        System.out.println( "Month id: "+ month.getId() );
         MonthTransaction actualMonthTransaction = monthTransactionMapper.getSpecificTransactionsByMonthID( dbConnection, month.getId() ).get( 0 );
         assertEquals( monthTransaction.getId(), actualMonthTransaction.getId() );
-        assertEquals( monthTransaction.getMonthId(), actualMonthTransaction.getMonthId());
+        assertEquals( monthTransaction.getMonthId(), actualMonthTransaction.getMonthId() );
         assertEquals( monthTransaction.getName(), actualMonthTransaction.getName() );
         assertEquals( monthTransaction.getAmount(), actualMonthTransaction.getAmount(), 0 );
-        assertEquals( monthTransaction.getType(), actualMonthTransaction.getType());
-        assertEquals( monthTransaction.getCategoryId(), actualMonthTransaction.getCategoryId());
-        
+        assertEquals( monthTransaction.getType(), actualMonthTransaction.getType() );
+        assertEquals( monthTransaction.getCategoryId(), actualMonthTransaction.getCategoryId() );
+
+    }
+
+    @Test
+    public void testUpdateMonthTransaction() {
+        monthTransaction.setAmount( 20.3 );
+        monthTransaction.setType( "drinks" );
+        monthTransaction.setName( "coke" );
+        MonthTransaction actualMonthTransaction = monthTransactionMapper.updateMonthTransaction( dbConnection, monthTransaction.getId(), monthTransaction );
+        assertEquals( monthTransaction.getId(), actualMonthTransaction.getId() );
+        assertEquals( monthTransaction.getMonthId(), actualMonthTransaction.getMonthId() );
+        assertEquals( monthTransaction.getName(), actualMonthTransaction.getName() );
+        assertEquals( monthTransaction.getAmount(), actualMonthTransaction.getAmount(), 0 );
+        assertEquals( monthTransaction.getType(), actualMonthTransaction.getType() );
+        assertEquals( monthTransaction.getCategoryId(), actualMonthTransaction.getCategoryId() );
+    }
+
+//    @Test
+//    public void testInsertMonthTransaction() {
+//        MonthTransaction newMonthTransaction= new MonthTransaction();
+//        newMonthTransaction.setAmount( 10);
+//        newMonthTransaction.setCategoryId( category.getId() );
+//        newMonthTransaction.setMonthId( month.getId());
+//        newMonthTransaction.setName( "coke");
+//        newMonthTransaction.setType( "drinks");
+//        int id= 0;
+//        MonthTransaction mtransaction= monthTransactionMapper.insertMonthTransaction(dbConnection, newMonthTransaction );
+//        id= mtransaction.getId();
+//        System.out.println( "Transaction id: "+ id );
+//        MonthTransaction actualMonthTransaction = monthTransactionMapper.getSpecificTransactionsByMonthID( dbConnection, id ).get( 0);
+//        assertEquals( newMonthTransaction.getId(), actualMonthTransaction.getId());
+//        assertEquals( id, newMonthTransaction.getMonthId() );
+//        assertEquals( newMonthTransaction.getName(), actualMonthTransaction.getName() );
+//        assertEquals( newMonthTransaction.getAmount(), actualMonthTransaction.getAmount(), 0 );
+//        assertEquals( newMonthTransaction.getType(), actualMonthTransaction.getType() );
+//        assertEquals( newMonthTransaction.getCategoryId(), actualMonthTransaction.getCategoryId() );
+//    }
+    @Test
+    public void testDeleteMonthTransaction() {
+        assertEquals( 1, monthTransactionMapper.deleteMonthTransaction(dbConnection, monthTransaction.getId() ) );
+    }
+
+    @Test
+    public void testDeleteAllMonthTransactions() {
+        assertEquals( 1, monthTransactionMapper.deleteAllMonthTransactions( dbConnection ) );
     }
 }
