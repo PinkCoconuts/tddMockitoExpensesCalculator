@@ -14,16 +14,41 @@ public class ExpensesCalculator extends javax.swing.JFrame {
     public ExpensesCalculator() {
         initComponents();
         initMonths();
+        initCategories();
+        initTypes();
         this.setLocationRelativeTo( null );
     }
 
     private void initMonths() {
-        String[] months = new String[ 3 ];
-        months[ 0 ] = "Jan 2016";
-        months[ 1 ] = "Feb 2016";
-        months[ 2 ] = "Mar 2016";
+        String[] months = new String[ 4 ];
+
+        months[ 0 ] = "-ALL-";
+        months[ 1 ] = "Jan 2016";
+        months[ 2 ] = "Feb 2016";
+        months[ 3 ] = "Mar 2016";
 
         jComboBoxMonths.setModel( new javax.swing.DefaultComboBoxModel( months ) );
+    }
+
+    private void initCategories() {
+        String[] categories = new String[ 3 ];
+
+        categories[ 0 ] = "-ALL-";
+        categories[ 1 ] = "Expences";
+        categories[ 2 ] = "Incomes";
+
+        jComboBoxCategory.setModel( new javax.swing.DefaultComboBoxModel( categories ) );
+    }
+
+    private void initTypes() {
+        String[] types = new String[ 4 ];
+
+        types[ 0 ] = "-ALL-";
+        types[ 1 ] = "Foods";
+        types[ 2 ] = "Drinks";
+        types[ 3 ] = "RAKIA";
+
+        jComboBoType.setModel( new javax.swing.DefaultComboBoxModel( types ) );
     }
 
     class CustomModel extends AbstractTableModel {
@@ -124,6 +149,11 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         }
 
         jComboBoxCategory.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Food", "Drinks", "Soviet" }));
+        jComboBoxCategory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxCategoryActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Month/Year");
 
@@ -132,6 +162,11 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         jLabel3.setText("Transaction Type");
 
         jComboBoType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoTypeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -177,7 +212,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                     .addComponent(jComboBoType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -196,16 +231,41 @@ public class ExpensesCalculator extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBoxMonthsPropertyChange
 
     private void jComboBoxMonthsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxMonthsActionPerformed
-        System.out.println( "Action Performed : " + jComboBoxMonths.getSelectedItem() );
+        System.out.println( "Month Clicked : " + jComboBoxMonths.getSelectedItem() );
 
-        fillMonthTable( jComboBoxMonths.getSelectedItem().toString() );
-    }//GEN-LAST:event_jComboBoxMonthsActionPerformed
-
-    private void fillMonthTable( String month ) {
+        //Call to controller to get transactions by month
         List<MonthTransaction> monthTransactions = new ArrayList();
         monthTransactions.add( new MonthTransaction( 1, "Chips", "Food", 1, 2, 50 ) );
         monthTransactions.add( new MonthTransaction( 2, "Vodka", "Drinks", 1, 3, 200 ) );
         monthTransactions.add( new MonthTransaction( 3, "Tekilla - Havana Tropikana", "Drinks", 1, 2, 250 ) );
+
+        fillMonthTable( monthTransactions );
+    }//GEN-LAST:event_jComboBoxMonthsActionPerformed
+
+    private void jComboBoxCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCategoryActionPerformed
+        System.out.println( "Category Clicked : " + jComboBoxCategory.getSelectedItem() );
+
+        //Call to controller to get transactions by category
+        List<MonthTransaction> monthTransactions = new ArrayList();
+        monthTransactions.add( new MonthTransaction( 1, "Chips", "Food", 1, 2, 50 ) );
+        monthTransactions.add( new MonthTransaction( 2, "Pizza", "Food", 1, 3, 200 ) );
+        monthTransactions.add( new MonthTransaction( 3, "Mussaka", "Fodka", 1, 2, 250 ) );
+
+        fillMonthTable( monthTransactions );
+    }//GEN-LAST:event_jComboBoxCategoryActionPerformed
+
+    private void jComboBoTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoTypeActionPerformed
+        System.out.println( "Type Clicked : " + jComboBoType.getSelectedItem() );
+
+        //Call to controller to get transactions by category
+        List<MonthTransaction> monthTransactions = new ArrayList();
+        monthTransactions.add( new MonthTransaction( 1, "Salary", "Payment", 1, 3, 500 ) );
+        monthTransactions.add( new MonthTransaction( 2, "SU", "Scolarship", 1, 3, 400 ) );
+
+        fillMonthTable( monthTransactions );
+    }//GEN-LAST:event_jComboBoTypeActionPerformed
+
+    private void fillMonthTable( List<MonthTransaction> monthTransactions ) {
 
         Object[][] twoDimensionalArrayForTables = new Object[ monthTransactions.size() ][ 9 ];
         for ( int i = 0; i < monthTransactions.size(); i++ ) {
