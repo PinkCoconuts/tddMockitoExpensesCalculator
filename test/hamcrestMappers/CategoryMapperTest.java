@@ -1,10 +1,13 @@
-package mappers;
+package hamcrestMappers;
 
 import entity.Category;
+import static hamcrestTests.CustomAbstractEntityClassMatcher.matches;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
+import mappers.CategoryMapper;
+import static org.hamcrest.CoreMatchers.is;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -14,7 +17,7 @@ import static org.junit.Assert.*;
 import utilities.DBconnector;
 import utilities.PerformanceLogger;
 
-public class CategoryMapper_Test {
+public class CategoryMapperTest {
 
     //Mapperclass
     private CategoryMapper categoryMapper;
@@ -47,7 +50,7 @@ public class CategoryMapper_Test {
     }
 
     @BeforeClass
-    public static void beforeClass() {
+    public static void setUpClass() {
         //logger initialization
         performanceLogger = new PerformanceLogger();
         logger = performanceLogger.initLogger( loggerName, loggerPath );
@@ -55,12 +58,11 @@ public class CategoryMapper_Test {
     }
 
     @AfterClass
-    public static void afterClass() {
-
+    public static void tearDownClass() {
     }
 
     @Before
-    public void beforeTest() {
+    public void setUp() {
         categoryMapper = new CategoryMapper();
 
         databaseConnector = new DBconnector( databaseHost[ 1 ], databaseUsername[ 1 ], databasePassword[ 1 ], null );
@@ -68,7 +70,7 @@ public class CategoryMapper_Test {
     }
 
     @After
-    public void afterTest() {
+    public void tearDown() {
         categoryMapper.wipeCategoryTable( connection, logger );
         categoryMapper = null;
 
@@ -82,7 +84,7 @@ public class CategoryMapper_Test {
 
         Category dbCategory = categoryMapper.getCategoryByID( connection, logger, insertedCategory.getId() );
 
-        assertEquals( insertedCategory.getId(), dbCategory.getId() );
+        assertThat( insertedCategory, matches( dbCategory ) );
     }
 
     @Test
@@ -94,9 +96,8 @@ public class CategoryMapper_Test {
         categoryMapper.updateCategory( connection, logger, insertedCategory.getId(), newCategory );
 
         Category dbCategory = categoryMapper.getCategoryByID( connection, logger, insertedCategory.getId() );
-        
-        assertEquals( insertedCategory.getId(), dbCategory.getId() );
-        assertEquals( newCategory.getName(), dbCategory.getName() );
+        newCategory.setId( dbCategory.getId() );
+        assertThat( newCategory, matches( dbCategory ) );
     }
 
     @Test
@@ -112,7 +113,7 @@ public class CategoryMapper_Test {
         assertEquals( deleteResult, deleteExpectedResult );
         Category dbCategoryDeleted = categoryMapper.getCategoryByID( connection, logger, insertedCategory.getId() );
 
-        assertEquals( null, dbCategoryDeleted );
+        assertThat( null, is( dbCategoryDeleted ) );
     }
 
     @Test
@@ -122,8 +123,7 @@ public class CategoryMapper_Test {
 
         Category dbCategory = categoryMapper.getCategoryByID( connection, logger, insertedCategory.getId() );
 
-        assertEquals( insertedCategory.getId(), dbCategory.getId() );
-        assertEquals( category.getName(), dbCategory.getName() );
+        assertThat( insertedCategory, matches( dbCategory ) );
     }
 
     @Test
@@ -141,24 +141,17 @@ public class CategoryMapper_Test {
         List<Category> dbCategories = categoryMapper.getCategories( connection, logger );
 
         for ( int m = 0; m < insertedCategories.size(); m++ ) {
-            boolean isIdMatching = false, isNameMatching = false;
             for ( int i = 0; i < dbCategories.size(); i++ ) {
                 if ( insertedCategories.get( m ).getId() == dbCategories.get( i ).getId() ) {
-                    isIdMatching = true;
-                }
-                if ( insertedCategories.get( m ).getName().equals( dbCategories.get( i ).getName() ) ) {
-                    isNameMatching = true;
+                    assertThat( insertedCategories.get( m ), matches( dbCategories.get( i ) ) );
                 }
             }
-            assertEquals( isIdMatching, true );
-            assertEquals( isNameMatching, true );
-
         }
 
     }
 
     @Test
     public void testwipeCategoryTable() {
-        assertEquals( 1, categoryMapper.wipeCategoryTable(connection, logger ) );
+        assertThat( 1, is( categoryMapper.wipeCategoryTable( connection, logger ) ) );
     }
 }

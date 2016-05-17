@@ -1,14 +1,16 @@
 package hamcrestTests;
 
 import entity.Category;
+import entity.Month;
+import entity.MonthTransaction;
 import static hamcrestTests.CustomAbstractEntityClassMatcher.matches;
+import static org.hamcrest.CoreMatchers.not;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import static org.mockito.AdditionalMatchers.not;
 
 public class CustomizedMatcher {
 
@@ -32,10 +34,25 @@ public class CustomizedMatcher {
     }
 
     @Test
-    public void hello() {
+    public void categoryTest() {
         Category cat1 = new Category( 1, "Tennis" );
         Category cat2 = new Category( 1, "Tennis" );
         Category cat3 = new Category( 1, "Blah" );
         assertThat( cat1, matches( cat2 ) );
+        assertThat( cat1, not( matches( cat3 ) ) );
+    }
+
+    @Test
+    public void monthTest() {
+        Month mon1 = new Month( 1, "Jan 2016" );
+        Month mon2 = new Month( 1, "Jan 2016" );
+        assertThat( mon1, matches( mon2 ) );
+    }
+
+    @Test
+    public void monthTransactionTest() {
+        MonthTransaction mon1 = new MonthTransaction( 1, "rent", "accommodation", 1, 1, 10 );
+        MonthTransaction mon2 = new MonthTransaction( 1, "rent", "accommodation", 1, 1, 10 );
+        assertThat( mon1, matches( mon2 ) );
     }
 }
