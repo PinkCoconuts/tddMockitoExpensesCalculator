@@ -5,6 +5,7 @@ import entity.Category;
 import entity.Month;
 import entity.MonthTransaction;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,8 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         initTypes();
         fillMonthTable( controller.getMonthTransactions() );
         this.setLocationRelativeTo( null );
+        jLayeredPaneViewTransactions.setVisible( false );
+        jLayeredPaneAddTransaction.setVisible( false );
     }
 
     private void initMonths() {
@@ -36,7 +39,10 @@ public class ExpensesCalculator extends javax.swing.JFrame {
             months[ i ] = allMonths.get( i - 1 ).getName();
         }
 
+        String[] monthsForAddTransactionFrame = Arrays.copyOfRange( months, 1, months.length );
+
         jComboBoxMonths.setModel( new javax.swing.DefaultComboBoxModel( months ) );
+        jComboBoxMonthsAddTransaction.setModel( new javax.swing.DefaultComboBoxModel( monthsForAddTransactionFrame ) );
     }
 
     private void initCategories() {
@@ -46,8 +52,10 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         for ( int i = 1; i < allCategories.size() + 1; i++ ) {
             categories[ i ] = allCategories.get( i - 1 ).getName();
         }
+        String[] categoriesForAddTransactionFrame = Arrays.copyOfRange( categories, 1, categories.length );
 
         jComboBoxCategory.setModel( new javax.swing.DefaultComboBoxModel( categories ) );
+        jComboBoxCategoryAddTransaction.setModel( new javax.swing.DefaultComboBoxModel( categoriesForAddTransactionFrame ) );
     }
 
     private void initTypes() {
@@ -101,26 +109,46 @@ public class ExpensesCalculator extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLayeredPaneViewTransactions = new javax.swing.JLayeredPane();
+        jLabel1 = new javax.swing.JLabel();
         jComboBoxMonths = new javax.swing.JComboBox();
+        jLabel2 = new javax.swing.JLabel();
+        jComboBoxCategory = new javax.swing.JComboBox();
+        jComboBoType = new javax.swing.JComboBox();
+        jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableMonthTransactions = new javax.swing.JTable();
-        jComboBoxCategory = new javax.swing.JComboBox();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jComboBoType = new javax.swing.JComboBox();
+        jLayeredPaneAddTransaction = new javax.swing.JLayeredPane();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jTextFieldTransactionName = new javax.swing.JTextField();
+        jComboBox1 = new javax.swing.JComboBox();
+        jComboBoxMonthsAddTransaction = new javax.swing.JComboBox();
+        jComboBoxCategoryAddTransaction = new javax.swing.JComboBox();
+        jTextFieldAmount = new javax.swing.JTextField();
+        jButtonAddTransaction = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItemViewTransactions = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabel1.setText("Month/Year");
+
         jComboBoxMonths.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Month1", "Month2", "Month3" }));
-        jComboBoxMonths.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jComboBoxMonthsMouseReleased(evt);
-            }
-        });
         jComboBoxMonths.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBoxMonthsItemStateChanged(evt);
+            }
+        });
+        jComboBoxMonths.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jComboBoxMonthsMouseReleased(evt);
             }
         });
         jComboBoxMonths.addActionListener(new java.awt.event.ActionListener() {
@@ -133,6 +161,24 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                 jComboBoxMonthsPropertyChange(evt);
             }
         });
+
+        jLabel2.setText("Transaction Category");
+
+        jComboBoxCategory.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Food", "Drinks", "Soviet" }));
+        jComboBoxCategory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxCategoryActionPerformed(evt);
+            }
+        });
+
+        jComboBoType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoTypeActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Transaction Type");
 
         jTableMonthTransactions.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -158,70 +204,210 @@ public class ExpensesCalculator extends javax.swing.JFrame {
             jTableMonthTransactions.getColumnModel().getColumn(3).setResizable(false);
         }
 
-        jComboBoxCategory.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Food", "Drinks", "Soviet" }));
-        jComboBoxCategory.addActionListener(new java.awt.event.ActionListener() {
+        javax.swing.GroupLayout jLayeredPaneViewTransactionsLayout = new javax.swing.GroupLayout(jLayeredPaneViewTransactions);
+        jLayeredPaneViewTransactions.setLayout(jLayeredPaneViewTransactionsLayout);
+        jLayeredPaneViewTransactionsLayout.setHorizontalGroup(
+            jLayeredPaneViewTransactionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPaneViewTransactionsLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addGroup(jLayeredPaneViewTransactionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jLayeredPaneViewTransactionsLayout.createSequentialGroup()
+                        .addGroup(jLayeredPaneViewTransactionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1)
+                            .addComponent(jComboBoxMonths, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(58, 58, 58)
+                        .addGroup(jLayeredPaneViewTransactionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jLayeredPaneViewTransactionsLayout.createSequentialGroup()
+                                .addComponent(jComboBoxCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(136, 136, 136)
+                                .addComponent(jComboBoType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jLayeredPaneViewTransactionsLayout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(77, 77, 77)
+                                .addComponent(jLabel3)))))
+                .addContainerGap(26, Short.MAX_VALUE))
+        );
+        jLayeredPaneViewTransactionsLayout.setVerticalGroup(
+            jLayeredPaneViewTransactionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPaneViewTransactionsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jLayeredPaneViewTransactionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
+                .addGap(22, 22, 22)
+                .addGroup(jLayeredPaneViewTransactionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jComboBoType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jLayeredPaneViewTransactionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jComboBoxMonths, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jComboBoxCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(35, 35, 35)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
+        jLayeredPaneViewTransactions.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPaneViewTransactions.setLayer(jComboBoxMonths, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPaneViewTransactions.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPaneViewTransactions.setLayer(jComboBoxCategory, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPaneViewTransactions.setLayer(jComboBoType, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPaneViewTransactions.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPaneViewTransactions.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jLabel4.setText("Name");
+
+        jLabel5.setText("Type");
+
+        jLabel6.setText("Month");
+
+        jLabel7.setText("Category");
+
+        jLabel8.setText("Amount");
+
+        jTextFieldTransactionName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxCategoryActionPerformed(evt);
+                jTextFieldTransactionNameActionPerformed(evt);
             }
         });
 
-        jLabel1.setText("Month/Year");
-
-        jLabel2.setText("Transaction Category");
-
-        jLabel3.setText("Transaction Type");
-
-        jComboBoType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBoType.addActionListener(new java.awt.event.ActionListener() {
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "income", "expense" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoTypeActionPerformed(evt);
+                jComboBox1ActionPerformed(evt);
             }
         });
+
+        jComboBoxMonthsAddTransaction.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jComboBoxCategoryAddTransaction.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jTextFieldAmount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldAmountActionPerformed(evt);
+            }
+        });
+
+        jButtonAddTransaction.setText("Add");
+        jButtonAddTransaction.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAddTransactionActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jLayeredPaneAddTransactionLayout = new javax.swing.GroupLayout(jLayeredPaneAddTransaction);
+        jLayeredPaneAddTransaction.setLayout(jLayeredPaneAddTransactionLayout);
+        jLayeredPaneAddTransactionLayout.setHorizontalGroup(
+            jLayeredPaneAddTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPaneAddTransactionLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(jLayeredPaneAddTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonAddTransaction)
+                    .addGroup(jLayeredPaneAddTransactionLayout.createSequentialGroup()
+                        .addGroup(jLayeredPaneAddTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8))
+                        .addGap(116, 116, 116)
+                        .addGroup(jLayeredPaneAddTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBoxMonthsAddTransaction, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBoxCategoryAddTransaction, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jLayeredPaneAddTransactionLayout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(134, 134, 134)
+                        .addComponent(jTextFieldTransactionName, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jLayeredPaneAddTransactionLayout.setVerticalGroup(
+            jLayeredPaneAddTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPaneAddTransactionLayout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addGroup(jLayeredPaneAddTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jTextFieldTransactionName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jLayeredPaneAddTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jLayeredPaneAddTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jComboBoxMonthsAddTransaction, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21)
+                .addGroup(jLayeredPaneAddTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jComboBoxCategoryAddTransaction, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21)
+                .addGroup(jLayeredPaneAddTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jTextFieldAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
+                .addComponent(jButtonAddTransaction)
+                .addContainerGap(88, Short.MAX_VALUE))
+        );
+        jLayeredPaneAddTransaction.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPaneAddTransaction.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPaneAddTransaction.setLayer(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPaneAddTransaction.setLayer(jLabel7, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPaneAddTransaction.setLayer(jLabel8, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPaneAddTransaction.setLayer(jTextFieldTransactionName, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPaneAddTransaction.setLayer(jComboBox1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPaneAddTransaction.setLayer(jComboBoxMonthsAddTransaction, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPaneAddTransaction.setLayer(jComboBoxCategoryAddTransaction, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPaneAddTransaction.setLayer(jTextFieldAmount, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPaneAddTransaction.setLayer(jButtonAddTransaction, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jMenu1.setText("Transactions");
+        jMenu1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu1ActionPerformed(evt);
+            }
+        });
+
+        jMenuItemViewTransactions.setText("View");
+        jMenuItemViewTransactions.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemViewTransactionsActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItemViewTransactions);
+
+        jMenuItem1.setText("Add");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Something else");
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jComboBoxMonths, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(98, 98, 98)
-                                .addComponent(jComboBoxCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(jComboBoType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel3)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(89, Short.MAX_VALUE))
+                .addGap(19, 19, 19)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLayeredPaneViewTransactions)
+                    .addComponent(jLayeredPaneAddTransaction))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBoxMonths, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBoxCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBoType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jLayeredPaneViewTransactions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLayeredPaneAddTransaction)
+                .addGap(37, 37, 37))
         );
 
         pack();
@@ -277,11 +463,45 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         if ( "-ALL-".equals( type ) ) {
             monthTransactions = controller.getMonthTransactions();
         } else {
-            monthTransactions = controller.getTransactionsByType(type );
+            monthTransactions = controller.getTransactionsByType( type );
         }
 
         fillMonthTable( monthTransactions );
     }//GEN-LAST:event_jComboBoTypeActionPerformed
+
+    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
+
+    }//GEN-LAST:event_jMenu1ActionPerformed
+
+    private void jTextFieldTransactionNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldTransactionNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldTransactionNameActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jTextFieldAmountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldAmountActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldAmountActionPerformed
+
+    private void jMenuItemViewTransactionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemViewTransactionsActionPerformed
+        jLayeredPaneViewTransactions.setVisible( true );
+        jLayeredPaneAddTransaction.setVisible( false );
+    }//GEN-LAST:event_jMenuItemViewTransactionsActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        jLayeredPaneViewTransactions.setVisible( false );
+        jLayeredPaneAddTransaction.setVisible( true );
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jButtonAddTransactionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddTransactionActionPerformed
+        controller.addTransactions( jTextFieldTransactionName.getText(),
+                                    jComboBoxMonthsAddTransaction.getSelectedItem().toString(),
+                                    jComboBoType.getSelectedItem().toString(),
+                                    jComboBoxCategory.getSelectedItem().toString(),
+                                    Double.parseDouble( jTextFieldAmount.getText() ) );
+    }//GEN-LAST:event_jButtonAddTransactionActionPerformed
 
     private void fillMonthTable( List<MonthTransaction> monthTransactions ) {
         Map<Integer, String> transactionsMap = new HashMap();
@@ -336,13 +556,31 @@ public class ExpensesCalculator extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonAddTransaction;
     private javax.swing.JComboBox jComboBoType;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBoxCategory;
+    private javax.swing.JComboBox jComboBoxCategoryAddTransaction;
     private javax.swing.JComboBox jComboBoxMonths;
+    private javax.swing.JComboBox jComboBoxMonthsAddTransaction;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLayeredPane jLayeredPaneAddTransaction;
+    private javax.swing.JLayeredPane jLayeredPaneViewTransactions;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItemViewTransactions;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableMonthTransactions;
+    private javax.swing.JTextField jTextFieldAmount;
+    private javax.swing.JTextField jTextFieldTransactionName;
     // End of variables declaration//GEN-END:variables
 }

@@ -68,4 +68,21 @@ public class Controller {
         return facade.getSpecificTransactionsByType( type );
     }
 
+    public MonthTransaction addTransactions( String name, String month, String category, String type, double amount ) {
+        int monthId = 0, categoryId = 0;
+        for ( Map.Entry<Integer, String> entrySet : monthMap.entrySet() ) {
+            if ( entrySet.getValue().equals( month ) ) {
+                monthId = entrySet.getKey();
+            }
+        }
+
+        for ( Map.Entry<Integer, String> entrySet : categoryMap.entrySet() ) {
+            if ( entrySet.getValue().equals( category ) ) {
+                categoryId = entrySet.getKey();
+            }
+        }
+        MonthTransaction monthTransaction = new MonthTransaction( 0, name, type, monthId, categoryId, amount );
+        return facade.insertMonthTransaction( monthTransaction );
+    }
+
 }
