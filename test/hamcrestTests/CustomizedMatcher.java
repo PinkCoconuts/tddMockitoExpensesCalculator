@@ -1,7 +1,7 @@
 package hamcrestTests;
 
 import entity.Category;
-import static hamcrestTests.CustomMatcherMonthTest.matches;
+import static hamcrestTests.CustomAbstractEntityClassMatcher.matches;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
