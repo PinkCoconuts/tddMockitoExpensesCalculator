@@ -129,13 +129,17 @@ public class Facade {
     public List<MonthTransaction> getSpecificTransactionsByCategoryID( int categoryId ) {
         return monthTransactionMapper.getSpecificTransactionsByCategoryID( connection, categoryId );
     }
-    
-     public List<MonthTransaction> getSpecificTransactionsByType( String type ) {
-        return monthTransactionMapper.getSpecificTransactionsByType(connection, type );
+
+    public List<MonthTransaction> getSpecificTransactionsByType( String type ) {
+        return monthTransactionMapper.getSpecificTransactionsByType( connection, type );
     }
 
-    public MonthTransaction insertMonthTransaction( MonthTransaction object ) {
-        return monthTransactionMapper.insertMonthTransaction( connection, object );
+    public boolean insertMonthTransaction( MonthTransaction object ) {
+        MonthTransaction mt = monthTransactionMapper.insertMonthTransaction( connection, object );
+        if ( mt != null ) {
+            return true;
+        }
+        return false;
     }
 
     public MonthTransaction updateMonthTransaction( int monthTransactionID, MonthTransaction newObject ) {

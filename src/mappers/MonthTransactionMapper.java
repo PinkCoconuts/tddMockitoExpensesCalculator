@@ -54,12 +54,10 @@ public class MonthTransactionMapper {
             preparedStatement.setInt( 1, monthId );
             ResultSet rs = preparedStatement.executeQuery();
             while ( rs.next() ) {
-                monthTransaction.setId( rs.getInt( "ID" ) );
-                monthTransaction.setMonthId( monthId );
-                monthTransaction.setName( rs.getString( "NAME" ) );
-                monthTransaction.setAmount( rs.getDouble( "AMOUNT" ) );
-                monthTransaction.setType( rs.getString( "TYPE" ) );
-                monthTransaction.setCategoryId( rs.getInt( "CATEGORY_ID" ) );
+                monthTransaction = new MonthTransaction( rs.getInt( "ID" ),
+                                                         rs.getString( "NAME" ), rs.getString( "TYPE" ),
+                                                         monthId, rs.getInt( "CATEGORY_ID" ),
+                                                         rs.getDouble( "AMOUNT" ) );
                 monthTransactions.add( monthTransaction );
             }
             rs.close();
@@ -98,7 +96,7 @@ public class MonthTransactionMapper {
         }
         return monthTransactions;
     }
-    
+
     public List<MonthTransaction> getSpecificTransactionsByType( Connection connection,
             String type ) {
         ArrayList<MonthTransaction> monthTransactions = new ArrayList();
@@ -109,12 +107,12 @@ public class MonthTransactionMapper {
                 + "WHERE TYPE = ?";
         try {
             preparedStatement = connection.prepareStatement( selectSQL );
-            preparedStatement.setString(1, type );
+            preparedStatement.setString( 1, type );
             ResultSet rs = preparedStatement.executeQuery();
             while ( rs.next() ) {
                 monthTransaction = new MonthTransaction( rs.getInt( "ID" ),
                                                          rs.getString( "NAME" ), type,
-                                                         rs.getInt( "MONTH_ID" ), rs.getInt("CATEGORY_ID" ),
+                                                         rs.getInt( "MONTH_ID" ), rs.getInt( "CATEGORY_ID" ),
                                                          rs.getDouble( "AMOUNT" ) );
                 monthTransactions.add( monthTransaction );
             }
