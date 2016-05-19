@@ -78,7 +78,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
 
     class CustomModel extends AbstractTableModel {
 
-        String[] COLUMN_NAMES = new String[]{ "Name", "Type", "Month", "Category", "Amount", "Edit/Delete" };
+        String[] COLUMN_NAMES = new String[]{ "ID", "Name", "Type", "Month", "Category", "Amount", "Edit", "Delete" };
 
         private Object[][] result;
         private String[] columnNames;
@@ -106,14 +106,26 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         @Override
         public Object getValueAt( final int rowIndex, final int columnIndex ) {
             //return result[ rowIndex ][ columnIndex ];
-
+            JButton button;
             switch ( columnIndex ) {
-                case 5:
-                    final JButton button = new JButton( COLUMN_NAMES[ columnIndex ] );
+                case 6:
+                    //Edit
+                    button = new JButton( COLUMN_NAMES[ columnIndex ] );
                     button.addActionListener( new ActionListener() {
                         public void actionPerformed( ActionEvent arg0 ) {
                             JOptionPane.showMessageDialog( JOptionPane.getFrameForComponent( button ),
-                                                           "Button clicked for row " + rowIndex );
+                                                           "Edit Button clicked for row " + rowIndex );
+                        }
+                    } );
+                    return button;
+                case 7:
+                    //Delete
+                    button = new JButton( COLUMN_NAMES[ columnIndex ] );
+                    button.addActionListener( new ActionListener() {
+                        public void actionPerformed( ActionEvent arg0 ) {
+                            JOptionPane.showMessageDialog( JOptionPane.getFrameForComponent( button ),
+                                                           "Delete Button clicked for row " + rowIndex
+                                                           + " : " + jTableMonthTransactions.getValueAt( rowIndex, 1 ) );
                         }
                     } );
                     return button;
@@ -552,7 +564,6 @@ public class ExpensesCalculator extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonAddTransactionActionPerformed
 
     private void jTableMonthTransactionsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMonthTransactionsMouseClicked
-        System.out.println( "Hello?" );
         int column = jTableMonthTransactions.getColumnModel().getColumnIndexAtX( evt.getX() ); // get the coloum of the button
         int row = evt.getY() / jTableMonthTransactions.getRowHeight(); //get the row of the button
 
@@ -561,32 +572,34 @@ public class ExpensesCalculator extends javax.swing.JFrame {
             Object value = jTableMonthTransactions.getValueAt( row, column );
             if ( value instanceof JButton ) {
                 /*perform a click event*/
-                System.out.println( "I don't know" );
                 (( JButton ) value).doClick();
             }
         }
     }//GEN-LAST:event_jTableMonthTransactionsMouseClicked
 
     private void fillMonthTable( List<MonthTransaction> monthTransactions ) {
-        Object[][] twoDimensionalArrayForTables = new Object[ monthTransactions.size() ][ 6 ];
+        Object[][] twoDimensionalArrayForTables = new Object[ monthTransactions.size() ][ 8 ];
         for ( int i = 0; i < monthTransactions.size(); i++ ) {
-            twoDimensionalArrayForTables[ i ][ 0 ] = monthTransactions.get( i ).getName();
-            twoDimensionalArrayForTables[ i ][ 1 ] = monthTransactions.get( i ).getType();
-            twoDimensionalArrayForTables[ i ][ 2 ] = monthTransactions.get( i ).getMonthId();
-            twoDimensionalArrayForTables[ i ][ 3 ] = monthTransactions.get( i ).getCategoryId();
-            twoDimensionalArrayForTables[ i ][ 4 ] = monthTransactions.get( i ).getAmount();
-            twoDimensionalArrayForTables[ i ][ 5 ] = new JButton( "Edit #" + monthTransactions.get( i ).getId() );
+            twoDimensionalArrayForTables[ i ][ 0 ] = monthTransactions.get( i ).getId();
+            twoDimensionalArrayForTables[ i ][ 1 ] = monthTransactions.get( i ).getName();
+            twoDimensionalArrayForTables[ i ][ 2 ] = monthTransactions.get( i ).getType();
+            twoDimensionalArrayForTables[ i ][ 3 ] = monthTransactions.get( i ).getMonthId();
+            twoDimensionalArrayForTables[ i ][ 4 ] = monthTransactions.get( i ).getCategoryId();
+            twoDimensionalArrayForTables[ i ][ 5 ] = monthTransactions.get( i ).getAmount();
+            twoDimensionalArrayForTables[ i ][ 6 ] = new JButton( "Edit #" + monthTransactions.get( i ).getId() );
+            twoDimensionalArrayForTables[ i ][ 7 ] = new JButton( "Delete #" + monthTransactions.get( i ).getId() );
 
         }
 
-        String[] rowNames = new String[]{ "Name", "Type", "Month", "Category", "Amount", "Edit/Delete" };
+        String[] rowNames = new String[]{ "ID", "Name", "Type", "Month", "Category", "Amount", "Edit", "Delete" };
         CustomModel cm = new CustomModel( twoDimensionalArrayForTables, rowNames );
 
         jTableMonthTransactions.setModel( cm );
         jTableMonthTransactions.getTableHeader().setReorderingAllowed( false );
 
         TableCellRenderer buttonRenderer = new JTableButtonRenderer();
-        jTableMonthTransactions.getColumn( cm.getColumnName( 5 ) ).setCellRenderer( buttonRenderer );
+        jTableMonthTransactions.getColumn( cm.getColumnName( 6 ) ).setCellRenderer( buttonRenderer );
+        jTableMonthTransactions.getColumn( cm.getColumnName( 7 ) ).setCellRenderer( buttonRenderer );
     }
 
     /**
