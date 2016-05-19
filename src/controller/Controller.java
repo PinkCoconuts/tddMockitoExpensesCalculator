@@ -111,5 +111,9 @@ public class Controller {
         MonthTransaction monthTransaction = new MonthTransaction( 0, name, type, monthId, categoryId, amount );
         return facade.insertMonthTransaction( monthTransaction );
     }
+    
+     public int deleteMonthTransaction(int monthTransactionID) {
+        return facade.deleteMonthTransaction( monthTransactionID );
+    }
 
 }

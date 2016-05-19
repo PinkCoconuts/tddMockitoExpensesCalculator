@@ -126,6 +126,8 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                             JOptionPane.showMessageDialog( JOptionPane.getFrameForComponent( button ),
                                                            "Delete Button clicked for row " + rowIndex
                                                            + " : " + jTableMonthTransactions.getValueAt( rowIndex, 1 ) );
+                            controller.deleteMonthTransaction( Integer.parseInt(
+                                    jTableMonthTransactions.getValueAt( rowIndex, 0 ).toString() ) );
                         }
                     } );
                     return button;
