@@ -70,12 +70,10 @@ public class Controller {
 
     public List<MonthTransaction> getMonthTransactions( String monthName, String categoryName, String type ) {
         int monthId = 0, categoryId = 0;
-        System.out.println( "Month name: " + monthName );
         if ( !monthName.equals( "-ALL-" ) ) {
             for ( Map.Entry<Integer, String> entrySet : monthMap.entrySet() ) {
                 if ( entrySet.getValue().equals( monthName ) ) {
                     monthId = entrySet.getKey();
-                    System.out.println( "Month id: " + monthId );
                 }
             }
         }

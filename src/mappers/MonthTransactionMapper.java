@@ -112,7 +112,6 @@ public class MonthTransactionMapper {
             System.out.println( "Error in the getAllTransactions method: " + ex );
             return null;
         }
-        System.out.println( "Size: "+ transactionsList.size() );
         return transactionsList;
     }
 
