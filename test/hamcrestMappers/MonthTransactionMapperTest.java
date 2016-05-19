@@ -1,4 +1,4 @@
-package hamcrestTests;
+package hamcrestMappers;
 
 import entity.Category;
 import entity.Month;
