@@ -169,4 +169,10 @@ public class Facade {
     public int deleteCategory( int categoryID ) {
         return categoryMapper.deleteCategory( connection, logger, categoryID );
     }
+
+    //testing
+    public Connection getConnection() {
+        return connection;
+    }
+
 }

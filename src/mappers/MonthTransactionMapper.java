@@ -39,6 +39,82 @@ public class MonthTransactionMapper {
         return monthTransactions;
     }
 
+    /*
+     * Abstract mapper to get transactions sorted by monthid, category id and type.
+     */
+    public List<MonthTransaction> getAllTransactions( Connection connection,
+            Logger logger, int monthId, int categoryId, String type ) {
+        
+        List<MonthTransaction> transactionsList = new ArrayList();
+        List<String> elementsToQuery = new ArrayList();
+
+        StringBuilder sBuild = new StringBuilder();
+        sBuild.append( "SELECT * FROM MONTH_TRANSACTION_TBL " );
+
+        boolean isFound = false;
+
+        if ( monthId > 0 ) {
+            sBuild.append( "WHERE MONTH_ID = ? " );
+            isFound = true;
+            elementsToQuery.add( "month" );
+        }
+
+        if ( categoryId > 0 ) {
+            if ( isFound ) {
+                sBuild.append( "AND CATEGORY_ID = ? " );
+            } else {
+                sBuild.append( "WHERE CATEGORY_ID = ? " );
+            }
+            isFound = true;
+            elementsToQuery.add( "category" );
+        }
+
+        if ( !type.isEmpty() && !"".equals( type ) ) {
+            if ( isFound ) {
+                sBuild.append( "AND TYPE = ? " );
+            } else {
+                sBuild.append( "WHERE TYPE = ? " );
+            }
+            elementsToQuery.add( "type" );
+        }
+        String sBuilderQueryStr = sBuild.toString();
+
+        PreparedStatement preparedStatement = null;
+        MonthTransaction monthTransaction = null;
+        try {
+            preparedStatement = connection.prepareStatement( sBuilderQueryStr );
+
+            for ( int i = 0; i < elementsToQuery.size(); i++ ) {
+                if ( "type".equals( elementsToQuery.get( i ) ) ) {
+                    preparedStatement.setString( i + 1, type );
+                } else if ( "category".equals( elementsToQuery.get( i ) ) ) {
+                    preparedStatement.setInt( i + 1, categoryId );
+                } else if ( "month".equals( elementsToQuery.get( i ) ) ) {
+                    preparedStatement.setInt( i + 1, monthId );
+                }
+            }
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while ( rs.next() ) {
+                monthTransaction
+                        = new MonthTransaction(
+                                rs.getInt( "ID" ), rs.getString( "NAME" ),
+                                rs.getString( "TYPE" ), rs.getInt( "MONTH_ID" ),
+                                rs.getInt( "CATEGORY_ID" ), rs.getDouble( "AMOUNT" )
+                        );
+                transactionsList.add( monthTransaction );
+            }
+            rs.close();
+            preparedStatement.close();
+        } catch ( SQLException ex ) {
+            //logger error
+            System.out.println( "Error in the getAllTransactions method: " + ex );
+            return null;
+        }
+        return transactionsList;
+    }
+
     //here I think it should be category instead of type. 
     //And again, we need one more method for getting all transactions for one specific month, without taking into consideration the category
     public List<MonthTransaction> getSpecificTransactionsByMonthID( Connection connection,
