@@ -68,6 +68,30 @@ public class Controller {
         return facade.getSpecificTransactionsByType( type );
     }
 
+    public List<MonthTransaction> getMonthTransactions( String monthName, String categoryName, String type ) {
+        int monthId = 0, categoryId = 0;
+        System.out.println( "Month name: " + monthName );
+        if ( !monthName.equals( "-ALL-" ) ) {
+            for ( Map.Entry<Integer, String> entrySet : monthMap.entrySet() ) {
+                if ( entrySet.getValue().equals( monthName ) ) {
+                    monthId = entrySet.getKey();
+                    System.out.println( "Month id: " + monthId );
+                }
+            }
+        }
+        if ( !categoryName.equals( "-ALL-" ) ) {
+            for ( Map.Entry<Integer, String> entrySet : categoryMap.entrySet() ) {
+                if ( entrySet.getValue().equals( categoryName ) ) {
+                    categoryId = entrySet.getKey();
+                }
+            }
+        }
+        if ( type.equals( "-ALL-" ) ) {
+            type = "";
+        }
+        return facade.getMonthTransactions( monthId, categoryId, type );
+    }
+
     public boolean addMonthTransactions( String name, String month, String category,
             String type, double amount ) {
 

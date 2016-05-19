@@ -481,45 +481,62 @@ public class ExpensesCalculator extends javax.swing.JFrame {
 
     private void jComboBoxMonthsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxMonthsActionPerformed
         System.out.println( "Month Clicked : " + jComboBoxMonths.getSelectedItem() );
-        String monthName = "" + jComboBoxMonths.getSelectedItem();
-        String selectedMonth = jComboBoxMonths.getSelectedItem().toString();
+//        String monthName = "" + jComboBoxMonths.getSelectedItem();
+//        String selectedMonth = jComboBoxMonths.getSelectedItem().toString();
+//        List<MonthTransaction> monthTransactions;
+//        if ( "-ALL-".equals( selectedMonth ) ) {
+//            monthTransactions = controller.getMonthTransactions();
+//        } elsme {
+//            monthTransactions = controller.getTransactionsByMonth( selectedMonth );
+//        }
         List<MonthTransaction> monthTransactions;
-        if ( "-ALL-".equals( selectedMonth ) ) {
-            monthTransactions = controller.getMonthTransactions();
-        } else {
-            monthTransactions = controller.getTransactionsByMonth( monthName );
-        }
-
+        monthTransactions = controller.getMonthTransactions(
+                jComboBoxMonths.getSelectedItem().toString(),
+                jComboBoxCategory.getSelectedItem().toString(),
+                jComboBoType.getSelectedItem().toString() );
         fillMonthTable( monthTransactions );
     }//GEN-LAST:event_jComboBoxMonthsActionPerformed
 
     private void jComboBoxCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCategoryActionPerformed
         System.out.println( "Category Clicked : " + jComboBoxCategory.getSelectedItem().toString() );
+        /*
+         String categoryName = jComboBoxCategory.getSelectedItem().toString();
+         //String selectedCategory = jComboBoxMonths.getSelectedItem().toString();
+         List<MonthTransaction> monthTransactions;
+         if ( "-ALL-".equals( categoryName ) ) {
+         monthTransactions = controller.getMonthTransactions();
+         } else {
+         monthTransactions = controller.getTransactionsByCategory( categoryName );
+         }
 
-        String categoryName = jComboBoxCategory.getSelectedItem().toString();
-        //String selectedCategory = jComboBoxMonths.getSelectedItem().toString();
+         fillMonthTable( monthTransactions );*/
+
         List<MonthTransaction> monthTransactions;
-        if ( "-ALL-".equals( categoryName ) ) {
-            monthTransactions = controller.getMonthTransactions();
-        } else {
-            monthTransactions = controller.getTransactionsByCategory( categoryName );
-        }
-
+        monthTransactions = controller.getMonthTransactions(
+                jComboBoxMonths.getSelectedItem().toString(),
+                jComboBoxCategory.getSelectedItem().toString(),
+                jComboBoType.getSelectedItem().toString() );
         fillMonthTable( monthTransactions );
     }//GEN-LAST:event_jComboBoxCategoryActionPerformed
 
     private void jComboBoTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoTypeActionPerformed
         System.out.println( "Type Clicked : " + jComboBoType.getSelectedItem() );
 
-        String type = jComboBoType.getSelectedItem().toString();
-        //String selectedCategory = jComboBoxMonths.getSelectedItem().toString();
+//        String type = jComboBoType.getSelectedItem().toString();
+//        //String selectedCategory = jComboBoxMonths.getSelectedItem().toString();
+//        List<MonthTransaction> monthTransactions;
+//        if ( "-ALL-".equals( type ) ) {
+//            monthTransactions = controller.getMonthTransactions();
+//        } else {
+//            monthTransactions = controller.getTransactionsByType( type );
+//        }
+//
+//        fillMonthTable( monthTransactions );
         List<MonthTransaction> monthTransactions;
-        if ( "-ALL-".equals( type ) ) {
-            monthTransactions = controller.getMonthTransactions();
-        } else {
-            monthTransactions = controller.getTransactionsByType( type );
-        }
-
+        monthTransactions = controller.getMonthTransactions(
+                jComboBoxMonths.getSelectedItem().toString(),
+                jComboBoxCategory.getSelectedItem().toString(),
+                jComboBoType.getSelectedItem().toString() );
         fillMonthTable( monthTransactions );
     }//GEN-LAST:event_jComboBoTypeActionPerformed
 

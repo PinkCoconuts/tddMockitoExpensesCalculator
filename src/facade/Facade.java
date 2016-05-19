@@ -122,6 +122,11 @@ public class Facade {
         return monthTransactionMapper.getAllTransactions( connection );
     }
 
+    public List<MonthTransaction> getMonthTransactions(int monthId, int categoryId, String type ) {
+        System.out.println( "From the facade: month id "+ monthId + " category id: "+ categoryId + " type: "+ type );
+        return monthTransactionMapper.getAllTransactions( connection, logger, monthId, categoryId, type );
+    }
+
     public List<MonthTransaction> getSpecificTransactionsByMonthID( int monthId ) {
         return monthTransactionMapper.getSpecificTransactionsByMonthID( connection, monthId );
     }
