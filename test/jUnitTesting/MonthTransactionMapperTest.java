@@ -1,4 +1,4 @@
-package mappers;
+package jUnitTesting;
 
 import entity.Category;
 import entity.Month;
@@ -7,6 +7,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Logger;
+import mappers.CategoryMapper;
+import mappers.MonthMapper;
+import mappers.MonthTransactionMapper;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

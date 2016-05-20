@@ -34,8 +34,7 @@ public class PerformanceLogger {
                     + "create and add a handler to the logger : " + e );
             Logger.getLogger( PerformanceLogger.class.getName() ).log( Level.SEVERE, null, e );
         }
-        logger.info( "***** NEW SESSION *****" );
-        logger.info( logger.getName() + " Logger started!\n" );
+        logger.info( "***** NEW SESSION ***** :" + logger.getName() + " Logger started!\n" );
 
         return logger;
     }

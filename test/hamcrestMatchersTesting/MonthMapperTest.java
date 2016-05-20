@@ -1,7 +1,7 @@
-package hamcrestMappers;
+package hamcrestMatchersTesting;
 
 import entity.Month;
-import static hamcrestTests.CustomAbstractEntityClassMatcher.matches;
+import static hamcrestMatchers.CustomAbstractEntityClassMatcher.matches;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
