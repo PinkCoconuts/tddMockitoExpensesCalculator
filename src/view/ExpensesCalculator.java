@@ -37,7 +37,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         this.setLocationRelativeTo( null );
         //jLayeredPaneViewTransactions.setVisible( false );
         jLayeredPaneAddTransaction.setVisible( false );
-        jLayeredPaneViewMonths.setVisible( false);
+        jLayeredPaneViewMonths.setVisible( false );
     }
 
     private void initMonths() {
@@ -78,10 +78,9 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         jComboBoType.setModel( new javax.swing.DefaultComboBoxModel( types ) );
     }
 
-    class CustomModel extends AbstractTableModel {
+class CustomModel extends AbstractTableModel {
 
         String[] COLUMN_NAMES = new String[]{ "ID", "Name", "Type", "Month", "Category", "Amount", "Edit", "Delete" };
-        String[] COLUMN_NAMES_MONTHS_TABLE = new String[]{ "ID", "Name", "Edit", "Delete" };
 
         private Object[][] result;
         private String[] columnNames;
@@ -154,6 +153,48 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                         }
                     } );
                     return button;
+                default:
+                    return result[ rowIndex ][ columnIndex ];
+            }
+        }
+
+        @Override
+        public boolean isCellEditable( int rowIndex, int columnIndex ) {
+            return false;
+        }
+    }
+
+    class CustomModelMonthsTable extends AbstractTableModel {
+
+        String[] COLUMN_NAMES_MONTHS_TABLE = new String[]{ "ID", "Name", "Edit", "Delete" };
+
+        private Object[][] result;
+        private String[] columnNames;
+
+        public CustomModelMonthsTable( Object[][] result, String[] columnNames ) {
+            this.result = result;
+            this.columnNames = columnNames;
+        }
+
+        @Override
+        public int getRowCount() {
+            return result.length;
+        }
+
+        @Override
+        public int getColumnCount() {
+            return columnNames.length;
+        }
+
+        @Override
+        public String getColumnName( int col ) {
+            return columnNames[ col ];
+        }
+
+        @Override
+        public Object getValueAt( final int rowIndex, final int columnIndex ) {
+            JButton button;
+            switch ( columnIndex ) {
                 case 3:
                     button = new JButton( COLUMN_NAMES_MONTHS_TABLE[ columnIndex ] );
 //                    Edit month
@@ -182,6 +223,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
             return false;
         }
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -762,7 +804,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         }
 
         String[] rowNames = new String[]{ "ID", "Name", "Edit", "Delete" };
-        CustomModel cm = new CustomModel( twoDimensionalArrayForTables, rowNames );
+        CustomModelMonthsTable cm = new CustomModelMonthsTable( twoDimensionalArrayForTables, rowNames );
 
         jTableMonths.setModel( cm );
         jTableMonths.getTableHeader().setReorderingAllowed( false );
