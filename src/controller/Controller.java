@@ -110,7 +110,7 @@ public class Controller {
         return facade.insertMonthTransaction( monthTransaction );
     }
     
-     public int deleteMonthTransaction(int monthTransactionID) {
+     public boolean deleteMonthTransaction(int monthTransactionID) {
         return facade.deleteMonthTransaction( monthTransactionID );
     }
 

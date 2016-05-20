@@ -119,39 +119,39 @@ public class Facade {
     }
 
     public List<MonthTransaction> getMonthTransactions() {
-        return monthTransactionMapper.getAllTransactions( connection );
+        return monthTransactionMapper.getAllTransactions( connection, logger );
     }
 
     public List<MonthTransaction> getMonthTransactions( int monthId, int categoryId, String type ) {
         return monthTransactionMapper.getAllTransactions( connection, logger, monthId, categoryId, type );
     }
 
+    public MonthTransaction getMonthTransactionByID( int id ) {
+        return monthTransactionMapper.getTransactionsByID( connection, logger, id );
+    }
+
     public List<MonthTransaction> getSpecificTransactionsByMonthID( int monthId ) {
-        return monthTransactionMapper.getSpecificTransactionsByMonthID( connection, monthId );
+        return null;//monthTransactionMapper.getSpecificTransactionsByMonthID( connection, monthId );
     }
 
     public List<MonthTransaction> getSpecificTransactionsByCategoryID( int categoryId ) {
-        return monthTransactionMapper.getSpecificTransactionsByCategoryID( connection, categoryId );
+        return null;//monthTransactionMapper.getSpecificTransactionsByCategoryID( connection, categoryId );
     }
 
     public List<MonthTransaction> getSpecificTransactionsByType( String type ) {
-        return monthTransactionMapper.getSpecificTransactionsByType( connection, type );
+        return null;//monthTransactionMapper.getSpecificTransactionsByType( connection, type );
     }
 
     public boolean insertMonthTransaction( MonthTransaction object ) {
-        MonthTransaction mt = monthTransactionMapper.insertMonthTransaction( connection, object );
-        if ( mt != null ) {
-            return true;
-        }
-        return false;
+        return monthTransactionMapper.insertMonthTransaction( connection, null, object );
     }
 
-    public MonthTransaction updateMonthTransaction( int monthTransactionID, MonthTransaction newObject ) {
-        return monthTransactionMapper.updateMonthTransaction( connection, monthTransactionID, newObject );
+    public boolean updateMonthTransaction( int monthTransactionID, MonthTransaction newObject ) {
+        return monthTransactionMapper.updateMonthTransaction( connection, null, monthTransactionID, newObject );
     }
 
-    public int deleteMonthTransaction( int monthTransactionID ) {
-        return monthTransactionMapper.deleteMonthTransaction( connection, monthTransactionID );
+    public boolean deleteMonthTransaction( int monthTransactionID ) {
+        return monthTransactionMapper.deleteMonthTransaction( connection, null, monthTransactionID );
     }
 
     public List<Category> getCategories() {
