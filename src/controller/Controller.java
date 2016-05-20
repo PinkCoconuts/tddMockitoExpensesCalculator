@@ -124,13 +124,12 @@ public class Controller {
     public Month getMonthByID( int monthID ) {
         return facade.getMonthByID( monthID );
     }
-    
-    
+
     public boolean updateMonthTransactions( String stringID, String name, String month, String category,
             String type, String stringAmount ) {
 
-        int id= Integer.parseInt( stringID );
-        double amount= Double.parseDouble( stringAmount);
+        int id = Integer.parseInt( stringID );
+        double amount = Double.parseDouble( stringAmount );
         int monthId = 0, categoryId = 0;
         for ( Map.Entry<Integer, String> entrySet : monthMap.entrySet() ) {
             if ( entrySet.getValue().equals( month ) ) {
@@ -145,14 +144,23 @@ public class Controller {
         }
 
         MonthTransaction monthTransaction = new MonthTransaction( id, name, type, monthId, categoryId, amount );
-        if ( facade.updateMonthTransaction(id, monthTransaction ) != null ) {
+        if ( facade.updateMonthTransaction( id, monthTransaction ) != null ) {
             return true;
         }
         return false;
     }
-    
-      public boolean deleteMonth( int monthID ) {
-        return facade.deleteMonth(monthID );
+
+    public boolean deleteMonth( int monthID ) {
+        return facade.deleteMonth( monthID );
+    }
+
+    public boolean updateMonth( String stringID, String name ) {
+        int id = Integer.parseInt( stringID );
+        Month month = new Month( id, name );
+        if ( facade.updateMonth( id, month ) != null ) {
+            return true;
+        }
+        return false;
     }
 
 }
