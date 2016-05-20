@@ -1,7 +1,7 @@
-package hamcrestMappers;
+package hamcrestMatchersTesting;
 
 import entity.Category;
-import static hamcrestTests.CustomAbstractEntityClassMatcher.matches;
+import static hamcrestMatchers.CustomAbstractEntityClassMatcher.matches;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +28,8 @@ public class CategoryMapperTest {
 
     //Database authentication
     private static String[] databaseHost = { "jdbc:oracle:thin:@127.0.0.1:1521:XE", "jdbc:oracle:thin:@datdb.cphbusiness.dk:1521:dat" };
-    private static String[] databaseUsername = { "bobkoo", "cphbs96" };
-    private static String[] databasePassword = { "qwerty12345", "cphbs96" };
+    private static String[] databaseUsername = { "bobkoo", "cphbs96", "cphcd77" };
+    private static String[] databasePassword = { "qwerty12345", "cphbs96", "cphcd77" };
 
     //logger
     private static String loggerName = "expensesCalculator";
@@ -39,12 +39,9 @@ public class CategoryMapperTest {
 
     public Boolean initializeConnection() {
         if ( connection != null ) {
-            System.out.println( "Connection already existing" );
-            logger.info( "Connection with database is already existing!" );
             return true;
         } else {
             connection = databaseConnector.getConnection( logger );
-            logger.info( "Connection with database initialized" );
         }
         return true;
     }
@@ -65,7 +62,7 @@ public class CategoryMapperTest {
     public void setUp() {
         categoryMapper = new CategoryMapper();
 
-        databaseConnector = new DBconnector( databaseHost[ 1 ], databaseUsername[ 1 ], databasePassword[ 1 ], null );
+        databaseConnector = new DBconnector( databaseHost[ 1 ], databaseUsername[ 2 ], databasePassword[ 2 ], null );
         initializeConnection();
     }
 
@@ -107,13 +104,13 @@ public class CategoryMapperTest {
 
         Category dbCategory = categoryMapper.getCategoryByID( connection, logger, insertedCategory.getId() );
 
-        int deleteResult = categoryMapper.deleteCategory( connection, logger, dbCategory.getId() );
-        int deleteExpectedResult = 1;
+        boolean deleteResult = categoryMapper.deleteCategory( connection, logger, dbCategory.getId() );
+        boolean deleteExpectedResult = true;
 
         assertEquals( deleteResult, deleteExpectedResult );
         Category dbCategoryDeleted = categoryMapper.getCategoryByID( connection, logger, insertedCategory.getId() );
-
-        assertThat( null, is( dbCategoryDeleted ) );
+        Category expectedCategory = new Category(0, "");
+        assertThat( expectedCategory, matches( dbCategoryDeleted ) );
     }
 
     @Test
@@ -152,6 +149,6 @@ public class CategoryMapperTest {
 
     @Test
     public void testwipeCategoryTable() {
-        assertThat( 1, is( categoryMapper.wipeCategoryTable( connection, logger ) ) );
+        assertThat( true, is( categoryMapper.wipeCategoryTable( connection, logger ) ) );
     }
 }

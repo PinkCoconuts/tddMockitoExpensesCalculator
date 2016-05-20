@@ -197,7 +197,7 @@ public class MonthTransactionMapper {
     }
 
     /*
-     * Method to insert a new month
+     * Method to insert a new month transaction
      *
      * boolean Month transaction object if inserted
      * boolean false if errors

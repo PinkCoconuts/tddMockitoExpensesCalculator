@@ -1,8 +1,9 @@
-package facade;
+package facadeMockitoTesting;
 
 import entity.Category;
 import entity.Month;
 import entity.MonthTransaction;
+import facade.Facade;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -195,9 +196,9 @@ public class Facade_Test {
     @Test
     public void testDeletCategory() {
         int categoryId = 2;
-        Mockito.when( mockCategoryMapper.deleteCategory( null, facade.getLogger(), categoryId ) ).thenReturn( 3 );
+        Mockito.when( mockCategoryMapper.deleteCategory( null, facade.getLogger(), categoryId ) ).thenReturn( true );
 
-        assertEquals( 3, facade.deleteCategory( categoryId ) );
+        assertEquals( true, facade.deleteCategory( categoryId ) );
     }
 
     /*

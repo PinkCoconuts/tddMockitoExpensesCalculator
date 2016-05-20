@@ -1,9 +1,9 @@
-package hamcrestTests;
+package hamcrestMatchers;
 
 import entity.Category;
 import entity.Month;
 import entity.MonthTransaction;
-import static hamcrestTests.CustomAbstractEntityClassMatcher.matches;
+import static hamcrestMatchers.CustomAbstractEntityClassMatcher.matches;
 import static org.hamcrest.CoreMatchers.not;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -14,9 +14,9 @@ import static org.junit.Assert.*;
 
 public class CustomizedMatcher {
 
-    public CustomizedMatcher() {
-    }
-
+    /*
+     * Hamcrest Matchers Example
+     */
     @BeforeClass
     public static void setUpClass() {
     }
@@ -46,13 +46,17 @@ public class CustomizedMatcher {
     public void monthTest() {
         Month mon1 = new Month( 1, "Jan 2016" );
         Month mon2 = new Month( 1, "Jan 2016" );
+        Month mon3 = new Month( 1, "Feb 2016" );
         assertThat( mon1, matches( mon2 ) );
+        assertThat( mon1, not( matches( mon3 ) ) );
     }
 
     @Test
     public void monthTransactionTest() {
         MonthTransaction mon1 = new MonthTransaction( 1, "rent", "accommodation", 1, 1, 10 );
         MonthTransaction mon2 = new MonthTransaction( 1, "rent", "accommodation", 1, 1, 10 );
+        MonthTransaction mon3 = new MonthTransaction( 1, "rent", "accommodation 2", 1, 1, 10 );
         assertThat( mon1, matches( mon2 ) );
+        assertThat( mon1, not( matches( mon3 ) ) );
     }
 }

@@ -1,9 +1,9 @@
-package hamcrestMappers;
+package hamcrestMatchersTesting;
 
 import entity.Category;
 import entity.Month;
 import entity.MonthTransaction;
-import static hamcrestTests.CustomAbstractEntityClassMatcher.matches;
+import static hamcrestMatchers.CustomAbstractEntityClassMatcher.matches;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -77,7 +77,8 @@ public class MonthTransactionMapperTest {
         Category toInsertcategory = new Category();
         toInsertcategory.setName( "food" );
         category = categoryMapper.insertCategory( dbConnection, logger, toInsertcategory );
-        int categoryId = categoryMapper.getCategories( dbConnection, logger ).get( 0 ).getId();
+        List<Category> cl = categoryMapper.getCategories( dbConnection, logger );
+        int categoryId = cl.get( 0 ).getId();
 
 //      insert a month transaction in the db
         monthTransaction = new MonthTransaction();

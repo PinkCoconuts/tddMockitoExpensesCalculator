@@ -1,4 +1,4 @@
-package mappers;
+package jUnitTesting;
 
 import entity.Category;
 import entity.Month;
@@ -7,6 +7,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Logger;
+import mappers.CategoryMapper;
+import mappers.MonthMapper;
+import mappers.MonthTransactionMapper;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -73,7 +76,8 @@ public class MonthTransactionMapperTest {
         Category toInsertcategory = new Category();
         toInsertcategory.setName( "food" );
         category = categoryMapper.insertCategory( dbConnection, logger, toInsertcategory );
-        int categoryId = categoryMapper.getCategories( dbConnection, logger ).get( 0 ).getId();
+        List<Category> cl = categoryMapper.getCategories( dbConnection, logger );
+        int categoryId = cl.get( 0 ).getId();
 
 //      insert a month transaction in the db
         monthTransaction = new MonthTransaction();

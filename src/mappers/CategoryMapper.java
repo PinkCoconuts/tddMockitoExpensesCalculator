@@ -8,209 +8,276 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class CategoryMapper {
 
-    public List<Category> getCategories( Connection connection, Logger logger ) {
+    /*
+     * Method for getting all categories.
+     *
+     * Returns : 
+     * Filled List<Category> if found
+     * Empty List<Category> if not found
+     * Boolean false if errors
+     */
+    public <T> T getCategories( Connection connection, Logger logger ) {
         List<Category> categories = new ArrayList();
+
+        String selectSQL = "SELECT ID, NAME FROM CATEGORY_TBL ";
 
         Category category = null;
         PreparedStatement preparedStatement = null;
-        String selectSQL = "SELECT ID, NAME FROM CATEGORY_TBL ";
         try {
             preparedStatement = connection.prepareStatement( selectSQL );
             ResultSet resultSet = preparedStatement.executeQuery();
+
             while ( resultSet.next() ) {
-                category = new Category( resultSet.getInt( "ID" ), resultSet.getString( "NAME" ) );
+                category = new Category(
+                        resultSet.getInt( "ID" ), resultSet.getString( "NAME" )
+                );
                 categories.add( category );
             }
+
             resultSet.close();
             preparedStatement.close();
         } catch ( SQLException e ) {
-            System.out.println( "Exception - getCategories - SQL Exception : " + e );
+
+            if ( logger != null ) {
+                logger.log( Level.SEVERE, "Error in the getCategories method:"
+                            + " {0}", e );
+            } else {
+                System.out.println( "Error in the getCategories method: "
+                        + "Logger not initialized"
+                        + "\nError in the getCategories method: " + e );
+            }
+            return ( T ) ( Boolean ) false;
         }
-        logger.info( "Successfully retrieved categories (size) : " + categories.size() );
-        return categories;
+
+        return ( T ) categories;
     }
 
-    public Category getCategoryByID( Connection connection, Logger logger, int categoryId ) {
-        PreparedStatement preparedStatement = null;
+    /*
+     * Method for getting a category by its id
+     *
+     * Returns :
+     * Filled Category object if found
+     * Empty Category object if not found
+     * Boolean false if errors
+     */
+    public <T> T getCategoryByID( Connection connection, Logger logger, int categoryId ) {
         String SQLString = "SELECT * FROM Category_TBL WHERE ID = ?";
-        Category foundCategory = new Category();
 
+        Category category = null;
+        PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement( SQLString );
             preparedStatement.setInt( 1, categoryId );
             ResultSet rs = preparedStatement.executeQuery();
 
             if ( rs.next() ) {
-                int selectedCatId = rs.getInt( 1 );
-                String selectedCatName = rs.getString( 2 );
-
-                foundCategory = new Category( selectedCatId, selectedCatName );
+                category = new Category( rs.getInt( 1 ), rs.getString( 2 ) );
             } else {
-                logger.warning( "Found nothing - getCategoryByID - CategoryID " + categoryId );
-                return null;
+                //Defeat testing null error in an easy way
+                category = new Category(0, "");
             }
+
+            rs.close();
+            preparedStatement.close();
         } catch ( SQLException e ) {
-            logger.severe( "Exception - getCategoryByID - Execution SQL Exception : [ " + e + " ]" );
-            return null;
-        } finally {
-            try {
-                if ( preparedStatement != null ) {
-                    preparedStatement.close();
-                }
-            } catch ( SQLException e ) {
-                logger.warning( "Exception - getCategoryByID - Closing SQL Exception : [ " + e + " ]" );
+            if ( logger != null ) {
+                logger.log( Level.SEVERE, "Error in the getCategoryByID method:"
+                            + " {0}", e );
+            } else {
+                System.out.println( "Error in the getCategoryByID method: "
+                        + "Logger not initialized"
+                        + "\nError in the getCategoryByID method: " + e );
             }
+            return ( T ) ( Boolean ) false;
         }
-        logger.info( "Successfully retrieved category : " + foundCategory.toString() );
-        return foundCategory;
+        return ( T ) category;
     }
 
-    public Category insertCategory( Connection connection, Logger logger, Category object ) {
-        PreparedStatement preparedStatement = null;
-        int categoryID = 0;
-        Category insertedCategory;
+    /*
+     * Method to insert a new category
+     *
+     * boolean category object if inserted
+     * boolean false if errors
+     */
+    public <T> T insertCategory( Connection connection, Logger logger, Category object ) {
+
+        int nextId = 0;
 
         String SQLString = "select CATEGORY_ID_SEQ.nextval from dual";
+
+        PreparedStatement preparedStatement = null;
         try {
+
             preparedStatement = connection.prepareStatement( SQLString );
             ResultSet rs = preparedStatement.executeQuery();
-            try {
-                if ( rs.next() ) {
-                    categoryID = rs.getInt( 1 );
+
+            boolean foundError = false;
+
+            if ( rs.next() ) {
+                nextId = rs.getInt( 1 );
+            } else {
+                foundError = true;
+                if ( logger != null ) {
+                    logger.log( Level.SEVERE, "Error in the insertCategory method:"
+                                + " {0}", "Cannot obtain next id for category object" );
+                } else {
+                    System.out.println( "Error in the insertCategory method: "
+                            + "Logger not initialized"
+                            + "\nError in the insertCategory method: "
+                            + "\"Cannot obtain next id for category object" );
                 }
-            } finally {
-                try {
-                    rs.close();
-                } catch ( Exception e ) {
-                    logger.warning( "Exception - insertCategory (Part 1) - ResultSet : " + e );
-                }
+            }
+
+            rs.close();
+            preparedStatement.close();
+
+            if ( foundError ) {
+                return ( T ) ( Boolean ) false;
             }
         } catch ( SQLException e ) {
-            logger.severe( "Exception - insertCategory (Part 1) - Execution SQL Exception : [ " + e + " ]" );
-            return null;
-        } finally {
-            try {
-                if ( preparedStatement != null ) {
-                    preparedStatement.close();
-                }
-            } catch ( SQLException e ) {
-                logger.warning( "Exception - insertCategory (Part1) - Closing SQL Exception : [ " + e + " ]" );
+            if ( logger != null ) {
+                logger.log( Level.SEVERE, "Error in the insertCategory method:"
+                            + " {0}", e );
+            } else {
+                System.out.println( "Error in the insertCategory method: "
+                        + "Logger not initialized"
+                        + "\nError in the insertCategory method: " + e );
             }
+            return ( T ) ( Boolean ) false;
         }
 
-        String insertQuery = "INSERT INTO CATEGORY_TBL (ID, NAME) VALUES (?, ?)";
-        preparedStatement = null;
-        try {
-            preparedStatement = connection.prepareStatement( insertQuery );
+        SQLString = "INSERT INTO CATEGORY_TBL (ID, NAME) VALUES (?, ?)";
 
-            preparedStatement.setInt( 1, categoryID );
+        try {
+            preparedStatement = connection.prepareStatement( SQLString );
+
+            preparedStatement.setInt( 1, nextId );
             preparedStatement.setString( 2, object.getName() );
 
             preparedStatement.executeUpdate();
 
+            preparedStatement.close();
+
         } catch ( SQLException e ) {
-            logger.severe( "Method insertCategory - SQL Exception :"
-                    + " [ " + e + " ], Category content : [" + object.toString() + "]" );
-            return null;
-        } finally {
-            try {
-                if ( preparedStatement != null ) {
-                    preparedStatement.close();
-                }
-            } catch ( SQLException e ) {
-                logger.warning( "Method insertCategory - Closing Statement exception :"
-                        + " [ " + e + " ], Category content : [" + object.toString() + "]" );
+            if ( logger != null ) {
+                logger.log( Level.SEVERE, "Error in the insertCategory (Part 2) method:"
+                            + " {0}", e );
+            } else {
+                System.out.println( "Error in the insertCategory (Part 2) method: "
+                        + "Logger not initialized"
+                        + "\nError in the insertCategory (Part 2) method: " + e );
             }
+            return ( T ) ( Boolean ) false;
         }
-        logger.info( "Successfully inserted category : " + object.toString() );
-        insertedCategory = new Category( categoryID, object.getName() );
-        return insertedCategory;
+
+        object.setId( nextId );
+        return ( T ) object;
     }
 
-    public int updateCategory( Connection connection, Logger logger, int categoryId, Category newObject ) {
-        PreparedStatement preparedStatement = null;
+    /*
+     * Method to update a category transaction
+     *
+     * Returns :
+     * boolean Category object if updated
+     * boolean false if errors
+     */
+    public <T> T updateCategory( Connection connection, Logger logger, int categoryId,
+            Category object ) {
         String updateQuery = "UPDATE Category_TBL SET NAME = ? WHERE ID = ?";
 
+        PreparedStatement preparedStatement = null;
         try {
+
             preparedStatement = connection.prepareStatement( updateQuery );
 
-            preparedStatement.setString( 1, newObject.getName() );
+            preparedStatement.setString( 1, object.getName() );
             preparedStatement.setInt( 2, categoryId );
 
             preparedStatement.executeUpdate();
+
+            preparedStatement.close();
+
         } catch ( SQLException e ) {
-            logger.severe( "Method updateCategory - SQL Exception :"
-                    + " [ " + e + " ], Category content : [" + newObject.toString() + "]" );
-            return -1;
-        } finally {
-            try {
-                if ( preparedStatement != null ) {
-                    preparedStatement.close();
-                }
-            } catch ( SQLException e ) {
-                logger.warning( "Method updateCategory - Closing Statement exception :"
-                        + " [ " + e + " ], Category content : [" + newObject.toString() + "]" );
+            if ( logger != null ) {
+                logger.log( Level.SEVERE, "Error in the updateCategory method:"
+                            + " {0}", e );
+            } else {
+                System.out.println( "Error in the updateCategory method: "
+                        + "Logger not initialized"
+                        + "\nError in the updateCategory method: " + e );
             }
+            return ( T ) ( Boolean ) false;
         }
-        logger.info( "Successfully updated category : " + newObject.toString() );
-        return 1;
+
+        object.setId( categoryId );
+        return ( T ) object;
     }
 
-    public int deleteCategory( Connection connection, Logger logger, int categoryId ) {
-        PreparedStatement preparedStatement = null;
+    /*
+     * Method to delete a category
+     *
+     * Returns :
+     * boolean true if deleted
+     * boolean false if errors
+     */
+    public boolean deleteCategory( Connection connection, Logger logger, int categoryId ) {
+
         String deleleStatement = "delete from CATEGORY_TBL where id = ?";
+
+        PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement( deleleStatement );
+
             preparedStatement.setInt( 1, categoryId );
 
             preparedStatement.executeUpdate();
+
+            preparedStatement.close();
         } catch ( SQLException e ) {
-            logger.severe( "Method deleteCategory - SQL Exception :"
-                    + " [ " + e + " ], Category id : [" + categoryId + "]" );
-            return -1;
-        } finally {
-            try {
-                if ( preparedStatement != null ) {
-                    preparedStatement.close();
-                }
-            } catch ( SQLException e ) {
-                logger.warning( "Method deleteCategory - Closing Statement exception :"
-                        + " [ " + e + " ], Category id : [" + categoryId + "]" );
+            if ( logger != null ) {
+                logger.log( Level.SEVERE, "Error in the deleteCategory method:"
+                            + " {0}", e );
+            } else {
+                System.out.println( "Error in the deleteCategory method: "
+                        + "Logger not initialized"
+                        + "\nError in the deleteCategory method: " + e );
             }
+            return false;
         }
-        logger.info( "Successfully deleted Category id : [" + categoryId + "]" );
-        return 1;
+        return true;
     }
 
-    public int wipeCategoryTable( Connection connection, Logger logger ) {
-        Statement statement = null;
-        String sql;
+    public boolean wipeCategoryTable( Connection connection, Logger logger ) {
+
         String[] databasesToWipe = { "MONTH_TRANSACTION_TBL", "CATEGORY_TBL" };
+
+        Statement statement = null;
+
+        String sqlQuery = "";
 
         for ( int i = 0; i < databasesToWipe.length; i++ ) {
             try {
                 statement = connection.createStatement();
-                sql = "DELETE FROM " + databasesToWipe[ i ];
-                statement.executeUpdate( sql );
+                sqlQuery = "DELETE FROM " + databasesToWipe[ i ];
+                statement.executeUpdate( sqlQuery );
+                statement.close();
             } catch ( SQLException e ) {
-                logger.severe( "Method wipeCategoryTable - SQL Exception while trying to wipe out table " + databasesToWipe[ i ] + " : " + e );
-                return -1;
-            } finally {
-                try {
-                    if ( statement != null ) {
-                        statement.close();
-                    }
-                } catch ( SQLException e ) {
-                    logger.warning( "[SQL Exception while trying to close the prepared statement song for wiping out table " + databasesToWipe[ i ] + " : " + e );
+                if ( logger != null ) {
+                    logger.log( Level.SEVERE, "Error in the wipeCategoryTable method:"
+                                + " {0}", e );
+                } else {
+                    System.out.println( "Error in the wipeCategoryTable method: "
+                            + "Logger not initialized"
+                            + "\nError in the wipeCategoryTable method: " + e );
                 }
+                return false;
             }
-            logger.info( "Successfully wiped out database " + databasesToWipe[ i ] );
-
         }
-        return 1;
+        return true;
     }
 }
