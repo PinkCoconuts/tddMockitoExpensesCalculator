@@ -133,7 +133,6 @@ public class MonthMapper {
             return -1;
         }
         try {
-            System.out.println( "I should update it right now" );
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch ( SQLException ex ) {

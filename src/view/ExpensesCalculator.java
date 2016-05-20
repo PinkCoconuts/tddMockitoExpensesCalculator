@@ -128,6 +128,10 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                                                            + " : " + jTableMonthTransactions.getValueAt( rowIndex, 1 ) );
                             controller.deleteMonthTransaction( Integer.parseInt(
                                     jTableMonthTransactions.getValueAt( rowIndex, 0 ).toString() ) );
+                            fillMonthTable( controller.getMonthTransactions(
+                                    jComboBoxMonths.getSelectedItem().toString(),
+                                    jComboBoxCategory.getSelectedItem().toString(),
+                                    jComboBoType.getSelectedItem().toString() ) );
                         }
                     } );
                     return button;
