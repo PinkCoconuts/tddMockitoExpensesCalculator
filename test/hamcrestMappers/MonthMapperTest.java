@@ -4,6 +4,7 @@ import entity.Month;
 import static hamcrestTests.CustomAbstractEntityClassMatcher.matches;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Logger;
 import mappers.MonthMapper;
 import static org.hamcrest.CoreMatchers.is;
@@ -62,12 +63,13 @@ public class MonthMapperTest {
 
     @Test
     public void testGetAllMonths() {
-        assertThat( month, matches( monthMapper.getMonths( dbConnection ).get( 0 ) ) );
+        List<Month> lm = monthMapper.getMonths( dbConnection, null );
+        assertThat( month, matches( lm.get( 0 ) ) );
     }
 
     @Test
     public void testGetMonthById() {
-        assertThat( month, matches( monthMapper.getMonthByID( dbConnection, month.getId() ) ) );
+        assertThat( month, matches( monthMapper.getMonthByID( dbConnection, null, month.getId() ) ) );
     }
 
     @Test

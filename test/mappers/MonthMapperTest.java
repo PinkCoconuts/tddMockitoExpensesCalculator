@@ -3,6 +3,7 @@ package mappers;
 import entity.Month;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.After;
@@ -63,14 +64,15 @@ public class MonthMapperTest {
 
     @Test
     public void testGetAllMonths() {
-        assertEquals( month.getId(), monthMapper.getMonths( dbConnection ).get( 0 ).getId() );
-        assertEquals( month.getName(), monthMapper.getMonths( dbConnection ).get( 0 ).getName() );
+        List<Month> lm = monthMapper.getMonths( dbConnection, null );
+        assertEquals( month.getId(), lm.get( 0 ).getId() );
+        assertEquals( month.getName(), lm.get( 0 ).getName() );
     }
 
     @Test
     public void testGetMonthById() {
-        assertEquals( month.getId(), monthMapper.getMonthByID( dbConnection, month.getId() ).getId() );
-        assertEquals( month.getName(), monthMapper.getMonthByID( dbConnection, month.getId() ).getName() );
+        assertEquals( month.getId(), monthMapper.getMonthByID( dbConnection, null, month.getId() ).getId() );
+        assertEquals( month.getName(), monthMapper.getMonthByID( dbConnection, null, month.getId() ).getName() );
     }
 
     @Test

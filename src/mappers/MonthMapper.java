@@ -6,40 +6,46 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MonthMapper {
 
-    public MonthMapper() {
-    }
-
-    public List<Month> getMonths( Connection connection ) {
+    public <T> T getMonths( Connection connection, Logger logger ) {
         ArrayList<Month> months = new ArrayList();
 
-//        Month month = new Month();
         Month month = null;
         PreparedStatement preparedStatement = null;
+
         String selectSQL = "SELECT ID, NAME FROM MONTH_TBL ";
+
         try {
             preparedStatement = connection.prepareStatement( selectSQL );
             ResultSet rs = preparedStatement.executeQuery();
+
             while ( rs.next() ) {
+
                 month = new Month( rs.getInt( "ID" ), rs.getString( "NAME" ) );
                 months.add( month );
             }
             rs.close();
             preparedStatement.close();
-        } catch ( SQLException ex ) {
-            System.out.println( "Error in the getMonthById method: " + ex );
-            Logger.getLogger( MonthMapper.class.getName() ).log( Level.SEVERE, null, ex );
+        } catch ( SQLException e ) {
+
+            if ( logger != null ) {
+                logger.log( Level.SEVERE, "Error in the getMonths method:"
+                            + " {0}", e );
+            } else {
+                System.out.println( "Error in the getMonths method: "
+                        + "Logger not initialized"
+                        + "\nError in the getMonths method: " + e );
+            }
+            return ( T ) ( Boolean ) true;
         }
-        return months;
+        return ( T ) months;
     }
 
-    public Month getMonthByID( Connection connection, int monthId ) {
+    public Month getMonthByID( Connection connection, Logger logger, int monthId ) {
         Month month = new Month();
         PreparedStatement preparedStatement = null;
         String selectSQL = "SELECT NAME FROM MONTH_TBL "
