@@ -150,5 +150,9 @@ public class Controller {
         }
         return false;
     }
+    
+      public boolean deleteMonth( int monthID ) {
+        return facade.deleteMonth(monthID );
+    }
 
 }
