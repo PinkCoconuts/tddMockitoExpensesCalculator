@@ -54,8 +54,8 @@ public class MonthMapperTest {
     public void setUp() {
         month = new Month();
         month.setName( "July 2016" );
-        monthMapper.deleteAllMonths( dbConnection );
-        month = monthMapper.insertMonth( dbConnection, month );
+        monthMapper.deleteAllMonths( dbConnection, null );
+        month = monthMapper.insertMonth( dbConnection, null, month );
     }
 
     @After
@@ -71,31 +71,33 @@ public class MonthMapperTest {
 
     @Test
     public void testGetMonthById() {
-        assertEquals( month.getId(), monthMapper.getMonthByID( dbConnection, null, month.getId() ).getId() );
-        assertEquals( month.getName(), monthMapper.getMonthByID( dbConnection, null, month.getId() ).getName() );
+        Month m = monthMapper.getMonthByID( dbConnection, null, month.getId() );
+        assertEquals( month.getId(), m.getId() );
+        assertEquals( month.getName(), m.getName() );
     }
 
     @Test
     public void testInsertMonth() {
         Month monthToInsert = new Month();
         monthToInsert.setName( "december 2016" );
-        assertEquals( monthToInsert, monthMapper.insertMonth( dbConnection, monthToInsert ) );
+        assertEquals( monthToInsert, monthMapper.insertMonth( dbConnection, null, monthToInsert ) );
     }
 
     @Test
     public void testUpdateMonth() {
         month.setName( "updated name" );
-        assertEquals( month.getId(), monthMapper.updateMonth( dbConnection, month.getId(), month ).getId() );
-        assertEquals( month.getName(), monthMapper.updateMonth( dbConnection, month.getId(), month ).getName() );
+        Month um = monthMapper.updateMonth( dbConnection, null, month.getId(), month );
+        assertEquals( month.getId(), um.getId() );
+        assertEquals( month.getName(), um.getName() );
     }
 
     @Test
     public void testDeleteMonth() {
-        assertEquals( 1, monthMapper.deleteMonth( dbConnection, month.getId() ) );
+        assertEquals( true, monthMapper.deleteMonth( dbConnection, null, month.getId() ) );
     }
 
     @Test
     public void testDeleteAllMonths() {
-        assertEquals( 1, monthMapper.deleteAllMonths( dbConnection ) );
+        assertEquals( true, monthMapper.deleteAllMonths( dbConnection, null ) );
     }
 }

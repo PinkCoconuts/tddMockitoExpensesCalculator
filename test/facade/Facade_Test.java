@@ -81,7 +81,7 @@ public class Facade_Test {
     @Test
     public void testInsertMonth() {
         Month monthObj = new Month( 1, "May 2016" );
-        Mockito.when( mockMonthMapper.insertMonth( null, monthObj ) ).thenReturn( monthObj );
+        Mockito.when( mockMonthMapper.insertMonth( null, null, monthObj ) ).thenReturn( monthObj );
 
         assertEquals( monthObj, facade.insertMonth( monthObj ) );
     }
@@ -90,7 +90,7 @@ public class Facade_Test {
     public void testUpdateMonth() {
         int monthId = 23;
         Month newObject = new Month( 1, "May 2016" );
-        Mockito.when( mockMonthMapper.updateMonth( null, monthId, newObject ) ).thenReturn( newObject );
+        Mockito.when( mockMonthMapper.updateMonth( null, null, monthId, newObject ) ).thenReturn( newObject );
 
         assertEquals( newObject, facade.updateMonth( monthId, newObject ) );
     }
@@ -98,9 +98,9 @@ public class Facade_Test {
     @Test
     public void testDeleteMonth() {
         int monthId = 2;
-        Mockito.when( mockMonthMapper.deleteMonth( null, monthId ) ).thenReturn( 5 );
+        Mockito.when( mockMonthMapper.deleteMonth( null, null, monthId ) ).thenReturn( true );
 
-        assertEquals( 5, facade.deleteMonth( monthId ) );
+        assertEquals( true, facade.deleteMonth( monthId ) );
     }
 
 //    @Test

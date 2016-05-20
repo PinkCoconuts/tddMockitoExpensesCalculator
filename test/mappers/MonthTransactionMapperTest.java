@@ -58,14 +58,14 @@ public class MonthTransactionMapperTest {
     public void setUp() {
 //        would be nice to make triggers to delete the month and catgory on month transaction deletion
 //        delete all months and categories
-        monthMapper.deleteAllMonths( dbConnection );
+        monthMapper.deleteAllMonths( dbConnection, null );
         categoryMapper.wipeCategoryTable( dbConnection, logger );
         monthTransactionMapper.deleteAllMonthTransactions( dbConnection, null );
 
 //      insert a month in the db, whose id will be used for the month transaction
         Month toInsertmonth = new Month();
         toInsertmonth.setName( "August 2016" );
-        month = monthMapper.insertMonth( dbConnection, toInsertmonth );
+        month = monthMapper.insertMonth( dbConnection, null, toInsertmonth );
         List<Month> lm = monthMapper.getMonths( dbConnection, null );
         int monthId = lm.get( 0 ).getId();
 

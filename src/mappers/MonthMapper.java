@@ -11,14 +11,21 @@ import java.util.logging.Logger;
 
 public class MonthMapper {
 
+    /*
+     * Method for getting all month.
+     *
+     * Returns : 
+     * Filled List<Month> if found
+     * Empty List<Month> if not found
+     * Boolean false if errors
+     */
     public <T> T getMonths( Connection connection, Logger logger ) {
         ArrayList<Month> months = new ArrayList();
 
+        String selectSQL = "SELECT ID, NAME FROM MONTH_TBL";
+
         Month month = null;
         PreparedStatement preparedStatement = null;
-
-        String selectSQL = "SELECT ID, NAME FROM MONTH_TBL ";
-
         try {
             preparedStatement = connection.prepareStatement( selectSQL );
             ResultSet rs = preparedStatement.executeQuery();
@@ -45,120 +52,232 @@ public class MonthMapper {
         return ( T ) months;
     }
 
-    public Month getMonthByID( Connection connection, Logger logger, int monthId ) {
-        Month month = new Month();
+    /*
+     * Method for getting a month by its id
+     *
+     * Returns :
+     * Filled Month object if found
+     * Empty Month object if not found
+     * Boolean false if errors
+     */
+    public <T> T getMonthByID( Connection connection, Logger logger, int monthId ) {
+        String selectSQL = "SELECT NAME FROM MONTH_TBL WHERE ID = ?";
+
+        Month month = null;
         PreparedStatement preparedStatement = null;
-        String selectSQL = "SELECT NAME FROM MONTH_TBL "
-                + "WHERE ID = ?";
+
         try {
             preparedStatement = connection.prepareStatement( selectSQL );
             preparedStatement.setInt( 1, monthId );
             ResultSet rs = preparedStatement.executeQuery();
+
             if ( rs.next() ) {
-                month.setId( monthId );
-                month.setName( rs.getString( "NAME" ) );
+                month = new Month( monthId, rs.getString( "NAME" ) );
+            } else {
+                month = new Month();
             }
+
             rs.close();
             preparedStatement.close();
-        } catch ( SQLException ex ) {
-            System.out.println( "Error in the getMonthById method: " + ex );
-            Logger.getLogger( MonthMapper.class.getName() ).log( Level.SEVERE, null, ex );
+        } catch ( SQLException e ) {
+
+            if ( logger != null ) {
+                logger.log( Level.SEVERE, "Error in the getMonthByID method:"
+                            + " {0}", e );
+            } else {
+                System.out.println( "Error in the getMonthByID method: "
+                        + "Logger not initialized"
+                        + "\nError in the getMonthByID method: " + e );
+            }
+            return ( T ) ( Boolean ) true;
         }
-        return month;
+        return ( T ) month;
     }
 
-    public Month insertMonth( Connection connection, Month object ) {
+    /*
+     * Method to insert a new month
+     *
+     * boolean Month object if inserted
+     * boolean false if errors
+     */
+    public <T> T insertMonth( Connection connection, Logger logger, Month object ) {
+
         int nextId = 0;
-        String sqlIdentifier = "select month_id_seq.nextval from dual";
-        PreparedStatement pst;
+
+        String sqlQuery = "select month_id_seq.nextval from dual";
+
+        PreparedStatement preparedStatement;
         try {
-            pst = connection.prepareStatement( sqlIdentifier );
-            ResultSet rs = pst.executeQuery();
+
+            preparedStatement = connection.prepareStatement( sqlQuery );
+            ResultSet rs = preparedStatement.executeQuery();
+
+            boolean foundError = false;
+
             if ( rs.next() ) {
                 nextId = rs.getInt( 1 );
+            } else {
+                foundError = true;
+                if ( logger != null ) {
+                    logger.log( Level.SEVERE, "Error in the insertMonth method:"
+                                + " {0}", "Cannot obtain next id for month object" );
+                } else {
+                    System.out.println( "Error in the insertMonth method: "
+                            + "Logger not initialized"
+                            + "\nError in the insertMonth method: "
+                            + "\"Cannot obtain next id for month object" );
+                }
             }
-        } catch ( SQLException ex ) {
-            Logger.getLogger( MonthMapper.class.getName() ).log( Level.SEVERE, null, ex );
+
+            rs.close();
+            preparedStatement.close();
+
+            if ( foundError ) {
+                return ( T ) ( Boolean ) false;
+            }
+        } catch ( SQLException e ) {
+
+            if ( logger != null ) {
+                logger.log( Level.SEVERE, "Error in the insertMonth method:"
+                            + " {0}", e );
+            } else {
+                System.out.println( "Error in the insertMonth method: "
+                        + "Logger not initialized"
+                        + "\nError in the insertMonth method: " + e );
+            }
+            return ( T ) ( Boolean ) false;
         }
-        String insertTableSQL;
-        PreparedStatement preparedStatement;
-        insertTableSQL = "INSERT INTO Month_tbl (id, name) "
-                + "VALUES (?, ?)";
+
+        sqlQuery = "INSERT INTO Month_tbl (id, name) VALUES (?, ?)";
+
         try {
-            preparedStatement = connection.prepareStatement( insertTableSQL );
+            preparedStatement = connection.prepareStatement( sqlQuery );
 
             preparedStatement.setInt( 1, nextId );
             preparedStatement.setString( 2, object.getName() );
 
             preparedStatement.executeUpdate();
+
             preparedStatement.close();
-            object.setId( nextId );
-            return object;
+
         } catch ( SQLException e ) {
-            System.out.println( "Exception in insert Month mapper: " + e );
-            return null;
+            if ( logger != null ) {
+                logger.log( Level.SEVERE, "Error in the insertMonth (Part 2) method:"
+                            + " {0}", e );
+            } else {
+                System.out.println( "Error in the insertMonth (Part 2) method: "
+                        + "Logger not initialized"
+                        + "\nError in the insertMonth (Part 2) method: " + e );
+            }
+            return ( T ) ( Boolean ) false;
         }
+
+        object.setId( nextId );
+        return ( T ) object;
     }
 
-    public Month updateMonth( Connection connection, int monthId, Month newObject ) {
-        Month month = new Month();
-        PreparedStatement preparedStatement = null;
+    /*
+     * Method to update a month
+     *
+     * Returns :
+     * boolean Month object if updated
+     * boolean false if errors
+     */
+    public <T> T updateMonth( Connection connection, Logger logger, int monthId,
+            Month object ) {
+
         String updateQuery = "UPDATE MONTH_TBL SET NAME = ? WHERE ID = ?";
 
+        PreparedStatement preparedStatement = null;
         try {
+
             preparedStatement = connection.prepareStatement( updateQuery );
 
-            preparedStatement.setString( 1, newObject.getName() );
+            preparedStatement.setString( 1, object.getName() );
             preparedStatement.setInt( 2, monthId );
 
             preparedStatement.executeUpdate();
-            month.setId( monthId );
-            month.setName( newObject.getName() );
+
+            preparedStatement.close();
+
         } catch ( SQLException e ) {
-            System.out.println( "Error in the update method of the Month mapper: " + e );
-        } finally {
-            try {
-                if ( preparedStatement != null ) {
-                    preparedStatement.close();
-                }
-            } catch ( SQLException e ) {
-                System.out.println( "Error in the update method of the Month mapper: " + e );
+
+            if ( logger != null ) {
+                logger.log( Level.SEVERE, "Error in the updateMonth method:"
+                            + " {0}", e );
+            } else {
+                System.out.println( "Error in the updateMonth method: "
+                        + "Logger not initialized"
+                        + "\nError in the updateMonth method: " + e );
             }
+            return ( T ) ( Boolean ) false;
         }
-        return month;
+
+        object.setId( monthId );
+        return ( T ) object;
     }
 
-    public int deleteMonth( Connection connection, int monthId ) {
-        PreparedStatement preparedStatement;
+    /*
+     * Method to delete a month
+     *
+     * Returns :
+     * boolean true if deleted
+     * boolean false if errors
+     */
+    public boolean deleteMonth( Connection connection, Logger logger, int monthId ) {
+
         String deleleStatement = "delete from Month_tbl where id = ?";
+
+        PreparedStatement preparedStatement;
         try {
             preparedStatement = connection.prepareStatement( deleleStatement );
+
             preparedStatement.setInt( 1, monthId );
-        } catch ( Exception e ) {
-            System.out.println( "Exception in the delete month method in the Month mapper: " + e );
-            return -1;
-        }
-        try {
+
             preparedStatement.executeUpdate();
             preparedStatement.close();
-        } catch ( SQLException ex ) {
-            System.out.println( "Exception in the delete month method: " + ex );
-            return -2;
+        } catch ( Exception e ) {
+            if ( logger != null ) {
+                logger.log( Level.SEVERE, "Error in the deleteMonth method:"
+                            + " {0}", e );
+            } else {
+                System.out.println( "Error in the deleteMonth method: "
+                        + "Logger not initialized"
+                        + "\nError in the deleteMonth method: " + e );
+            }
+            return false;
         }
-        return 1;
+        return true;
     }
 
-    public int deleteAllMonths( Connection connection ) {
-        PreparedStatement preparedStatement;
+    /*
+     * Method to delete all months
+     *
+     * Returns :
+     * boolean true if all deleted
+     * boolean false if errors
+     */
+    public boolean deleteAllMonths( Connection connection, Logger logger ) {
         String deleteStatement = "delete from Month_tbl";
+
+        PreparedStatement preparedStatement;
         try {
             preparedStatement = connection.prepareStatement( deleteStatement );
+
             preparedStatement.executeUpdate();
+
             preparedStatement.close();
         } catch ( Exception e ) {
-            System.out.println( "Exception in delete all method in the Month mapper: " + e );
-            return -1;
+            if ( logger != null ) {
+                logger.log( Level.SEVERE, "Error in the deleteAllMonthTransactions method:"
+                            + " {0}", e );
+            } else {
+                System.out.println( "Error in the deleteAllMonthTransactions method: "
+                        + "Logger not initialized"
+                        + "\nError in the deleteAllMonthTransactions method: " + e );
+            }
+            return false;
         }
-        return 1;
+        return true;
     }
 }

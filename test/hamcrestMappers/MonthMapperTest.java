@@ -53,8 +53,8 @@ public class MonthMapperTest {
     public void setUp() {
         month = new Month();
         month.setName( "July 2016" );
-        monthMapper.deleteAllMonths( dbConnection );
-        month = monthMapper.insertMonth( dbConnection, month );
+        monthMapper.deleteAllMonths( dbConnection, null );
+        month = monthMapper.insertMonth( dbConnection, null, month );
     }
 
     @After
@@ -69,6 +69,7 @@ public class MonthMapperTest {
 
     @Test
     public void testGetMonthById() {
+        System.out.println( "ID ?? : " + month.getId() );
         assertThat( month, matches( monthMapper.getMonthByID( dbConnection, null, month.getId() ) ) );
     }
 
@@ -76,22 +77,22 @@ public class MonthMapperTest {
     public void testInsertMonth() {
         Month monthToInsert = new Month();
         monthToInsert.setName( "december 2016" );
-        assertThat( monthToInsert, matches( monthMapper.insertMonth( dbConnection, monthToInsert ) ) );
+        assertThat( monthToInsert, matches( monthMapper.insertMonth( dbConnection, null, monthToInsert ) ) );
     }
 
     @Test
     public void testUpdateMonth() {
         month.setName( "updated name" );
-        assertThat( month, matches( monthMapper.updateMonth( dbConnection, month.getId(), month ) ) );
+        assertThat( month, matches( monthMapper.updateMonth( dbConnection, null, month.getId(), month ) ) );
     }
 
     @Test
     public void testDeleteMonth() {
-        assertThat( 1, is( monthMapper.deleteMonth( dbConnection, month.getId() ) ) );
+        assertThat( true, is( monthMapper.deleteMonth( dbConnection, null, month.getId() ) ) );
     }
 
     @Test
     public void testDeleteAllMonths() {
-        assertThat( 1, is( monthMapper.deleteAllMonths( dbConnection ) ) );
+        assertThat( true, is( monthMapper.deleteAllMonths( dbConnection, null ) ) );
     }
 }
