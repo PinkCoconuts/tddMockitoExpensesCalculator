@@ -118,10 +118,8 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                             String transactionId = jTableMonthTransactions.getValueAt( rowIndex, 0 ).toString();
                             String transactionName = jTableMonthTransactions.getValueAt( rowIndex, 1 ).toString();
                             String transactionType = jTableMonthTransactions.getValueAt( rowIndex, 2 ).toString();
-                            String transactionMonthId = jTableMonthTransactions.getValueAt( rowIndex, 3 ).toString();
-                            String transactionMonthName = controller.getMonthByID(Integer.parseInt( transactionMonthId ) ).getName();
-                            String transactionCategoryId = jTableMonthTransactions.getValueAt( rowIndex, 4 ).toString();
-                            String transactionCategoryName = controller.getCategoryByID( Integer.parseInt( transactionCategoryId ) ).getName();
+                            String transactionMonthName = jTableMonthTransactions.getValueAt( rowIndex, 3 ).toString();
+                            String transactionCategoryName = jTableMonthTransactions.getValueAt( rowIndex, 4 ).toString();
                             String transactionAmount = jTableMonthTransactions.getValueAt( rowIndex, 5 ).toString();
                             jLayeredPaneViewTransactions.setVisible( false );
                             jLayeredPaneAddTransaction.setVisible( true );
@@ -599,8 +597,8 @@ public class ExpensesCalculator extends javax.swing.JFrame {
             twoDimensionalArrayForTables[ i ][ 0 ] = monthTransactions.get( i ).getId();
             twoDimensionalArrayForTables[ i ][ 1 ] = monthTransactions.get( i ).getName();
             twoDimensionalArrayForTables[ i ][ 2 ] = monthTransactions.get( i ).getType();
-            twoDimensionalArrayForTables[ i ][ 3 ] = monthTransactions.get( i ).getMonthId();
-            twoDimensionalArrayForTables[ i ][ 4 ] = monthTransactions.get( i ).getCategoryId();
+            twoDimensionalArrayForTables[ i ][ 3 ] = controller.getMonthByID( monthTransactions.get( i ).getMonthId() ).getName();
+            twoDimensionalArrayForTables[ i ][ 4 ] = controller.getCategoryByID( monthTransactions.get( i ).getCategoryId() ).getName();
             twoDimensionalArrayForTables[ i ][ 5 ] = monthTransactions.get( i ).getAmount();
             twoDimensionalArrayForTables[ i ][ 6 ] = new JButton( "Edit #" + monthTransactions.get( i ).getId() );
             twoDimensionalArrayForTables[ i ][ 7 ] = new JButton( "Delete #" + monthTransactions.get( i ).getId() );
