@@ -23,11 +23,10 @@ public class MonthTransactionMapper {
     public <T> T getAllTransactions( Connection connection, Logger logger ) {
         ArrayList<MonthTransaction> monthTransactions = new ArrayList();
 
-        MonthTransaction monthTransaction = null;
-        PreparedStatement preparedStatement = null;
-
         String selectSQL = "SELECT * FROM MONTH_TRANSACTION_TBL ";
 
+        MonthTransaction monthTransaction = null;
+        PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement( selectSQL );
             ResultSet rs = preparedStatement.executeQuery();
@@ -160,11 +159,10 @@ public class MonthTransactionMapper {
      */
     public <T> T getTransactionsByID( Connection connection, Logger logger,
             int id ) {
-        MonthTransaction monthTransaction = null;
-        PreparedStatement preparedStatement = null;
-
         String selectSQL = "SELECT * FROM MONTH_TRANSACTION_TBL WHERE ID = ?";
 
+        MonthTransaction monthTransaction = null;
+        PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement( selectSQL );
             preparedStatement.setInt( 1, id );
@@ -199,7 +197,7 @@ public class MonthTransactionMapper {
     }
 
     /*
-     * Method to insert a new song
+     * Method to insert a new month
      *
      * boolean Month transaction object if inserted
      * boolean false if errors
@@ -341,9 +339,9 @@ public class MonthTransactionMapper {
     public boolean deleteMonthTransaction( Connection connection, Logger logger,
             int monthTransactionId ) {
 
-        PreparedStatement preparedStatement;
-
         String deleteStatement = "delete from Month_transaction_tbl where id = ?";
+
+        PreparedStatement preparedStatement;
         try {
             preparedStatement = connection.prepareStatement( deleteStatement );
 
@@ -375,10 +373,13 @@ public class MonthTransactionMapper {
      */
     public boolean deleteAllMonthTransactions( Connection connection, Logger logger ) {
         String deleteStatement = "delete from MONTH_TRANSACTION_TBL";
+        
         PreparedStatement preparedStatement;
         try {
             preparedStatement = connection.prepareStatement( deleteStatement );
+            
             preparedStatement.executeUpdate();
+            
             preparedStatement.close();
         } catch ( Exception e ) {
             if ( logger != null ) {

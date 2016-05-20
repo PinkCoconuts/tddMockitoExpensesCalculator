@@ -107,15 +107,15 @@ public class Facade {
     }
 
     public Month insertMonth( Month object ) {
-        return monthMapper.insertMonth( connection, object );
+        return monthMapper.insertMonth( connection, null, object );
     }
 
     public Month updateMonth( int monthId, Month newObject ) {
-        return monthMapper.updateMonth( connection, monthId, newObject );
+        return monthMapper.updateMonth( connection, null, monthId, newObject );
     }
 
-    public int deleteMonth( int monthId ) {
-        return monthMapper.deleteMonth( connection, monthId );
+    public boolean deleteMonth( int monthId ) {
+        return monthMapper.deleteMonth( connection, null, monthId );
     }
 
     public List<MonthTransaction> getMonthTransactions() {
