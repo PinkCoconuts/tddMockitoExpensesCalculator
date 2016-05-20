@@ -106,13 +106,14 @@ public class CategoryMapper_Test {
 
         Category dbCategory = categoryMapper.getCategoryByID( connection, logger, insertedCategory.getId() );
 
-        int deleteResult = categoryMapper.deleteCategory( connection, logger, dbCategory.getId() );
-        int deleteExpectedResult = 1;
+        boolean deleteResult = categoryMapper.deleteCategory( connection, logger, dbCategory.getId() );
+        boolean deleteExpectedResult = true;
 
         assertEquals( deleteResult, deleteExpectedResult );
         Category dbCategoryDeleted = categoryMapper.getCategoryByID( connection, logger, insertedCategory.getId() );
-
-        assertEquals( null, dbCategoryDeleted );
+        Category expectedCategory = new Category(0, "");
+        assertEquals( expectedCategory.getId(), dbCategoryDeleted.getId() );
+        assertEquals( expectedCategory.getName(), dbCategoryDeleted.getName() );
     }
 
     @Test
@@ -159,6 +160,6 @@ public class CategoryMapper_Test {
 
     @Test
     public void testwipeCategoryTable() {
-        assertEquals( 1, categoryMapper.wipeCategoryTable(connection, logger ) );
+        assertEquals( true, categoryMapper.wipeCategoryTable(connection, logger ) );
     }
 }

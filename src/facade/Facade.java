@@ -170,7 +170,7 @@ public class Facade {
         return categoryMapper.updateCategory( connection, logger, categoryId, newObject );
     }
 
-    public int deleteCategory( int categoryID ) {
+    public boolean deleteCategory( int categoryID ) {
         return categoryMapper.deleteCategory( connection, logger, categoryID );
     }
 
