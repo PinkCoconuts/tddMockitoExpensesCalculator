@@ -162,6 +162,12 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                             String monthId = jTableMonths.getValueAt( rowIndex, 0 ).toString();
                             String monthName = jTableMonths.getValueAt( rowIndex, 1 ).toString();            
                             System.out.println( "I will delete this month "+ monthName );
+                            JOptionPane.showMessageDialog( JOptionPane.getFrameForComponent( button ),
+                                                           "Delete Button clicked for row " + rowIndex
+                                                           + " : " + jTableMonths.getValueAt( rowIndex, 1 ) );
+                            controller.deleteMonth(Integer.parseInt(
+                                    jTableMonths.getValueAt( rowIndex, 0 ).toString() ));
+                            fillMonthsTable( controller.getMonths());
                             
                         }
                     } );
