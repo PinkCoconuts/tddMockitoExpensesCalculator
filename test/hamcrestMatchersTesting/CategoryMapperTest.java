@@ -56,6 +56,8 @@ public class CategoryMapperTest {
 
     @AfterClass
     public static void tearDownClass() {
+        performanceLogger = null;
+        logger = null;
     }
 
     @Before
@@ -109,7 +111,7 @@ public class CategoryMapperTest {
 
         assertEquals( deleteResult, deleteExpectedResult );
         Category dbCategoryDeleted = categoryMapper.getCategoryByID( connection, logger, insertedCategory.getId() );
-        Category expectedCategory = new Category(0, "");
+        Category expectedCategory = new Category( 0, "" );
         assertThat( expectedCategory, matches( dbCategoryDeleted ) );
     }
 

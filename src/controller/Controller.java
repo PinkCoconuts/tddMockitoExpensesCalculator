@@ -46,28 +46,6 @@ public class Controller {
         return facade.getMonthTransactions();
     }
 
-    public List<MonthTransaction> getTransactionsByMonth( String monthName ) {
-        for ( Map.Entry<Integer, String> entrySet : monthMap.entrySet() ) {
-            if ( entrySet.getValue().equals( monthName ) ) {
-                return facade.getSpecificTransactionsByMonthID( entrySet.getKey() );
-            }
-        }
-        return new ArrayList<MonthTransaction>();
-    }
-
-    public List<MonthTransaction> getTransactionsByCategory( String categoryName ) {
-        for ( Map.Entry<Integer, String> entrySet : categoryMap.entrySet() ) {
-            if ( entrySet.getValue().equals( categoryName ) ) {
-                return facade.getSpecificTransactionsByCategoryID( entrySet.getKey() );
-            }
-        }
-        return new ArrayList<MonthTransaction>();
-    }
-
-    public List<MonthTransaction> getTransactionsByType( String type ) {
-        return facade.getSpecificTransactionsByType( type );
-    }
-
     public List<MonthTransaction> getMonthTransactions( String monthName, String categoryName, String type ) {
         int monthId = 0, categoryId = 0;
         if ( !monthName.equals( "-ALL-" ) ) {

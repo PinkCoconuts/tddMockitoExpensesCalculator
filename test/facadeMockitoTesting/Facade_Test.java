@@ -4,7 +4,6 @@ import entity.Category;
 import entity.Month;
 import entity.MonthTransaction;
 import facade.Facade;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import mappers.CategoryMapper;
@@ -17,7 +16,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.mockito.Mockito;
-import static org.mockito.Mockito.doThrow;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
@@ -104,25 +102,6 @@ public class Facade_Test {
         assertEquals( true, facade.deleteMonth( monthId ) );
     }
 
-//    @Test
-//    public void testGetSpecificTransactionsByMonthID() {
-//        int monthTransactionId = 2;
-//        String type = "expenses";
-//        Mockito.when( mockMonthTransactionMapper.getSpecificTransactionsByMonthID( null, monthTransactionId ) ).thenAnswer( new Answer() {
-//
-//            List<MonthTransaction> monthTransactions = new ArrayList();
-//
-//            @Override
-//            public Object answer( InvocationOnMock invocation ) throws Throwable {
-//                monthTransactions.add( new MonthTransaction( 1, "Burger", "Expense", 2, 3, 300 ) );
-//                return monthTransactions;
-//            }
-//        } );
-//
-//        assertEquals( 1, facade.getSpecificTransactionsByMonthID( monthTransactionId ).size() );
-//        assertEquals( 2, facade.getSpecificTransactionsByMonthID( monthTransactionId ).size() );
-//        assertEquals( 3, facade.getSpecificTransactionsByMonthID( monthTransactionId ).size() );
-//    }
     @Test
     public void testInsertMonthTransaction() {
         MonthTransaction monthTransObj = new MonthTransaction( 1, "Burger", "Expense", 2, 3, 300 );

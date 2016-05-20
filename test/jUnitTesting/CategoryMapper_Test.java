@@ -154,7 +154,6 @@ public class CategoryMapper_Test {
             assertEquals( isNameMatching, true );
 
         }
-
     }
 
     @Test

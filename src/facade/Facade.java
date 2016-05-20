@@ -130,18 +130,6 @@ public class Facade {
         return monthTransactionMapper.getTransactionsByID( connection, logger, id );
     }
 
-    public List<MonthTransaction> getSpecificTransactionsByMonthID( int monthId ) {
-        return null;//monthTransactionMapper.getSpecificTransactionsByMonthID( connection, monthId );
-    }
-
-    public List<MonthTransaction> getSpecificTransactionsByCategoryID( int categoryId ) {
-        return null;//monthTransactionMapper.getSpecificTransactionsByCategoryID( connection, categoryId );
-    }
-
-    public List<MonthTransaction> getSpecificTransactionsByType( String type ) {
-        return null;//monthTransactionMapper.getSpecificTransactionsByType( connection, type );
-    }
-
     public MonthTransaction insertMonthTransaction( MonthTransaction object ) {
         return monthTransactionMapper.insertMonthTransaction( connection, null, object );
     }
