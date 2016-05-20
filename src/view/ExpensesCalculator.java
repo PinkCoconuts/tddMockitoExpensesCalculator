@@ -204,7 +204,6 @@ class CustomModel extends AbstractTableModel {
                         public void actionPerformed( ActionEvent arg0 ) {
                             String monthId = jTableMonths.getValueAt( rowIndex, 0 ).toString();
                             String monthName = jTableMonths.getValueAt( rowIndex, 1 ).toString();
-                            System.out.println( "I will delete this month " + monthName );
                             JOptionPane.showMessageDialog( JOptionPane.getFrameForComponent( button ),
                                                            "Delete Button clicked for row " + rowIndex
                                                            + " : " + jTableMonths.getValueAt( rowIndex, 1 ) );
@@ -220,8 +219,6 @@ class CustomModel extends AbstractTableModel {
                     button.addActionListener( new ActionListener() {
                         public void actionPerformed( ActionEvent arg0 ) {
                             setCellEditable( rowIndex, 1, true );
-//                            setCellEditable( rowIndex, 0, false );
-                            System.out.println( "Is cell editable? " + isCellEditable( rowIndex, 0 ) );
                         }
                     } );
                     return button;
@@ -232,24 +229,19 @@ class CustomModel extends AbstractTableModel {
 
         @Override
         public boolean isCellEditable( int rowIndex, int columnIndex ) {
-//            return false;
             return this.editable_cells[ rowIndex ][ columnIndex ];
         }
 
         public void setCellEditable( int row, int col, boolean value ) {
-            System.out.println( "Row " + row + " col " + col );
             for ( int i = 0; i < getRowCount(); i++ ) {
                 for ( int j = 0; j < getColumnCount(); j++ ) {
                     if ( i != row || j != col ) {
-                        System.out.println( "This should be not editable: row " + i + " column " + j );
                         editable_cells[ i ][ j ] = !value;
                     } else {
-                        System.out.println( "This should be editable: row " + i + " column " + j );
                         editable_cells[ row ][ col ] = value;
                     }
                 }
             }
-//            editable_cells[ row ][ col ] = value; // set cell true/false
 //            this.fireTableCellUpdated( row, col );
         }
     }
