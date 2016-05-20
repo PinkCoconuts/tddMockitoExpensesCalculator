@@ -115,7 +115,11 @@ public class Controller {
     }
 
     public Category getCategoryByID( int categoryID ) {
-        return facade.getCategoryByID(categoryID );
+        return facade.getCategoryByID( categoryID );
+    }
+
+    public Month getMonthByID( int monthID ) {
+        return facade.getMonthByID( monthID );
     }
 
 }

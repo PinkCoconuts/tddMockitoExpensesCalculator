@@ -118,7 +118,8 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                             String transactionId = jTableMonthTransactions.getValueAt( rowIndex, 0 ).toString();
                             String transactionName = jTableMonthTransactions.getValueAt( rowIndex, 1 ).toString();
                             String transactionType = jTableMonthTransactions.getValueAt( rowIndex, 2 ).toString();
-                            String transactionMonth = jTableMonthTransactions.getValueAt( rowIndex, 3 ).toString();
+                            String transactionMonthId = jTableMonthTransactions.getValueAt( rowIndex, 3 ).toString();
+                            String transactionMonthName = controller.getMonthByID(Integer.parseInt( transactionMonthId ) ).getName();
                             String transactionCategoryId = jTableMonthTransactions.getValueAt( rowIndex, 4 ).toString();
                             String transactionCategoryName = controller.getCategoryByID( Integer.parseInt( transactionCategoryId ) ).getName();
                             String transactionAmount = jTableMonthTransactions.getValueAt( rowIndex, 5 ).toString();
@@ -126,7 +127,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                             jLayeredPaneAddTransaction.setVisible( true );
                             jTextFieldTransactionName.setText( transactionName );
                             jComboBoxTypeAddTransaction.setSelectedItem( transactionType );
-                            jComboBoxMonthsAddTransaction.setSelectedItem( transactionMonth );
+                            jComboBoxMonthsAddTransaction.setSelectedItem( transactionMonthName );
                             jComboBoxCategoryAddTransaction.setSelectedItem( transactionCategoryName );
                             jTextFieldAmount.setText( transactionAmount );
                             jButtonAddTransaction.setText( "Edit" );
