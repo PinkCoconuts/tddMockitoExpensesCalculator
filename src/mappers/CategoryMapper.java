@@ -105,7 +105,7 @@ public class CategoryMapper {
      * boolean false if errors
      */
     public <T> T insertCategory( Connection connection, Logger logger, Category object ) {
-
+        
         int nextId = 0;
 
         String SQLString = "select CATEGORY_ID_SEQ.nextval from dual";
@@ -174,7 +174,7 @@ public class CategoryMapper {
             }
             return ( T ) ( Boolean ) false;
         }
-
+        
         object.setId( nextId );
         return ( T ) object;
     }
