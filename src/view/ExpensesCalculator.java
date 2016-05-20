@@ -128,6 +128,8 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                             jComboBoxMonthsAddTransaction.setSelectedItem( transactionMonthName );
                             jComboBoxCategoryAddTransaction.setSelectedItem( transactionCategoryName );
                             jTextFieldAmount.setText( transactionAmount );
+                            jLabelTransactionId.setText( transactionId );
+                            jLabelTransactionId.setVisible( false );
                             jButtonAddTransaction.setText( "Edit" );
                         }
                     } );
@@ -191,6 +193,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         jTextFieldAmount = new javax.swing.JTextField();
         jButtonAddTransaction = new javax.swing.JButton();
         jLabelInsertTransactionStatus = new javax.swing.JLabel();
+        jLabelTransactionId = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItemViewTransactions = new javax.swing.JMenuItem();
@@ -198,7 +201,6 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(600, 385));
 
         jLayeredPaneViewTransactions.setPreferredSize(new java.awt.Dimension(540, 360));
 
@@ -313,7 +315,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                     .addComponent(jComboBoType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(35, 35, 35)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         jLayeredPaneViewTransactions.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPaneViewTransactions.setLayer(jComboBoxMonths, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -365,13 +367,15 @@ public class ExpensesCalculator extends javax.swing.JFrame {
 
         jLabelInsertTransactionStatus.setText("Status :");
 
+        jLabelTransactionId.setText("jLabel9");
+
         javax.swing.GroupLayout jLayeredPaneAddTransactionLayout = new javax.swing.GroupLayout(jLayeredPaneAddTransaction);
         jLayeredPaneAddTransaction.setLayout(jLayeredPaneAddTransactionLayout);
         jLayeredPaneAddTransactionLayout.setHorizontalGroup(
             jLayeredPaneAddTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPaneAddTransactionLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addGroup(jLayeredPaneAddTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jLayeredPaneAddTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jLayeredPaneAddTransactionLayout.createSequentialGroup()
                         .addComponent(jButtonAddTransaction)
                         .addGap(28, 28, 28)
@@ -383,15 +387,17 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                             .addComponent(jLabel7)
                             .addComponent(jLabel8))
                         .addGap(116, 116, 116)
-                        .addGroup(jLayeredPaneAddTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jLayeredPaneAddTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jComboBoxMonthsAddTransaction, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBoxTypeAddTransaction, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBoxTypeAddTransaction, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jComboBoxCategoryAddTransaction, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jTextFieldAmount)))
                     .addGroup(jLayeredPaneAddTransactionLayout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addGap(134, 134, 134)
-                        .addComponent(jTextFieldTransactionName, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTextFieldTransactionName)))
+                .addGap(38, 38, 38)
+                .addComponent(jLabelTransactionId)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jLayeredPaneAddTransactionLayout.setVerticalGroup(
@@ -400,7 +406,8 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addGroup(jLayeredPaneAddTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextFieldTransactionName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldTransactionName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelTransactionId))
                 .addGap(18, 18, 18)
                 .addGroup(jLayeredPaneAddTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -435,6 +442,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         jLayeredPaneAddTransaction.setLayer(jTextFieldAmount, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPaneAddTransaction.setLayer(jButtonAddTransaction, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPaneAddTransaction.setLayer(jLabelInsertTransactionStatus, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPaneAddTransaction.setLayer(jLabelTransactionId, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jMenuBar1.setPreferredSize(new java.awt.Dimension(228, 25));
 
@@ -473,14 +481,14 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLayeredPaneViewTransactions, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
-            .addComponent(jLayeredPaneAddTransaction, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+            .addComponent(jLayeredPaneAddTransaction)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLayeredPaneViewTransactions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLayeredPaneAddTransaction, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
+                .addComponent(jLayeredPaneAddTransaction)
                 .addGap(24, 24, 24))
         );
 
@@ -564,17 +572,33 @@ public class ExpensesCalculator extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jButtonAddTransactionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddTransactionActionPerformed
-        boolean status = controller.
-                addMonthTransactions( jTextFieldTransactionName.getText(),
-                                      jComboBoxMonthsAddTransaction.getSelectedItem().toString(),
-                                      jComboBoxCategoryAddTransaction.getSelectedItem().toString(),
-                                      jComboBoxTypeAddTransaction.getSelectedItem().toString(),
-                                      Double.parseDouble( jTextFieldAmount.getText() ) );
-        jLabelInsertTransactionStatus.setText(
-                status
-                        ? "Month Transaction was inserted successfully!"
-                        : "Internal error while inserting month transaction"
-        );
+        boolean status = false;
+        if ( jButtonAddTransaction.getText().equals( "Add" ) ) {
+            status = controller.
+                    addMonthTransactions( jTextFieldTransactionName.getText(),
+                                          jComboBoxMonthsAddTransaction.getSelectedItem().toString(),
+                                          jComboBoxCategoryAddTransaction.getSelectedItem().toString(),
+                                          jComboBoxTypeAddTransaction.getSelectedItem().toString(),
+                                          Double.parseDouble( jTextFieldAmount.getText() ) );
+            jLabelInsertTransactionStatus.setText(
+                    status
+                            ? "Month Transaction was inserted successfully!"
+                            : "Internal error while inserting month transaction"
+            );
+        } else if ( jButtonAddTransaction.getText().equals( "Edit" ) ) {
+            status = controller.
+                    updateMonthTransactions( jLabelTransactionId.getText(),
+                                             jTextFieldTransactionName.getText(),
+                                             jComboBoxMonthsAddTransaction.getSelectedItem().toString(),
+                                             jComboBoxCategoryAddTransaction.getSelectedItem().toString(),
+                                             jComboBoxTypeAddTransaction.getSelectedItem().toString(),
+                                             jTextFieldAmount.getText() );
+            jLabelInsertTransactionStatus.setText(
+                    status
+                            ? "Month Transaction was updated successfully!"
+                            : "Internal error while updating month transaction"
+            );
+        }
     }//GEN-LAST:event_jButtonAddTransactionActionPerformed
 
     private void jTableMonthTransactionsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMonthTransactionsMouseClicked
@@ -668,6 +692,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabelInsertTransactionStatus;
+    private javax.swing.JLabel jLabelTransactionId;
     private javax.swing.JLayeredPane jLayeredPaneAddTransaction;
     private javax.swing.JLayeredPane jLayeredPaneViewTransactions;
     private javax.swing.JMenu jMenu1;

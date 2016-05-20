@@ -124,5 +124,31 @@ public class Controller {
     public Month getMonthByID( int monthID ) {
         return facade.getMonthByID( monthID );
     }
+    
+    
+    public boolean updateMonthTransactions( String stringID, String name, String month, String category,
+            String type, String stringAmount ) {
+
+        int id= Integer.parseInt( stringID );
+        double amount= Double.parseDouble( stringAmount);
+        int monthId = 0, categoryId = 0;
+        for ( Map.Entry<Integer, String> entrySet : monthMap.entrySet() ) {
+            if ( entrySet.getValue().equals( month ) ) {
+                monthId = entrySet.getKey();
+            }
+        }
+
+        for ( Map.Entry<Integer, String> entrySet : categoryMap.entrySet() ) {
+            if ( entrySet.getValue().equals( category ) ) {
+                categoryId = entrySet.getKey();
+            }
+        }
+
+        MonthTransaction monthTransaction = new MonthTransaction( id, name, type, monthId, categoryId, amount );
+        if ( facade.updateMonthTransaction(id, monthTransaction ) != null ) {
+            return true;
+        }
+        return false;
+    }
 
 }
