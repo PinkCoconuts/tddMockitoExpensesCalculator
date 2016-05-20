@@ -53,7 +53,7 @@ public class Facade_Test {
     @Test
     public void testGetMonths() {
 
-        Mockito.when( mockMonthMapper.getMonths( null ) ).thenAnswer( new Answer() {
+        Mockito.when( mockMonthMapper.getMonths( null, null ) ).thenAnswer( new Answer() {
 
             List<Month> months = new ArrayList();
 
@@ -73,7 +73,7 @@ public class Facade_Test {
     public void testGetMonthByID() {
         int monthId = 23;
         Month monthObj = new Month( 23, "Feb 2016" );
-        Mockito.when( mockMonthMapper.getMonthByID( null, monthId ) ).thenReturn( monthObj );
+        Mockito.when( mockMonthMapper.getMonthByID( null, null, monthId ) ).thenReturn( monthObj );
 
         assertEquals( monthObj, facade.getMonthByID( monthId ) );
     }
@@ -125,7 +125,7 @@ public class Facade_Test {
     @Test
     public void testInsertMonthTransaction() {
         MonthTransaction monthTransObj = new MonthTransaction( 1, "Burger", "Expense", 2, 3, 300 );
-        Mockito.when( mockMonthTransactionMapper.insertMonthTransaction( null, null, monthTransObj ) ).thenReturn( true );
+        Mockito.when( mockMonthTransactionMapper.insertMonthTransaction( null, null, monthTransObj ) ).thenReturn( monthTransObj );
 
         assertEquals( monthTransObj, facade.insertMonthTransaction( monthTransObj ) );
     }
@@ -134,7 +134,7 @@ public class Facade_Test {
     public void testUpdateMonthTransaction() {
         int monthTransactionId = 2;
         MonthTransaction monthTransObj = new MonthTransaction( 1, "Burger", "Expense", 2, 3, 300 );
-        Mockito.when( mockMonthTransactionMapper.updateMonthTransaction( null, null, monthTransactionId, monthTransObj ) ).thenReturn( true );
+        Mockito.when( mockMonthTransactionMapper.updateMonthTransaction( null, null, monthTransactionId, monthTransObj ) ).thenReturn( monthTransObj );
 
         assertEquals( monthTransObj, facade.updateMonthTransaction( monthTransactionId, monthTransObj ) );
     }

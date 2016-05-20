@@ -70,7 +70,8 @@ public class MonthTransactionMapperTest {
         Month toInsertmonth = new Month();
         toInsertmonth.setName( "August 2016" );
         month = monthMapper.insertMonth( dbConnection, toInsertmonth );
-        int monthId = monthMapper.getMonths( dbConnection ).get( 0 ).getId();
+        List<Month> lm = monthMapper.getMonths( dbConnection, null );
+        int monthId = lm.get( 0 ).getId();
 
 //      insert a category in the db, whose id will be used for the month transaction
         Category toInsertcategory = new Category();

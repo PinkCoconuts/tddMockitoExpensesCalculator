@@ -99,11 +99,11 @@ public class Facade {
     }
 
     public List<Month> getMonths() {
-        return monthMapper.getMonths( connection );
+        return monthMapper.getMonths( connection, null );
     }
 
     public Month getMonthByID( int monthId ) {
-        return monthMapper.getMonthByID( connection, monthId );
+        return monthMapper.getMonthByID( connection, null, monthId );
     }
 
     public Month insertMonth( Month object ) {
@@ -142,11 +142,11 @@ public class Facade {
         return null;//monthTransactionMapper.getSpecificTransactionsByType( connection, type );
     }
 
-    public boolean insertMonthTransaction( MonthTransaction object ) {
+    public MonthTransaction insertMonthTransaction( MonthTransaction object ) {
         return monthTransactionMapper.insertMonthTransaction( connection, null, object );
     }
 
-    public boolean updateMonthTransaction( int monthTransactionID, MonthTransaction newObject ) {
+    public MonthTransaction updateMonthTransaction( int monthTransactionID, MonthTransaction newObject ) {
         return monthTransactionMapper.updateMonthTransaction( connection, null, monthTransactionID, newObject );
     }
 
