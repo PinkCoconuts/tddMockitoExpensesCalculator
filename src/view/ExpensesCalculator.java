@@ -32,10 +32,12 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         initMonths();
         initCategories();
         initTypes();
-        fillMonthTable( controller.getMonthTransactions() );
+        fillTransactionsTable( controller.getMonthTransactions() );
+        fillMonthsTable( controller.getMonths() );
         this.setLocationRelativeTo( null );
         //jLayeredPaneViewTransactions.setVisible( false );
         jLayeredPaneAddTransaction.setVisible( false );
+        jLayeredPaneViewMonths.setVisible( false);
     }
 
     private void initMonths() {
@@ -79,6 +81,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
     class CustomModel extends AbstractTableModel {
 
         String[] COLUMN_NAMES = new String[]{ "ID", "Name", "Type", "Month", "Category", "Amount", "Edit", "Delete" };
+        String[] COLUMN_NAMES_MONTHS_TABLE = new String[]{ "ID", "Name", "Edit", "Delete" };
 
         private Object[][] result;
         private String[] columnNames;
@@ -144,10 +147,22 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                                                            + " : " + jTableMonthTransactions.getValueAt( rowIndex, 1 ) );
                             controller.deleteMonthTransaction( Integer.parseInt(
                                     jTableMonthTransactions.getValueAt( rowIndex, 0 ).toString() ) );
-                            fillMonthTable( controller.getMonthTransactions(
+                            fillTransactionsTable( controller.getMonthTransactions(
                                     jComboBoxMonths.getSelectedItem().toString(),
                                     jComboBoxCategory.getSelectedItem().toString(),
                                     jComboBoType.getSelectedItem().toString() ) );
+                        }
+                    } );
+                    return button;
+                case 3:
+                    button = new JButton( COLUMN_NAMES_MONTHS_TABLE[ columnIndex ] );
+//                    Edit month
+                    button.addActionListener( new ActionListener() {
+                        public void actionPerformed( ActionEvent arg0 ) {
+                            String monthId = jTableMonths.getValueAt( rowIndex, 0 ).toString();
+                            String monthName = jTableMonths.getValueAt( rowIndex, 1 ).toString();            
+                            System.out.println( "I will delete this month "+ monthName );
+                            
                         }
                     } );
                     return button;
@@ -194,11 +209,15 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         jButtonAddTransaction = new javax.swing.JButton();
         jLabelInsertTransactionStatus = new javax.swing.JLabel();
         jLabelTransactionId = new javax.swing.JLabel();
+        jLayeredPaneViewMonths = new javax.swing.JLayeredPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTableMonths = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItemViewTransactions = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItemAddTransaction = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -298,7 +317,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jComboBoType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jLayeredPaneViewTransactionsLayout.setVerticalGroup(
             jLayeredPaneViewTransactionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -428,7 +447,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                 .addGroup(jLayeredPaneAddTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonAddTransaction)
                     .addComponent(jLabelInsertTransactionStatus))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(93, Short.MAX_VALUE))
         );
         jLayeredPaneAddTransaction.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPaneAddTransaction.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -444,6 +463,52 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         jLayeredPaneAddTransaction.setLayer(jLabelInsertTransactionStatus, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPaneAddTransaction.setLayer(jLabelTransactionId, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
+        jLayeredPaneViewMonths.setPreferredSize(new java.awt.Dimension(540, 360));
+
+        jTableMonths.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Id", "Name", "Edit", "Delete"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, true, false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTableMonths.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableMonthsMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTableMonths);
+
+        javax.swing.GroupLayout jLayeredPaneViewMonthsLayout = new javax.swing.GroupLayout(jLayeredPaneViewMonths);
+        jLayeredPaneViewMonths.setLayout(jLayeredPaneViewMonthsLayout);
+        jLayeredPaneViewMonthsLayout.setHorizontalGroup(
+            jLayeredPaneViewMonthsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPaneViewMonthsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2)
+                .addContainerGap())
+        );
+        jLayeredPaneViewMonthsLayout.setVerticalGroup(
+            jLayeredPaneViewMonthsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPaneViewMonthsLayout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(121, Short.MAX_VALUE))
+        );
+        jLayeredPaneViewMonths.setLayer(jScrollPane2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         jMenuBar1.setPreferredSize(new java.awt.Dimension(228, 25));
 
         jMenu1.setText("Transactions");
@@ -453,6 +518,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
             }
         });
 
+        jMenuItemViewTransactions.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItemViewTransactions.setText("View");
         jMenuItemViewTransactions.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -461,17 +527,28 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItemViewTransactions);
 
-        jMenuItem1.setText("Add");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemAddTransaction.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItemAddTransaction.setText("Add");
+        jMenuItemAddTransaction.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                jMenuItemAddTransactionActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jMenu1.add(jMenuItemAddTransaction);
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Something else");
+        jMenu2.setText("Months");
+
+        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem2.setText("View");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem2);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -480,16 +557,22 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLayeredPaneViewTransactions, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
-            .addComponent(jLayeredPaneAddTransaction)
+            .addComponent(jLayeredPaneViewTransactions, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
+            .addComponent(jLayeredPaneAddTransaction, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLayeredPaneViewMonths, javax.swing.GroupLayout.DEFAULT_SIZE, 563, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLayeredPaneViewTransactions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLayeredPaneAddTransaction)
-                .addGap(24, 24, 24))
+                .addComponent(jLayeredPaneAddTransaction, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addComponent(jLayeredPaneViewMonths, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -515,7 +598,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                 jComboBoxMonths.getSelectedItem().toString(),
                 jComboBoxCategory.getSelectedItem().toString(),
                 jComboBoType.getSelectedItem().toString() );
-        fillMonthTable( monthTransactions );
+        fillTransactionsTable( monthTransactions );
     }//GEN-LAST:event_jComboBoxMonthsActionPerformed
 
     private void jComboBoxCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCategoryActionPerformed
@@ -526,7 +609,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                 jComboBoxMonths.getSelectedItem().toString(),
                 jComboBoxCategory.getSelectedItem().toString(),
                 jComboBoType.getSelectedItem().toString() );
-        fillMonthTable( monthTransactions );
+        fillTransactionsTable( monthTransactions );
     }//GEN-LAST:event_jComboBoxCategoryActionPerformed
 
     private void jComboBoTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoTypeActionPerformed
@@ -537,7 +620,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                 jComboBoxMonths.getSelectedItem().toString(),
                 jComboBoxCategory.getSelectedItem().toString(),
                 jComboBoType.getSelectedItem().toString() );
-        fillMonthTable( monthTransactions );
+        fillTransactionsTable( monthTransactions );
     }//GEN-LAST:event_jComboBoTypeActionPerformed
 
     private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
@@ -559,17 +642,19 @@ public class ExpensesCalculator extends javax.swing.JFrame {
     private void jMenuItemViewTransactionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemViewTransactionsActionPerformed
         jLayeredPaneViewTransactions.setVisible( true );
         jLayeredPaneAddTransaction.setVisible( false );
+        jLayeredPaneViewMonths.setVisible( false );
     }//GEN-LAST:event_jMenuItemViewTransactionsActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void jMenuItemAddTransactionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAddTransactionActionPerformed
         jLayeredPaneViewTransactions.setVisible( false );
         jLayeredPaneAddTransaction.setVisible( true );
+        jLayeredPaneViewMonths.setVisible( false );
         jTextFieldTransactionName.setText( "" );
         jTextFieldAmount.setText( "" );
         jComboBoxCategoryAddTransaction.setSelectedIndex( 0 );
         jComboBoxMonthsAddTransaction.setSelectedIndex( 0 );
         jComboBoxTypeAddTransaction.setSelectedIndex( 0 );
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_jMenuItemAddTransactionActionPerformed
 
     private void jButtonAddTransactionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddTransactionActionPerformed
         boolean status = false;
@@ -615,7 +700,27 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTableMonthTransactionsMouseClicked
 
-    private void fillMonthTable( List<MonthTransaction> monthTransactions ) {
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        jLayeredPaneAddTransaction.setVisible( false );
+        jLayeredPaneViewMonths.setVisible( true );
+        jLayeredPaneViewTransactions.setVisible( false );
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jTableMonthsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMonthsMouseClicked
+        int column = jTableMonths.getColumnModel().getColumnIndexAtX( evt.getX() ); // get the coloum of the button
+        int row = evt.getY() / jTableMonths.getRowHeight(); //get the row of the button
+
+        /*Checking the row or column is valid or not*/
+        if ( row < jTableMonths.getRowCount() && row >= 0 && column < jTableMonths.getColumnCount() && column >= 0 ) {
+            Object value = jTableMonths.getValueAt( row, column );
+            if ( value instanceof JButton ) {
+                /*perform a click event*/
+                (( JButton ) value).doClick();
+            }
+        }
+    }//GEN-LAST:event_jTableMonthsMouseClicked
+
+    private void fillTransactionsTable( List<MonthTransaction> monthTransactions ) {
         Object[][] twoDimensionalArrayForTables = new Object[ monthTransactions.size() ][ 8 ];
         for ( int i = 0; i < monthTransactions.size(); i++ ) {
             twoDimensionalArrayForTables[ i ][ 0 ] = monthTransactions.get( i ).getId();
@@ -638,6 +743,27 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         TableCellRenderer buttonRenderer = new JTableButtonRenderer();
         jTableMonthTransactions.getColumn( cm.getColumnName( 6 ) ).setCellRenderer( buttonRenderer );
         jTableMonthTransactions.getColumn( cm.getColumnName( 7 ) ).setCellRenderer( buttonRenderer );
+    }
+
+    private void fillMonthsTable( List<Month> months ) {
+        Object[][] twoDimensionalArrayForTables = new Object[ months.size() ][ 4 ];
+        for ( int i = 0; i < months.size(); i++ ) {
+            twoDimensionalArrayForTables[ i ][ 0 ] = months.get( i ).getId();
+            twoDimensionalArrayForTables[ i ][ 1 ] = months.get( i ).getName();
+            twoDimensionalArrayForTables[ i ][ 2 ] = new JButton( "Edit #" + months.get( i ).getId() );
+            twoDimensionalArrayForTables[ i ][ 3 ] = new JButton( "Delete #" + months.get( i ).getId() );
+
+        }
+
+        String[] rowNames = new String[]{ "ID", "Name", "Edit", "Delete" };
+        CustomModel cm = new CustomModel( twoDimensionalArrayForTables, rowNames );
+
+        jTableMonths.setModel( cm );
+        jTableMonths.getTableHeader().setReorderingAllowed( false );
+
+        TableCellRenderer buttonRenderer = new JTableButtonRenderer();
+        jTableMonths.getColumn( cm.getColumnName( 2 ) ).setCellRenderer( buttonRenderer );
+        jTableMonths.getColumn( cm.getColumnName( 3 ) ).setCellRenderer( buttonRenderer );
     }
 
     /**
@@ -694,14 +820,18 @@ public class ExpensesCalculator extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelInsertTransactionStatus;
     private javax.swing.JLabel jLabelTransactionId;
     private javax.swing.JLayeredPane jLayeredPaneAddTransaction;
+    private javax.swing.JLayeredPane jLayeredPaneViewMonths;
     private javax.swing.JLayeredPane jLayeredPaneViewTransactions;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItemAddTransaction;
     private javax.swing.JMenuItem jMenuItemViewTransactions;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTableMonthTransactions;
+    private javax.swing.JTable jTableMonths;
     private javax.swing.JTextField jTextFieldAmount;
     private javax.swing.JTextField jTextFieldTransactionName;
     // End of variables declaration//GEN-END:variables
