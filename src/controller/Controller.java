@@ -141,4 +141,12 @@ public class Controller {
         return false;
     }
 
+    public boolean addMonth( String monthName ) {
+        Month month = new Month( 0, monthName );
+        if ( facade.insertMonth( month ) != null ) {
+            return true;
+        }
+        return false;
+    }
+
 }

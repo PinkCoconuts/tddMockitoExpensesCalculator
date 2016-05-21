@@ -281,6 +281,9 @@ class CustomModel extends AbstractTableModel {
         jLayeredPaneViewMonths = new javax.swing.JLayeredPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableMonths = new javax.swing.JTable();
+        jButtonAddMonth = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        jTextFieldAddMonthName = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItemViewTransactions = new javax.swing.JMenuItem();
@@ -560,6 +563,21 @@ class CustomModel extends AbstractTableModel {
         });
         jScrollPane2.setViewportView(jTableMonths);
 
+        jButtonAddMonth.setText("Add month");
+        jButtonAddMonth.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAddMonthActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setText("Month name");
+
+        jTextFieldAddMonthName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldAddMonthNameActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jLayeredPaneViewMonthsLayout = new javax.swing.GroupLayout(jLayeredPaneViewMonths);
         jLayeredPaneViewMonths.setLayout(jLayeredPaneViewMonthsLayout);
         jLayeredPaneViewMonthsLayout.setHorizontalGroup(
@@ -568,15 +586,34 @@ class CustomModel extends AbstractTableModel {
                 .addContainerGap()
                 .addComponent(jScrollPane2)
                 .addContainerGap())
+            .addGroup(jLayeredPaneViewMonthsLayout.createSequentialGroup()
+                .addGap(113, 113, 113)
+                .addComponent(jLabel9)
+                .addGap(100, 100, 100)
+                .addComponent(jTextFieldAddMonthName, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPaneViewMonthsLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonAddMonth)
+                .addGap(34, 34, 34))
         );
         jLayeredPaneViewMonthsLayout.setVerticalGroup(
             jLayeredPaneViewMonthsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPaneViewMonthsLayout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(121, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addGroup(jLayeredPaneViewMonthsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(jTextFieldAddMonthName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
+                .addComponent(jButtonAddMonth)
+                .addContainerGap(86, Short.MAX_VALUE))
         );
         jLayeredPaneViewMonths.setLayer(jScrollPane2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPaneViewMonths.setLayer(jButtonAddMonth, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPaneViewMonths.setLayer(jLabel9, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPaneViewMonths.setLayer(jTextFieldAddMonthName, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jMenuBar1.setPreferredSize(new java.awt.Dimension(228, 25));
 
@@ -627,11 +664,8 @@ class CustomModel extends AbstractTableModel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLayeredPaneViewTransactions, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
-            .addComponent(jLayeredPaneAddTransaction, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLayeredPaneViewMonths, javax.swing.GroupLayout.DEFAULT_SIZE, 563, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jLayeredPaneAddTransaction)
+            .addComponent(jLayeredPaneViewMonths, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -639,9 +673,9 @@ class CustomModel extends AbstractTableModel {
                 .addComponent(jLayeredPaneViewTransactions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLayeredPaneAddTransaction, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jLayeredPaneViewMonths, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         pack();
@@ -789,6 +823,16 @@ class CustomModel extends AbstractTableModel {
         }
     }//GEN-LAST:event_jTableMonthsMouseClicked
 
+    private void jButtonAddMonthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddMonthActionPerformed
+        controller.addMonth( jTextFieldAddMonthName.getText());
+        fillMonthsTable( controller.getMonths());
+        jTextFieldAddMonthName.setText( "");
+    }//GEN-LAST:event_jButtonAddMonthActionPerformed
+
+    private void jTextFieldAddMonthNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldAddMonthNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldAddMonthNameActionPerformed
+
     private void fillTransactionsTable( List<MonthTransaction> monthTransactions ) {
         Object[][] twoDimensionalArrayForTables = new Object[ monthTransactions.size() ][ 8 ];
         for ( int i = 0; i < monthTransactions.size(); i++ ) {
@@ -871,6 +915,7 @@ class CustomModel extends AbstractTableModel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonAddMonth;
     private javax.swing.JButton jButtonAddTransaction;
     private javax.swing.JComboBox jComboBoType;
     private javax.swing.JComboBox jComboBoxCategory;
@@ -886,6 +931,7 @@ class CustomModel extends AbstractTableModel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelInsertTransactionStatus;
     private javax.swing.JLabel jLabelTransactionId;
     private javax.swing.JLayeredPane jLayeredPaneAddTransaction;
@@ -901,6 +947,7 @@ class CustomModel extends AbstractTableModel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTableMonthTransactions;
     private javax.swing.JTable jTableMonths;
+    private javax.swing.JTextField jTextFieldAddMonthName;
     private javax.swing.JTextField jTextFieldAmount;
     private javax.swing.JTextField jTextFieldTransactionName;
     // End of variables declaration//GEN-END:variables
