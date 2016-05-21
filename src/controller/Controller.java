@@ -153,4 +153,13 @@ public class Controller {
         return facade.deleteCategory( categoryID );
     }
 
+    public boolean updateCategory( String stringID, String name ) {
+        int id = Integer.parseInt( stringID );
+        Category category = new Category( id, name );
+        if ( facade.updateCategory(id, category ) != null ) {
+            return true;
+        }
+        return false;
+    }
+
 }

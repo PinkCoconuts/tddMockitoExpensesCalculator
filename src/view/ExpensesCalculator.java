@@ -364,6 +364,10 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         jLayeredPaneViewCategories = new javax.swing.JLayeredPane();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTableCategories = new javax.swing.JTable();
+        jLabel10 = new javax.swing.JLabel();
+        jTextFieldAddCategoryName = new javax.swing.JTextField();
+        jButtonAddCategory = new javax.swing.JButton();
+        jLabelCategoryId = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItemViewTransactions = new javax.swing.JMenuItem();
@@ -662,7 +666,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
             }
         });
 
-        jLabelAddMonthId.setText("jLabel10");
+        jLabelAddMonthId.setText("for id; do not delete it");
 
         javax.swing.GroupLayout jLayeredPaneViewMonthsLayout = new javax.swing.GroupLayout(jLayeredPaneViewMonths);
         jLayeredPaneViewMonths.setLayout(jLayeredPaneViewMonthsLayout);
@@ -723,6 +727,12 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(jTableCategories);
 
+        jLabel10.setText("Category name");
+
+        jButtonAddCategory.setText("Add category");
+
+        jLabelCategoryId.setText("hidden; do not delete it");
+
         javax.swing.GroupLayout jLayeredPaneViewCategoriesLayout = new javax.swing.GroupLayout(jLayeredPaneViewCategories);
         jLayeredPaneViewCategories.setLayout(jLayeredPaneViewCategoriesLayout);
         jLayeredPaneViewCategoriesLayout.setHorizontalGroup(
@@ -730,15 +740,38 @@ public class ExpensesCalculator extends javax.swing.JFrame {
             .addGroup(jLayeredPaneViewCategoriesLayout.createSequentialGroup()
                 .addComponent(jScrollPane3)
                 .addContainerGap())
+            .addGroup(jLayeredPaneViewCategoriesLayout.createSequentialGroup()
+                .addGap(98, 98, 98)
+                .addComponent(jLabel10)
+                .addGap(86, 86, 86)
+                .addComponent(jTextFieldAddCategoryName, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(101, 101, 101)
+                .addComponent(jLabelCategoryId)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPaneViewCategoriesLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonAddCategory)
+                .addGap(37, 37, 37))
         );
         jLayeredPaneViewCategoriesLayout.setVerticalGroup(
             jLayeredPaneViewCategoriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPaneViewCategoriesLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(137, Short.MAX_VALUE))
+                .addGap(41, 41, 41)
+                .addGroup(jLayeredPaneViewCategoriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(jTextFieldAddCategoryName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelCategoryId))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addComponent(jButtonAddCategory)
+                .addGap(29, 29, 29))
         );
         jLayeredPaneViewCategories.setLayer(jScrollPane3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPaneViewCategories.setLayer(jLabel10, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPaneViewCategories.setLayer(jTextFieldAddCategoryName, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPaneViewCategories.setLayer(jButtonAddCategory, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPaneViewCategories.setLayer(jLabelCategoryId, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jMenuBar1.setPreferredSize(new java.awt.Dimension(228, 25));
 
@@ -816,7 +849,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                 .addComponent(jLayeredPaneViewMonths, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLayeredPaneViewCategories, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         pack();
@@ -1110,6 +1143,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonAddCategory;
     private javax.swing.JButton jButtonAddMonth;
     private javax.swing.JButton jButtonAddTransaction;
     private javax.swing.JComboBox jComboBoType;
@@ -1119,6 +1153,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
     private javax.swing.JComboBox jComboBoxMonthsAddTransaction;
     private javax.swing.JComboBox jComboBoxTypeAddTransaction;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1128,6 +1163,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelAddMonthId;
+    private javax.swing.JLabel jLabelCategoryId;
     private javax.swing.JLabel jLabelInsertTransactionStatus;
     private javax.swing.JLabel jLabelTransactionId;
     private javax.swing.JLayeredPane jLayeredPaneAddTransaction;
@@ -1149,6 +1185,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
     private javax.swing.JTable jTableCategories;
     private javax.swing.JTable jTableMonthTransactions;
     private javax.swing.JTable jTableMonths;
+    private javax.swing.JTextField jTextFieldAddCategoryName;
     private javax.swing.JTextField jTextFieldAddMonthName;
     private javax.swing.JTextField jTextFieldAmount;
     private javax.swing.JTextField jTextFieldTransactionName;

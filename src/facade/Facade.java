@@ -154,7 +154,7 @@ public class Facade {
         return categoryMapper.insertCategory( connection, logger, object );
     }
 
-    public int updateCategory( int categoryId, Category newObject ) {
+    public Category updateCategory( int categoryId, Category newObject ) {
         return categoryMapper.updateCategory( connection, logger, categoryId, newObject );
     }
 
