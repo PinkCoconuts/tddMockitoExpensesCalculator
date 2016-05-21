@@ -255,6 +255,72 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         }
     }
 
+    class CustomModelCategoriesTable extends AbstractTableModel {
+
+        String[] COLUMN_NAMES_CATEGORIES_TABLE = new String[]{ "ID", "Name", "Edit", "Delete" };
+
+        private Object[][] result;
+        private String[] columnNames;
+
+        public CustomModelCategoriesTable( Object[][] result, String[] columnNames ) {
+            this.result = result;
+            this.columnNames = columnNames;
+        }
+
+        @Override
+        public int getRowCount() {
+            return result.length;
+        }
+
+        @Override
+        public int getColumnCount() {
+            return columnNames.length;
+        }
+
+        @Override
+        public String getColumnName( int col ) {
+            return columnNames[ col ];
+        }
+
+        @Override
+        public Object getValueAt( final int rowIndex, final int columnIndex ) {
+            JButton button;
+            switch ( columnIndex ) {
+                case 3: //delete
+                    button = new JButton( COLUMN_NAMES_CATEGORIES_TABLE[ columnIndex ] );
+//                    Edit month
+                    button.addActionListener( new ActionListener() {
+                        public void actionPerformed( ActionEvent arg0 ) {
+                            String categoryId = jTableCategories.getValueAt( rowIndex, 0 ).toString();
+                            String categoryName = jTableCategories.getValueAt( rowIndex, 1 ).toString();
+                            JOptionPane.showMessageDialog( JOptionPane.getFrameForComponent( button ),
+                                                           "Delete Button clicked for row " + rowIndex
+                                                           + " : " + jTableCategories.getValueAt( rowIndex, 1 ) );
+                            controller.deleteCategory( Integer.parseInt(
+                                    jTableCategories.getValueAt( rowIndex, 0 ).toString() ) );
+                            fillCategoriesTable( controller.getCategories() );
+                        }
+                    } );
+                    return button;
+//                case 2: //update
+//                    button = new JButton( COLUMN_NAMES_CATEGORIES_TABLE[ columnIndex ] );
+//                    button.addActionListener( new ActionListener() {
+//                        public void actionPerformed( ActionEvent arg0 ) {
+//                            jLabelAddMonthId.setText(
+//                                    jTableMonths.getValueAt( rowIndex, 0 ).toString() );
+//                            jTextFieldAddMonthName.setText(
+//                                    jTableMonths.getValueAt( rowIndex, 1 ).toString() );
+//                            jButtonAddMonth.setText( "Save changes" );
+//                        }
+//                    } );
+//                    return button;
+                default:
+                    return result[ rowIndex ][ columnIndex ];
+            }
+
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -650,6 +716,11 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTableCategories.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableCategoriesMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(jTableCategories);
 
         javax.swing.GroupLayout jLayeredPaneViewCategoriesLayout = new javax.swing.GroupLayout(jLayeredPaneViewCategories);
@@ -922,6 +993,20 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         jLayeredPaneViewTransactions.setVisible( false );
     }//GEN-LAST:event_jMenuItemViewCategoriesActionPerformed
 
+    private void jTableCategoriesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableCategoriesMouseClicked
+        int column = jTableCategories.getColumnModel().getColumnIndexAtX( evt.getX() ); // get the column of the button
+        int row = evt.getY() / jTableCategories.getRowHeight(); //get the row of the button
+
+        /*Checking the row or column is valid or not*/
+        if ( row < jTableCategories.getRowCount() && row >= 0 && column < jTableCategories.getColumnCount() && column >= 0 ) {
+            Object value = jTableCategories.getValueAt( row, column );
+            if ( value instanceof JButton ) {
+                /*perform a click event*/
+                (( JButton ) value).doClick();
+            }
+        }
+    }//GEN-LAST:event_jTableCategoriesMouseClicked
+
     private void fillTransactionsTable( List<MonthTransaction> monthTransactions ) {
         Object[][] twoDimensionalArrayForTables = new Object[ monthTransactions.size() ][ 8 ];
         for ( int i = 0; i < monthTransactions.size(); i++ ) {
@@ -979,7 +1064,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         }
 
         String[] rowNames = new String[]{ "ID", "Name", "Edit", "Delete" };
-        CustomModelMonthsTable cm = new CustomModelMonthsTable( twoDimensionalArrayForTables, rowNames );
+        CustomModelCategoriesTable cm = new CustomModelCategoriesTable( twoDimensionalArrayForTables, rowNames );
 
         jTableCategories.setModel( cm );
         jTableCategories.getTableHeader().setReorderingAllowed( false );

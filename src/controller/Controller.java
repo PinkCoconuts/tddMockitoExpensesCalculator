@@ -149,4 +149,8 @@ public class Controller {
         return false;
     }
 
+    public boolean deleteCategory( int categoryID ) {
+        return facade.deleteCategory( categoryID );
+    }
+
 }
