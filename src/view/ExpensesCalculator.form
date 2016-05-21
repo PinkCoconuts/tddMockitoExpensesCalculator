@@ -459,7 +459,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelTransactionId">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel9"/>
+            <Property name="text" type="java.lang.String" value="hidden; for id;  do not delete"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -484,6 +484,8 @@
                   <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
                   <Component id="jTextFieldAddMonthName" min="-2" pref="87" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
+                  <Component id="jLabelAddMonthId" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
               <Group type="102" alignment="1" attributes="0">
@@ -502,6 +504,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jTextFieldAddMonthName" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabelAddMonthId" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                   <Component id="jButtonAddMonth" min="-2" max="-2" attributes="0"/>
@@ -579,6 +582,11 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldAddMonthNameActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelAddMonthId">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="jLabel10"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

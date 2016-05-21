@@ -38,6 +38,8 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         //jLayeredPaneViewTransactions.setVisible( false );
         jLayeredPaneAddTransaction.setVisible( false );
         jLayeredPaneViewMonths.setVisible( false );
+        jLabelTransactionId.setVisible( false );
+        jLabelAddMonthId.setVisible( false );
     }
 
     private void initMonths() {
@@ -78,7 +80,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         jComboBoType.setModel( new javax.swing.DefaultComboBoxModel( types ) );
     }
 
-class CustomModel extends AbstractTableModel {
+    class CustomModel extends AbstractTableModel {
 
         String[] COLUMN_NAMES = new String[]{ "ID", "Name", "Type", "Month", "Category", "Amount", "Edit", "Delete" };
 
@@ -164,7 +166,7 @@ class CustomModel extends AbstractTableModel {
         }
     }
 
-   class CustomModelMonthsTable extends AbstractTableModel {
+    class CustomModelMonthsTable extends AbstractTableModel {
 
         String[] COLUMN_NAMES_MONTHS_TABLE = new String[]{ "ID", "Name", "Edit", "Delete" };
 
@@ -197,7 +199,7 @@ class CustomModel extends AbstractTableModel {
         public Object getValueAt( final int rowIndex, final int columnIndex ) {
             JButton button;
             switch ( columnIndex ) {
-                case 3:
+                case 3: //delete
                     button = new JButton( COLUMN_NAMES_MONTHS_TABLE[ columnIndex ] );
 //                    Edit month
                     button.addActionListener( new ActionListener() {
@@ -214,11 +216,16 @@ class CustomModel extends AbstractTableModel {
                         }
                     } );
                     return button;
-                case 2:
+                case 2: //update
                     button = new JButton( COLUMN_NAMES_MONTHS_TABLE[ columnIndex ] );
                     button.addActionListener( new ActionListener() {
                         public void actionPerformed( ActionEvent arg0 ) {
                             setCellEditable( rowIndex, 1, true );
+                            jLabelAddMonthId.setText(
+                                    jTableMonths.getValueAt( rowIndex, 0 ).toString() );
+                            jTextFieldAddMonthName.setText(
+                                    jTableMonths.getValueAt( rowIndex, 1 ).toString() );
+                            jButtonAddMonth.setText( "Save changes" );
                         }
                     } );
                     return button;
@@ -284,6 +291,7 @@ class CustomModel extends AbstractTableModel {
         jButtonAddMonth = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         jTextFieldAddMonthName = new javax.swing.JTextField();
+        jLabelAddMonthId = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItemViewTransactions = new javax.swing.JMenuItem();
@@ -458,7 +466,7 @@ class CustomModel extends AbstractTableModel {
 
         jLabelInsertTransactionStatus.setText("Status :");
 
-        jLabelTransactionId.setText("jLabel9");
+        jLabelTransactionId.setText("hidden; for id;  do not delete");
 
         javax.swing.GroupLayout jLayeredPaneAddTransactionLayout = new javax.swing.GroupLayout(jLayeredPaneAddTransaction);
         jLayeredPaneAddTransaction.setLayout(jLayeredPaneAddTransactionLayout);
@@ -578,6 +586,8 @@ class CustomModel extends AbstractTableModel {
             }
         });
 
+        jLabelAddMonthId.setText("jLabel10");
+
         javax.swing.GroupLayout jLayeredPaneViewMonthsLayout = new javax.swing.GroupLayout(jLayeredPaneViewMonths);
         jLayeredPaneViewMonths.setLayout(jLayeredPaneViewMonthsLayout);
         jLayeredPaneViewMonthsLayout.setHorizontalGroup(
@@ -591,6 +601,8 @@ class CustomModel extends AbstractTableModel {
                 .addComponent(jLabel9)
                 .addGap(100, 100, 100)
                 .addComponent(jTextFieldAddMonthName, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(66, 66, 66)
+                .addComponent(jLabelAddMonthId)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPaneViewMonthsLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -605,7 +617,8 @@ class CustomModel extends AbstractTableModel {
                 .addGap(27, 27, 27)
                 .addGroup(jLayeredPaneViewMonthsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(jTextFieldAddMonthName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldAddMonthName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelAddMonthId))
                 .addGap(27, 27, 27)
                 .addComponent(jButtonAddMonth)
                 .addContainerGap(86, Short.MAX_VALUE))
@@ -614,6 +627,7 @@ class CustomModel extends AbstractTableModel {
         jLayeredPaneViewMonths.setLayer(jButtonAddMonth, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPaneViewMonths.setLayer(jLabel9, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPaneViewMonths.setLayer(jTextFieldAddMonthName, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPaneViewMonths.setLayer(jLabelAddMonthId, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jMenuBar1.setPreferredSize(new java.awt.Dimension(228, 25));
 
@@ -807,6 +821,8 @@ class CustomModel extends AbstractTableModel {
         jLayeredPaneAddTransaction.setVisible( false );
         jLayeredPaneViewMonths.setVisible( true );
         jLayeredPaneViewTransactions.setVisible( false );
+        jTextFieldAddMonthName.setText( "" );
+        jButtonAddMonth.setText( "Add month" );
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jTableMonthsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMonthsMouseClicked
@@ -824,9 +840,15 @@ class CustomModel extends AbstractTableModel {
     }//GEN-LAST:event_jTableMonthsMouseClicked
 
     private void jButtonAddMonthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddMonthActionPerformed
-        controller.addMonth( jTextFieldAddMonthName.getText());
-        fillMonthsTable( controller.getMonths());
-        jTextFieldAddMonthName.setText( "");
+        if ( (jButtonAddMonth).getText().equals( "Add month" ) ) {
+            controller.addMonth( jTextFieldAddMonthName.getText() );
+            fillMonthsTable( controller.getMonths() );
+            jTextFieldAddMonthName.setText( "" );
+        } else if ( (jButtonAddMonth).getText().equals( "Save changes" ) ) {
+            controller.updateMonth( jLabelAddMonthId.getText(), jTextFieldAddMonthName.getText() );
+            fillMonthsTable( controller.getMonths() );
+            jTextFieldAddMonthName.setText( "" );
+        }
     }//GEN-LAST:event_jButtonAddMonthActionPerformed
 
     private void jTextFieldAddMonthNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldAddMonthNameActionPerformed
@@ -932,6 +954,7 @@ class CustomModel extends AbstractTableModel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelAddMonthId;
     private javax.swing.JLabel jLabelInsertTransactionStatus;
     private javax.swing.JLabel jLabelTransactionId;
     private javax.swing.JLayeredPane jLayeredPaneAddTransaction;
