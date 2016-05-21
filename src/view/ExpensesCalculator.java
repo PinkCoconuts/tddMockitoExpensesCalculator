@@ -760,6 +760,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         jLayeredPaneViewTransactions.setVisible( true );
         jLayeredPaneAddTransaction.setVisible( false );
         jLayeredPaneViewMonths.setVisible( false );
+        fillTransactionsTable( controller.getMonthTransactions());
     }//GEN-LAST:event_jMenuItemViewTransactionsActionPerformed
 
     private void jMenuItemAddTransactionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAddTransactionActionPerformed
