@@ -40,22 +40,40 @@ public class Controller {
      */
     public List<Category> getCategories() {
         categoryMap = new HashMap();
-        List<Category> categories = facade.getCategories( logger );
 
-        for ( int i = 0; i < categories.size(); i++ ) {
-            categoryMap.put( categories.get( i ).getId(), categories.get( i ).getName() );
+        Object object = facade.getCategories( logger );
+
+        if ( object instanceof List ) {
+
+            List<Category> categories = ( List<Category> ) object;
+
+            for ( int i = 0; i < categories.size(); i++ ) {
+                categoryMap.put( categories.get( i ).getId(), categories.get( i ).getName() );
+            }
+
+            return categories;
         }
-
-        return categories;
+        return null;
     }
 
-    public Category getCategoryByID( int categoryID ) {
-        return facade.getCategoryByID( logger, categoryID );
+    public Category getCategoryByID( int id ) {
+        Object object = facade.getCategoryByID( logger, id );
+
+        if ( object instanceof Category ) {
+
+            Category category = ( Category ) object;
+            return category;
+        }
+        return null;
     }
 
     public boolean addCategory( String categoryName ) {
         Category category = new Category( 0, categoryName );
-        if ( facade.insertCategory( logger, category ) != null ) {
+
+        Object object = facade.insertCategory( logger, category );
+
+        if ( object != null && (( boolean ) object != false) ) {
+
             return true;
         }
         return false;
@@ -63,8 +81,12 @@ public class Controller {
 
     public boolean updateCategory( String stringID, String name ) {
         int id = Integer.parseInt( stringID );
+
         Category category = new Category( id, name );
-        if ( facade.updateCategory( logger, id, category ) != null ) {
+        Object object = facade.updateCategory( logger, id, category );
+
+        if ( object != null && (( boolean ) object != false) ) {
+
             return true;
         }
         return false;
@@ -74,8 +96,11 @@ public class Controller {
         return facade.deleteCategory( logger, categoryID );
     }
 
+    /*
+     * deleteAllCategories in how included in the current GUI build.
+     */
     public boolean deleteAllCategories() {
-        return false;
+        return facade.deleteAllCategories( logger );
     }
 
     /*
@@ -83,22 +108,40 @@ public class Controller {
      */
     public List<Month> getMonths() {
         monthMap = new HashMap();
-        List<Month> months = facade.getMonths( logger );
 
-        for ( int i = 0; i < months.size(); i++ ) {
-            monthMap.put( months.get( i ).getId(), months.get( i ).getName() );
+        Object object = facade.getMonths( logger );
+
+        if ( object instanceof List ) {
+
+            List<Month> months = ( List<Month> ) object;
+
+            for ( int i = 0; i < months.size(); i++ ) {
+                monthMap.put( months.get( i ).getId(), months.get( i ).getName() );
+            }
+
+            return months;
         }
-
-        return months;
+        return null;
     }
 
     public Month getMonthByID( int monthID ) {
-        return facade.getMonthByID( logger, monthID );
+        Object object = facade.getMonthByID( logger, monthID );
+
+        if ( object instanceof Month ) {
+
+            Month month = ( Month ) object;
+            return month;
+        }
+        return null;
     }
 
     public boolean addMonth( String monthName ) {
         Month month = new Month( 0, monthName );
-        if ( facade.insertMonth( logger, month ) != null ) {
+
+        Object object = facade.insertMonth( logger, month );
+
+        if ( object != null && (( boolean ) object != false) ) {
+
             return true;
         }
         return false;
@@ -106,8 +149,12 @@ public class Controller {
 
     public boolean updateMonth( String stringID, String name ) {
         int id = Integer.parseInt( stringID );
+
         Month month = new Month( id, name );
-        if ( facade.updateMonth( logger, id, month ) != null ) {
+        Object object = facade.updateMonth( logger, id, month );
+
+        if ( object != null && (( boolean ) object != false) ) {
+
             return true;
         }
         return false;
@@ -117,15 +164,25 @@ public class Controller {
         return facade.deleteMonth( logger, monthID );
     }
 
+    /*
+     * deleteAllMonths in how included in the current GUI build.
+     */
     public boolean deleteAllMonths() {
-        return false;
+        return facade.deleteAllMonths( logger );
     }
 
     /*
      * Control month transaction functionality
      */
     public List<MonthTransaction> getMonthTransactions() {
-        return facade.getAllTransactions( logger );
+        Object object = facade.getAllTransactions( logger );
+
+        if ( object instanceof List ) {
+
+            List<MonthTransaction> mts = ( List<MonthTransaction> ) object;
+            return mts;
+        }
+        return null;
     }
 
     public List<MonthTransaction> getMonthTransactions( String monthName,
@@ -152,7 +209,15 @@ public class Controller {
         if ( type.equals( "-ALL-" ) ) {
             type = "";
         }
-        return facade.getAllTransactions( logger, monthId, categoryId, type );
+
+        Object object = facade.getAllTransactions( logger, monthId, categoryId, type );
+
+        if ( object instanceof List ) {
+
+            List<MonthTransaction> mts = ( List<MonthTransaction> ) object;
+            return mts;
+        }
+        return null;
     }
 
     public boolean addMonthTransactions( String name, String month, String category,
@@ -172,7 +237,10 @@ public class Controller {
         }
 
         MonthTransaction monthTransaction = new MonthTransaction( 0, name, type, monthId, categoryId, amount );
-        if ( facade.insertMonthTransaction( logger, monthTransaction ) != null ) {
+        Object object = facade.insertMonthTransaction( logger, monthTransaction );
+
+        if ( object != null && (( boolean ) object != false) ) {
+
             return true;
         }
         return false;
@@ -197,7 +265,10 @@ public class Controller {
         }
 
         MonthTransaction monthTransaction = new MonthTransaction( id, name, type, monthId, categoryId, amount );
-        if ( facade.updateMonthTransaction( logger, id, monthTransaction ) != null ) {
+        Object object = facade.updateMonthTransaction( logger, id, monthTransaction );
+
+        if ( object != null && (( boolean ) object != false) ) {
+
             return true;
         }
         return false;
@@ -207,8 +278,11 @@ public class Controller {
         return facade.deleteMonthTransaction( logger, monthTransactionID );
     }
 
+    /*
+     * deleteAllMonthTransactions in how included in the current GUI build.
+     */
     public boolean deleteAllMonthTransactions() {
-        return false;
+        return facade.deleteAllMonthTransactions( logger );
     }
 
 }
