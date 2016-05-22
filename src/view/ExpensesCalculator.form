@@ -626,10 +626,18 @@
               </Group>
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace min="-2" pref="104" max="-2" attributes="0"/>
-                  <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="jTextFieldAddCategoryName" min="-2" pref="111" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="jTextFieldAddCategoryName" min="-2" pref="111" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="jLabelFeedbackAddUpdateCategory" min="-2" pref="221" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jButtonAddCategory" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabelCategoryId" min="-2" max="-2" attributes="0"/>
@@ -657,7 +665,10 @@
                           <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <Component id="jButtonAddCategory" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="jButtonAddCategory" max="32767" attributes="0"/>
+                      <Component id="jLabelFeedbackAddUpdateCategory" max="32767" attributes="0"/>
+                  </Group>
                   <EmptySpace pref="108" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -707,6 +718,8 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="hidden; do not delete it"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelFeedbackAddUpdateCategory">
         </Component>
       </SubComponents>
     </Container>

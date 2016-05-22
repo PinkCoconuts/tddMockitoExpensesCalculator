@@ -384,6 +384,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         jTextFieldAddCategoryName = new javax.swing.JTextField();
         jButtonAddCategory = new javax.swing.JButton();
         jLabelCategoryId = new javax.swing.JLabel();
+        jLabelFeedbackAddUpdateCategory = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItemViewTransactions = new javax.swing.JMenuItem();
@@ -762,10 +763,15 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                 .addGap(20, 20, 20))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPaneViewCategoriesLayout.createSequentialGroup()
                 .addGap(104, 104, 104)
-                .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTextFieldAddCategoryName, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(59, 59, 59)
+                .addGroup(jLayeredPaneViewCategoriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jLayeredPaneViewCategoriesLayout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTextFieldAddCategoryName, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(59, 59, 59))
+                    .addGroup(jLayeredPaneViewCategoriesLayout.createSequentialGroup()
+                        .addComponent(jLabelFeedbackAddUpdateCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jLayeredPaneViewCategoriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButtonAddCategory)
                     .addComponent(jLabelCategoryId))
@@ -786,7 +792,9 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                             .addComponent(jTextFieldAddCategoryName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel10))
                         .addGap(9, 9, 9)))
-                .addComponent(jButtonAddCategory)
+                .addGroup(jLayeredPaneViewCategoriesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButtonAddCategory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelFeedbackAddUpdateCategory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(108, Short.MAX_VALUE))
         );
         jLayeredPaneViewCategories.setLayer(jScrollPane3, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -794,6 +802,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         jLayeredPaneViewCategories.setLayer(jTextFieldAddCategoryName, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPaneViewCategories.setLayer(jButtonAddCategory, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPaneViewCategories.setLayer(jLabelCategoryId, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPaneViewCategories.setLayer(jLabelFeedbackAddUpdateCategory, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jMenuBar1.setPreferredSize(new java.awt.Dimension(228, 25));
 
@@ -1048,6 +1057,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         jLayeredPaneViewTransactions.setVisible( false );
         jTextFieldAddCategoryName.setText( "" );
         jButtonAddCategory.setText( "Add category" );
+        jLabelFeedbackAddUpdateCategory.setText( "");
     }//GEN-LAST:event_jMenuItemViewCategoriesActionPerformed
 
     private void jTableCategoriesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableCategoriesMouseClicked
@@ -1066,14 +1076,22 @@ public class ExpensesCalculator extends javax.swing.JFrame {
 
     private void jButtonAddCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddCategoryActionPerformed
         if ( jButtonAddCategory.getText().equals( "Add category" ) ) {
-            controller.addCategory( jTextFieldAddCategoryName.getText() );
-            fillCategoriesTable( controller.getCategories() );
-            jTextFieldAddCategoryName.setText( "" );
+            if ( controller.addCategory( jTextFieldAddCategoryName.getText() ) ) {
+                fillCategoriesTable( controller.getCategories() );
+                jTextFieldAddCategoryName.setText( "" );
+                jLabelFeedbackAddUpdateCategory.setText( "The category was inserted successfully" );
+            } else {
+                jLabelFeedbackAddUpdateCategory.setText( "Ups! An error occurred. Please try again later" );
+            }
         } else if ( jButtonAddCategory.getText().equals( "Save changes" ) ) {
-            controller.updateCategory( jLabelCategoryId.getText(),
-                                       jTextFieldAddCategoryName.getText() );
-            fillCategoriesTable( controller.getCategories() );
-            jTextFieldAddCategoryName.setText( "" );
+            if ( controller.updateCategory( jLabelCategoryId.getText(),
+                                            jTextFieldAddCategoryName.getText() ) ) {
+                fillCategoriesTable( controller.getCategories() );
+                jTextFieldAddCategoryName.setText( "" );
+                jLabelFeedbackAddUpdateCategory.setText( "The category was updated successfully" );
+            } else {
+                jLabelFeedbackAddUpdateCategory.setText( "Ups! An error occurred. Please try again later" );
+            }
         }
     }//GEN-LAST:event_jButtonAddCategoryActionPerformed
 
@@ -1201,6 +1219,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelAddMonthId;
     private javax.swing.JLabel jLabelCategoryId;
+    private javax.swing.JLabel jLabelFeedbackAddUpdateCategory;
     private javax.swing.JLabel jLabelInsertTransactionStatus;
     private javax.swing.JLabel jLabelTransactionId;
     private javax.swing.JLayeredPane jLayeredPaneAddTransaction;
