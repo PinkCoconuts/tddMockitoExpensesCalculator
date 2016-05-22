@@ -1057,7 +1057,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         jLayeredPaneViewTransactions.setVisible( false );
         jTextFieldAddCategoryName.setText( "" );
         jButtonAddCategory.setText( "Add category" );
-        jLabelFeedbackAddUpdateCategory.setText( "");
+        jLabelFeedbackAddUpdateCategory.setText( "" );
     }//GEN-LAST:event_jMenuItemViewCategoriesActionPerformed
 
     private void jTableCategoriesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableCategoriesMouseClicked
@@ -1088,6 +1088,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                                             jTextFieldAddCategoryName.getText() ) ) {
                 fillCategoriesTable( controller.getCategories() );
                 jTextFieldAddCategoryName.setText( "" );
+                jButtonAddCategory.setText( "Add category" );
                 jLabelFeedbackAddUpdateCategory.setText( "The category was updated successfully" );
             } else {
                 jLabelFeedbackAddUpdateCategory.setText( "Ups! An error occurred. Please try again later" );
