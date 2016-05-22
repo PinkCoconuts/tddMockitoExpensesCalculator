@@ -373,13 +373,13 @@ public class MonthTransactionMapper {
      */
     public boolean deleteAllMonthTransactions( Connection connection, Logger logger ) {
         String deleteStatement = "delete from MONTH_TRANSACTION_TBL";
-        
+
         PreparedStatement preparedStatement;
         try {
             preparedStatement = connection.prepareStatement( deleteStatement );
-            
+
             preparedStatement.executeUpdate();
-            
+
             preparedStatement.close();
         } catch ( Exception e ) {
             if ( logger != null ) {

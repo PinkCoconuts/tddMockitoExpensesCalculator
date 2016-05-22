@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import utilities.DBconnector;
+import utilities.DatabaseConnector;
 import utilities.PerformanceLogger;
 
 public class MonthMapperTest {
@@ -25,7 +25,7 @@ public class MonthMapperTest {
     private static Month month;
 
     //Database Connection
-    private static DBconnector databaseConnector;
+    private static DatabaseConnector databaseConnector;
     private static Connection connection;
 
     //Database authentication
@@ -55,7 +55,7 @@ public class MonthMapperTest {
         logger = performanceLogger.initLogger( loggerName, loggerPath );
 
         //database initialization
-        databaseConnector = new DBconnector( databaseHost[ 1 ], databaseUsername[ 2 ], databasePassword[ 2 ], null );
+        databaseConnector = new DatabaseConnector( databaseHost[ 1 ], databaseUsername[ 2 ], databasePassword[ 2 ], null );
         connection = databaseConnector.getConnection( logger );
 
         //mapper initialization

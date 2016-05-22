@@ -17,7 +17,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import utilities.DBconnector;
+import utilities.DatabaseConnector;
 import utilities.PerformanceLogger;
 
 public class MonthTransactionMapperTest {
@@ -33,7 +33,7 @@ public class MonthTransactionMapperTest {
     private static MonthTransaction monthTransaction;
 
     //Database Connection
-    private static DBconnector databaseConnector;
+    private static DatabaseConnector databaseConnector;
     private static Connection connection;
 
     //Database authentication
@@ -54,7 +54,7 @@ public class MonthTransactionMapperTest {
         logger = performanceLogger.initLogger( loggerName, loggerPath );
 
         //database initialization
-        databaseConnector = new DBconnector( databaseHost[ 1 ], databaseUsername[ 2 ], databasePassword[ 2 ], null );
+        databaseConnector = new DatabaseConnector( databaseHost[ 1 ], databaseUsername[ 2 ], databasePassword[ 2 ], null );
         connection = databaseConnector.getConnection( logger );
 
         //mappers initialization
@@ -80,7 +80,7 @@ public class MonthTransactionMapperTest {
 //        would be nice to make triggers to delete the month and catgory on month transaction deletion
 //        delete all months and categories
         monthMapper.deleteAllMonths( connection, null );
-        categoryMapper.wipeCategoryTable( connection, logger );
+        categoryMapper.deleteAllCategories( connection, logger );
         monthTransactionMapper.deleteAllMonthTransactions( connection, null );
 
 //      insert a month in the db, whose id will be used for the month transaction

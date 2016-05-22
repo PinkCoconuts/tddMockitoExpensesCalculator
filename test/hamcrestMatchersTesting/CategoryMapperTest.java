@@ -14,7 +14,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import utilities.DBconnector;
+import utilities.DatabaseConnector;
 import utilities.PerformanceLogger;
 
 public class CategoryMapperTest {
@@ -23,7 +23,7 @@ public class CategoryMapperTest {
     private CategoryMapper categoryMapper;
 
     //Database Connection
-    private DBconnector databaseConnector = null;
+    private DatabaseConnector databaseConnector = null;
     private Connection connection = null;
 
     //Database authentication
@@ -64,13 +64,13 @@ public class CategoryMapperTest {
     public void setUp() {
         categoryMapper = new CategoryMapper();
 
-        databaseConnector = new DBconnector( databaseHost[ 1 ], databaseUsername[ 2 ], databasePassword[ 2 ], null );
+        databaseConnector = new DatabaseConnector( databaseHost[ 1 ], databaseUsername[ 2 ], databasePassword[ 2 ], null );
         initializeConnection();
     }
 
     @After
     public void tearDown() {
-        categoryMapper.wipeCategoryTable( connection, logger );
+        categoryMapper.deleteAllCategories( connection, logger );
         categoryMapper = null;
 
         databaseConnector.closeConnection( connection, logger );
@@ -151,6 +151,6 @@ public class CategoryMapperTest {
 
     @Test
     public void testwipeCategoryTable() {
-        assertThat( true, is( categoryMapper.wipeCategoryTable( connection, logger ) ) );
+        assertThat( true, is( categoryMapper.deleteAllCategories( connection, logger ) ) );
     }
 }

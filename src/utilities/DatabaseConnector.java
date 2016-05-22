@@ -14,14 +14,14 @@ import java.util.logging.Logger;
  *
  * @author mady
  */
-public class DBconnector {
+public class DatabaseConnector {
 
     private String databaseHost;
     private String databaseUsername;
     private String databasePassword;
     private String jdbcDriverName = "oracle.jdbc.driver.OracleDriver";
 
-    public DBconnector(String databaseHost, String databaseUsername, String databasePassword, String jdbcDriverName) {
+    public DatabaseConnector(String databaseHost, String databaseUsername, String databasePassword, String jdbcDriverName) {
         this.databaseHost = databaseHost;
         this.databaseUsername = databaseUsername;
         this.databasePassword = databasePassword;
