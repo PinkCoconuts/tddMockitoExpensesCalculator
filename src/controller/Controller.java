@@ -271,8 +271,11 @@ public class Controller {
         MonthTransaction monthTransaction = new MonthTransaction( id, name, type, monthId, categoryId, amount );
         Object object = facade.updateMonthTransaction( logger, id, monthTransaction );
 
-        if ( object != null && (( boolean ) object != false) ) {
-
+        if ( object instanceof Boolean ) {
+            if ( ( boolean ) object != false ) {
+                return true;
+            }
+        } else if ( object != null ) {
             return true;
         }
         return false;
