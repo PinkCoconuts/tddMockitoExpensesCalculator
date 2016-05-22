@@ -239,10 +239,14 @@ public class Controller {
         MonthTransaction monthTransaction = new MonthTransaction( 0, name, type, monthId, categoryId, amount );
         Object object = facade.insertMonthTransaction( logger, monthTransaction );
 
-        if ( object != null && (( boolean ) object != false) ) {
-
+        if ( object.getClass().isInstance( Boolean.class ) ) {
+            if ( ( boolean ) object != false ) {
+                return true;
+            }
+        } else if ( object != null ) {
             return true;
         }
+
         return false;
     }
 
