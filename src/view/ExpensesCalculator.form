@@ -629,8 +629,8 @@
                   <EmptySpace min="-2" pref="98" max="-2" attributes="0"/>
                   <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="86" max="-2" attributes="0"/>
-                  <Component id="jTextFieldAddCategoryName" min="-2" pref="72" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="101" max="-2" attributes="0"/>
+                  <Component id="jTextFieldAddCategoryName" min="-2" pref="110" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
                   <Component id="jLabelCategoryId" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -695,6 +695,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Add category"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAddCategoryActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelCategoryId">
           <Properties>
