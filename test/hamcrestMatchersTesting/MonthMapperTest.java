@@ -1,9 +1,11 @@
 package hamcrestMatchersTesting;
 
+import entity.Category;
 import entity.Month;
 import static hamcrestMatchers.CustomAbstractEntityClassMatcher.matches;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -81,8 +83,26 @@ public class MonthMapperTest {
 
     @Test
     public void testGetAllMonths() {
-        List<Month> lm = monthMapper.getMonths( connection, null );
-        assertThat( month, matches( lm.get( 0 ) ) );
+        List<Month> months = new ArrayList();
+        months.add( new Month( 1, "Jan 2016" ) );
+        months.add( new Month( 2, "Feb 2016" ) );
+        months.add( new Month( 3, "March 2016" ) );
+
+        List<Month> insertedMonths = new ArrayList();
+        insertedMonths.add( month ); //this object was added in the DB in the setUp() method
+        insertedMonths.add( monthMapper.insertMonth( connection, logger, months.get( 0 ) ) );
+        insertedMonths.add( monthMapper.insertMonth( connection, logger, months.get( 1 ) ) );
+        insertedMonths.add( monthMapper.insertMonth( connection, logger, months.get( 2 ) ) );
+
+        List<Month> dbMonths = monthMapper.getMonths( connection, logger );
+
+        for ( int m = 0; m < insertedMonths.size(); m++ ) {
+            for ( int i = 0; i < dbMonths.size(); i++ ) {
+                if ( insertedMonths.get( m ).getId() == dbMonths.get( i ).getId() ) {
+                    assertThat( insertedMonths.get( m ), matches( dbMonths.get( i ) ) );
+                }
+            }
+        }
     }
 
     @Test
