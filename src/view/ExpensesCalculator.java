@@ -146,15 +146,20 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                     button = new JButton( COLUMN_NAMES[ columnIndex ] );
                     button.addActionListener( new ActionListener() {
                         public void actionPerformed( ActionEvent arg0 ) {
-                            JOptionPane.showMessageDialog( JOptionPane.getFrameForComponent( button ),
-                                                           "Delete Button clicked for row " + rowIndex
-                                                           + " : " + jTableMonthTransactions.getValueAt( rowIndex, 1 ) );
-                            controller.deleteMonthTransaction( Integer.parseInt(
-                                    jTableMonthTransactions.getValueAt( rowIndex, 0 ).toString() ) );
-                            fillTransactionsTable( controller.getMonthTransactions(
-                                    jComboBoxMonths.getSelectedItem().toString(),
-                                    jComboBoxCategory.getSelectedItem().toString(),
-                                    jComboBoType.getSelectedItem().toString() ) );
+                            int confirmDelete = JOptionPane.showConfirmDialog(
+                                    JOptionPane.getFrameForComponent( button ),
+                                    "Are you sure you want to delete the transaction "
+                                    + jTableMonthTransactions.getValueAt( rowIndex, 1 ) + "?",
+                                    "Confirm request",
+                                    JOptionPane.YES_NO_OPTION );
+                            if ( confirmDelete == JOptionPane.YES_OPTION ) {
+                                controller.deleteMonthTransaction( Integer.parseInt(
+                                        jTableMonthTransactions.getValueAt( rowIndex, 0 ).toString() ) );
+                                fillTransactionsTable( controller.getMonthTransactions(
+                                        jComboBoxMonths.getSelectedItem().toString(),
+                                        jComboBoxCategory.getSelectedItem().toString(),
+                                        jComboBoType.getSelectedItem().toString() ) );
+                            }
                         }
                     } );
                     return button;
@@ -209,12 +214,17 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                         public void actionPerformed( ActionEvent arg0 ) {
                             String monthId = jTableMonths.getValueAt( rowIndex, 0 ).toString();
                             String monthName = jTableMonths.getValueAt( rowIndex, 1 ).toString();
-                            JOptionPane.showMessageDialog( JOptionPane.getFrameForComponent( button ),
-                                                           "Delete Button clicked for row " + rowIndex
-                                                           + " : " + jTableMonths.getValueAt( rowIndex, 1 ) );
-                            controller.deleteMonth( Integer.parseInt(
-                                    jTableMonths.getValueAt( rowIndex, 0 ).toString() ) );
-                            fillMonthsTable( controller.getMonths() );
+                            int confirmDelete = JOptionPane.showConfirmDialog(
+                                    JOptionPane.getFrameForComponent( button ),
+                                    "Are you sure you want to delete the month "
+                                    + jTableMonths.getValueAt( rowIndex, 1 ) + "?",
+                                    "Confirm request",
+                                    JOptionPane.YES_NO_OPTION );
+                            if ( confirmDelete == JOptionPane.YES_OPTION ) {
+                                controller.deleteMonth( Integer.parseInt(
+                                        jTableMonths.getValueAt( rowIndex, 0 ).toString() ) );
+                                fillMonthsTable( controller.getMonths() );
+                            }
 
                         }
                     } );
@@ -294,12 +304,17 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                         public void actionPerformed( ActionEvent arg0 ) {
                             String categoryId = jTableCategories.getValueAt( rowIndex, 0 ).toString();
                             String categoryName = jTableCategories.getValueAt( rowIndex, 1 ).toString();
-                            JOptionPane.showMessageDialog( JOptionPane.getFrameForComponent( button ),
-                                                           "Delete Button clicked for row " + rowIndex
-                                                           + " : " + jTableCategories.getValueAt( rowIndex, 1 ) );
-                            controller.deleteCategory( Integer.parseInt(
-                                    jTableCategories.getValueAt( rowIndex, 0 ).toString() ) );
-                            fillCategoriesTable( controller.getCategories() );
+                            int confirmDelete = JOptionPane.showConfirmDialog(
+                                    JOptionPane.getFrameForComponent( button ),
+                                    "Are you sure you want to delete the category "
+                                    + jTableCategories.getValueAt( rowIndex, 1 ) + "?",
+                                    "Confirm request",
+                                    JOptionPane.YES_NO_OPTION );
+                            if ( confirmDelete == JOptionPane.YES_OPTION ) {
+                                controller.deleteCategory( Integer.parseInt(
+                                        jTableCategories.getValueAt( rowIndex, 0 ).toString() ) );
+                                fillCategoriesTable( controller.getCategories() );
+                            }
                         }
                     } );
                     return button;
