@@ -1025,6 +1025,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         jLayeredPaneViewCategories.setVisible( false );
         jTextFieldAddMonthName.setText( "" );
         jButtonAddMonth.setText( "Add month" );
+        jLabelFeedbackAddUpdateMonth.setText( "");
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jTableMonthsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMonthsMouseClicked
@@ -1055,6 +1056,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                 fillMonthsTable( controller.getMonths() );
                 jTextFieldAddMonthName.setText( "" );
                 jLabelFeedbackAddUpdateMonth.setText( "The month was updated successfully" );
+                jButtonAddMonth.setText( "Add month");
             }
             else{
                 jLabelFeedbackAddUpdateMonth.setText( "Ups! An error occurred. Please try again later" );
