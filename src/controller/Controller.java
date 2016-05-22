@@ -167,7 +167,7 @@ public class Controller {
     public boolean updateCategory( String stringID, String name ) {
         int id = Integer.parseInt( stringID );
         Category category = new Category( id, name );
-        if ( facade.updateCategory( id, category ) != null ) {
+        if ( facade.updateCategory( logger, id, category ) != null ) {
             return true;
         }
         return false;
@@ -175,7 +175,7 @@ public class Controller {
 
     public boolean addCategory( String categoryName ) {
         Category category = new Category( 0, categoryName );
-        if ( facade.insertCategory(category ) != null ) {
+        if ( facade.insertCategory( logger, category ) != null ) {
             return true;
         }
         return false;
