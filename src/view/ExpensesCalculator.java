@@ -377,6 +377,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jTextFieldAddMonthName = new javax.swing.JTextField();
         jLabelAddMonthId = new javax.swing.JLabel();
+        jLabelFeedbackAddUpdateMonth = new javax.swing.JLabel();
         jLayeredPaneViewCategories = new javax.swing.JLayeredPane();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTableCategories = new javax.swing.JTable();
@@ -695,9 +696,12 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                 .addGap(19, 19, 19))
             .addGroup(jLayeredPaneViewMonthsLayout.createSequentialGroup()
                 .addGap(105, 105, 105)
-                .addComponent(jLabel9)
-                .addGap(92, 92, 92)
-                .addComponent(jTextFieldAddMonthName, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jLayeredPaneViewMonthsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jLayeredPaneViewMonthsLayout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addGap(92, 92, 92)
+                        .addComponent(jTextFieldAddMonthName, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabelFeedbackAddUpdateMonth, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(58, 58, 58)
                 .addGroup(jLayeredPaneViewMonthsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButtonAddMonth)
@@ -715,7 +719,9 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                     .addComponent(jTextFieldAddMonthName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelAddMonthId))
                 .addGap(18, 18, 18)
-                .addComponent(jButtonAddMonth)
+                .addGroup(jLayeredPaneViewMonthsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonAddMonth)
+                    .addComponent(jLabelFeedbackAddUpdateMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(95, Short.MAX_VALUE))
         );
         jLayeredPaneViewMonths.setLayer(jScrollPane2, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -723,6 +729,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         jLayeredPaneViewMonths.setLayer(jLabel9, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPaneViewMonths.setLayer(jTextFieldAddMonthName, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPaneViewMonths.setLayer(jLabelAddMonthId, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPaneViewMonths.setLayer(jLabelFeedbackAddUpdateMonth, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jTableCategories.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1036,13 +1043,22 @@ public class ExpensesCalculator extends javax.swing.JFrame {
 
     private void jButtonAddMonthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddMonthActionPerformed
         if ( (jButtonAddMonth).getText().equals( "Add month" ) ) {
-            controller.addMonth( jTextFieldAddMonthName.getText() );
-            fillMonthsTable( controller.getMonths() );
-            jTextFieldAddMonthName.setText( "" );
+            if ( controller.addMonth( jTextFieldAddMonthName.getText() ) ) {
+                fillMonthsTable( controller.getMonths() );
+                jTextFieldAddMonthName.setText( "" );
+                jLabelFeedbackAddUpdateMonth.setText( "The month was inserted successfully" );
+            } else {
+                jLabelFeedbackAddUpdateMonth.setText( "Ups! An error occurred. Please try again later" );
+            }
         } else if ( (jButtonAddMonth).getText().equals( "Save changes" ) ) {
-            controller.updateMonth( jLabelAddMonthId.getText(), jTextFieldAddMonthName.getText() );
-            fillMonthsTable( controller.getMonths() );
-            jTextFieldAddMonthName.setText( "" );
+            if ( controller.updateMonth( jLabelAddMonthId.getText(), jTextFieldAddMonthName.getText() ) ) {
+                fillMonthsTable( controller.getMonths() );
+                jTextFieldAddMonthName.setText( "" );
+                jLabelFeedbackAddUpdateMonth.setText( "The month was updated successfully" );
+            }
+            else{
+                jLabelFeedbackAddUpdateMonth.setText( "Ups! An error occurred. Please try again later" );
+            }
         }
     }//GEN-LAST:event_jButtonAddMonthActionPerformed
 
@@ -1221,6 +1237,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelAddMonthId;
     private javax.swing.JLabel jLabelCategoryId;
     private javax.swing.JLabel jLabelFeedbackAddUpdateCategory;
+    private javax.swing.JLabel jLabelFeedbackAddUpdateMonth;
     private javax.swing.JLabel jLabelInsertTransactionStatus;
     private javax.swing.JLabel jLabelTransactionId;
     private javax.swing.JLayeredPane jLayeredPaneAddTransaction;
