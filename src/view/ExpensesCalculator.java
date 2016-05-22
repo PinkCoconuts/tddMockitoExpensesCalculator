@@ -42,6 +42,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         jLayeredPaneViewCategories.setVisible( false );
         jLabelTransactionId.setVisible( false );
         jLabelAddMonthId.setVisible( false );
+        jLabelCategoryId.setVisible( false );
     }
 
     private void initMonths() {
@@ -302,18 +303,18 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                         }
                     } );
                     return button;
-//                case 2: //update
-//                    button = new JButton( COLUMN_NAMES_CATEGORIES_TABLE[ columnIndex ] );
-//                    button.addActionListener( new ActionListener() {
-//                        public void actionPerformed( ActionEvent arg0 ) {
-//                            jLabelAddMonthId.setText(
-//                                    jTableMonths.getValueAt( rowIndex, 0 ).toString() );
-//                            jTextFieldAddMonthName.setText(
-//                                    jTableMonths.getValueAt( rowIndex, 1 ).toString() );
-//                            jButtonAddMonth.setText( "Save changes" );
-//                        }
-//                    } );
-//                    return button;
+                case 2: //update
+                    button = new JButton( COLUMN_NAMES_CATEGORIES_TABLE[ columnIndex ] );
+                    button.addActionListener( new ActionListener() {
+                        public void actionPerformed( ActionEvent arg0 ) {
+                            jLabelCategoryId.setText(
+                                    jTableCategories.getValueAt( rowIndex, 0 ).toString() );
+                            jTextFieldAddCategoryName.setText(
+                                    jTableCategories.getValueAt( rowIndex, 1 ).toString() );
+                            jButtonAddCategory.setText( "Save changes" );
+                        }
+                    } );
+                    return button;
                 default:
                     return result[ rowIndex ][ columnIndex ];
             }
@@ -730,6 +731,11 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         jLabel10.setText("Category name");
 
         jButtonAddCategory.setText("Add category");
+        jButtonAddCategory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAddCategoryActionPerformed(evt);
+            }
+        });
 
         jLabelCategoryId.setText("hidden; do not delete it");
 
@@ -744,8 +750,8 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                 .addGap(98, 98, 98)
                 .addComponent(jLabel10)
                 .addGap(86, 86, 86)
-                .addComponent(jTextFieldAddCategoryName, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(101, 101, 101)
+                .addComponent(jTextFieldAddCategoryName, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(63, 63, 63)
                 .addComponent(jLabelCategoryId)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPaneViewCategoriesLayout.createSequentialGroup()
@@ -1024,6 +1030,8 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         jLayeredPaneAddTransaction.setVisible( false );
         jLayeredPaneViewMonths.setVisible( false );
         jLayeredPaneViewTransactions.setVisible( false );
+        jTextFieldAddCategoryName.setText( "" );
+        jButtonAddCategory.setText( "Add category" );
     }//GEN-LAST:event_jMenuItemViewCategoriesActionPerformed
 
     private void jTableCategoriesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableCategoriesMouseClicked
@@ -1039,6 +1047,19 @@ public class ExpensesCalculator extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jTableCategoriesMouseClicked
+
+    private void jButtonAddCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddCategoryActionPerformed
+        if ( jButtonAddCategory.getText().equals( "Add category" ) ) {
+            controller.addCategory( jTextFieldAddCategoryName.getText() );
+            fillCategoriesTable( controller.getCategories() );
+            jTextFieldAddCategoryName.setText( "" );
+        } else if ( jButtonAddCategory.getText().equals( "Save changes" ) ) {
+            controller.updateCategory( jLabelCategoryId.getText(),
+                                       jTextFieldAddCategoryName.getText() );
+            fillCategoriesTable( controller.getCategories() );
+            jTextFieldAddCategoryName.setText( "" );
+        }
+    }//GEN-LAST:event_jButtonAddCategoryActionPerformed
 
     private void fillTransactionsTable( List<MonthTransaction> monthTransactions ) {
         Object[][] twoDimensionalArrayForTables = new Object[ monthTransactions.size() ][ 8 ];
