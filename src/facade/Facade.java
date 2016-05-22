@@ -23,9 +23,9 @@ public class Facade {
     private Connection connection = null;
 
     //mappers
-    private static MonthTransactionMapper monthTransactionMapper;
-    private static MonthMapper monthMapper;
-    private static CategoryMapper categoryMapper;
+    private MonthTransactionMapper monthTransactionMapper;
+    private MonthMapper monthMapper;
+    private CategoryMapper categoryMapper;
 
     //facade instance
     private static Facade instance = null;
@@ -105,8 +105,8 @@ public class Facade {
         return categoryMapper.insertCategory( connection, logger, object );
     }
 
-    public <T> T updateCategory( Logger logger, int id, Category newObject ) {
-        return categoryMapper.updateCategory( connection, logger, id, newObject );
+    public <T> T updateCategory( Logger logger, int id, Category object ) {
+        return categoryMapper.updateCategory( connection, logger, id, object );
     }
 
     public boolean deleteCategory( Logger logger, int id ) {
@@ -124,20 +124,20 @@ public class Facade {
         return monthMapper.getMonths( connection, logger );
     }
 
-    public <T> T getMonthByID( Logger logger, int monthId ) {
-        return monthMapper.getMonthByID( connection, logger, monthId );
+    public <T> T getMonthByID( Logger logger, int id ) {
+        return monthMapper.getMonthByID( connection, logger, id );
     }
 
     public <T> T insertMonth( Logger logger, Month object ) {
         return monthMapper.insertMonth( connection, logger, object );
     }
 
-    public <T> T updateMonth( Logger logger, int monthId, Month newObject ) {
-        return monthMapper.updateMonth( connection, logger, monthId, newObject );
+    public <T> T updateMonth( Logger logger, int id, Month object ) {
+        return monthMapper.updateMonth( connection, logger, id, object );
     }
 
-    public boolean deleteMonth( Logger logger, int monthId ) {
-        return monthMapper.deleteMonth( connection, logger, monthId );
+    public boolean deleteMonth( Logger logger, int id ) {
+        return monthMapper.deleteMonth( connection, logger, id );
     }
 
     public boolean deleteAllMonths( Logger logger ) {
@@ -168,9 +168,9 @@ public class Facade {
     }
 
     public <T> T updateMonthTransaction( Logger logger, int id,
-            MonthTransaction newObject ) {
+            MonthTransaction object ) {
         return monthTransactionMapper
-                .updateMonthTransaction( connection, logger, id, newObject );
+                .updateMonthTransaction( connection, logger, id, object );
     }
 
     public boolean deleteMonthTransaction( Logger logger, int id ) {
@@ -184,16 +184,20 @@ public class Facade {
     /*
      * Setter and getters for testing purposes
      */
-    public static void setCategoryMapper( CategoryMapper categoryMapper ) {
-        Facade.categoryMapper = categoryMapper;
+    public boolean setCategoryMapper( CategoryMapper categoryMapper ) {
+        this.categoryMapper = categoryMapper;
+        return true;
     }
 
-    public static void setMonthMapper( MonthMapper monthMapper ) {
-        Facade.monthMapper = monthMapper;
+    public boolean setMonthMapper( MonthMapper monthMapper ) {
+        this.monthMapper = monthMapper;
+        return true;
     }
 
-    public static void setMonthTransactionMapper( MonthTransactionMapper monthTransactionMapper ) {
-        Facade.monthTransactionMapper = monthTransactionMapper;
+    public boolean setMonthTransactionMapper(
+            MonthTransactionMapper monthTransactionMapper ) {
+        this.monthTransactionMapper = monthTransactionMapper;
+        return true;
     }
 
     public Connection getConnection() {
