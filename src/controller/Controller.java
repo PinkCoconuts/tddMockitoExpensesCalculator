@@ -72,8 +72,11 @@ public class Controller {
 
         Object object = facade.insertCategory( logger, category );
 
-        if ( object != null && (( boolean ) object != false) ) {
-
+        if ( object instanceof Boolean ) {
+            if ( ( boolean ) object != false ) {
+                return true;
+            }
+        } else if ( object != null ) {
             return true;
         }
         return false;
