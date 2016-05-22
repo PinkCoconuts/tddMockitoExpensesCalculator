@@ -79,7 +79,7 @@ public class Controller {
         } else if ( object != null ) {
             return true;
         }
-        
+
         return false;
     }
 
@@ -96,7 +96,7 @@ public class Controller {
         } else if ( object != null ) {
             return true;
         }
-        
+
         return false;
     }
 
@@ -148,10 +148,14 @@ public class Controller {
 
         Object object = facade.insertMonth( logger, month );
 
-        if ( object != null && (( boolean ) object != false) ) {
-
+        if ( object instanceof Boolean ) {
+            if ( ( boolean ) object != false ) {
+                return true;
+            }
+        } else if ( object != null ) {
             return true;
         }
+
         return false;
     }
 
@@ -161,10 +165,14 @@ public class Controller {
         Month month = new Month( id, name );
         Object object = facade.updateMonth( logger, id, month );
 
-        if ( object != null && (( boolean ) object != false) ) {
-
+        if ( object instanceof Boolean ) {
+            if ( ( boolean ) object != false ) {
+                return true;
+            }
+        } else if ( object != null ) {
             return true;
         }
+
         return false;
     }
 
