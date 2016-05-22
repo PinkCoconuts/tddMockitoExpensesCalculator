@@ -252,7 +252,7 @@ public class CategoryMapper {
         return true;
     }
 
-    public boolean wipeCategoryTable( Connection connection, Logger logger ) {
+    public boolean deleteAllCategories( Connection connection, Logger logger ) {
 
         String[] databasesToWipe = { "MONTH_TRANSACTION_TBL", "CATEGORY_TBL" };
 
