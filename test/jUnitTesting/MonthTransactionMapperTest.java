@@ -3,8 +3,10 @@ package jUnitTesting;
 import entity.Category;
 import entity.Month;
 import entity.MonthTransaction;
+import static hamcrestMatchers.CustomAbstractEntityClassMatcher.matches;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -114,14 +116,67 @@ public class MonthTransactionMapperTest {
 
     @Test
     public void getAllMonthsTransactions() {
-        List<MonthTransaction> lmt = monthTransactionMapper.getAllTransactions( connection, null );
-        MonthTransaction firstMonthTransaction = lmt.get( 0 );
-        assertEquals( monthTransaction.getId(), firstMonthTransaction.getId() );
-        assertEquals( monthTransaction.getMonthId(), firstMonthTransaction.getMonthId() );
-        assertEquals( monthTransaction.getName(), firstMonthTransaction.getName() );
-        assertEquals( monthTransaction.getAmount(), firstMonthTransaction.getAmount(), 0 );
-        assertEquals( monthTransaction.getType(), firstMonthTransaction.getType() );
-        assertEquals( monthTransaction.getCategoryId(), firstMonthTransaction.getCategoryId() );
+        Month mon1 = monthMapper.insertMonth( connection, null, new Month( 0, "January 2016" ) );
+        Month mon2 = monthMapper.insertMonth( connection, null, new Month( 0, "February 2016" ) );
+        Month mon3 = monthMapper.insertMonth( connection, null, new Month( 0, "March 2016" ) );
+        Month mon4 = monthMapper.insertMonth( connection, null, new Month( 0, "April 2016" ) );
+        Month mon5 = monthMapper.insertMonth( connection, null, new Month( 0, "May 2016" ) );
+        Month mon6 = monthMapper.insertMonth( connection, null, new Month( 0, "June 2016" ) );
+
+        Category cat1 = categoryMapper.insertCategory( connection, null, new Category( 0, "salary" ) );
+        Category cat2 = categoryMapper.insertCategory( connection, null, new Category( 0, "accommodation" ) );
+        Category cat3 = categoryMapper.insertCategory( connection, null, new Category( 0, "transportation" ) );
+        Category cat4 = categoryMapper.insertCategory( connection, null, new Category( 0, "food" ) );
+
+        List<MonthTransaction> insertedTransactions = new ArrayList();
+        insertedTransactions.add( monthTransactionMapper.insertMonthTransaction( connection, null, new MonthTransaction( 0, "accommodation", "expense", mon1.getId(), cat2.getId(), 7000 ) ) );
+        insertedTransactions.add( monthTransactionMapper.insertMonthTransaction( connection, null, new MonthTransaction( 0, "gas for car", "expense", mon1.getId(), cat2.getId(), 2000 ) ) );
+        insertedTransactions.add( monthTransactionMapper.insertMonthTransaction( connection, null, new MonthTransaction( 0, "apples", "expense", mon1.getId(), cat4.getId(), 1200 ) ) );
+        insertedTransactions.add( monthTransactionMapper.insertMonthTransaction( connection, null, new MonthTransaction( 0, "salaryJan", "income", mon1.getId(), cat1.getId(), 21738 ) ) );
+        insertedTransactions.add( monthTransactionMapper.insertMonthTransaction( connection, null, new MonthTransaction( 0, "salaryFeb", "income", mon2.getId(), cat1.getId(), 28214 ) ) );
+        insertedTransactions.add( monthTransactionMapper.insertMonthTransaction( connection, null, new MonthTransaction( 0, "salaryMar", "income", mon3.getId(), cat1.getId(), 25108 ) ) );
+        insertedTransactions.add( monthTransactionMapper.insertMonthTransaction( connection, null, new MonthTransaction( 0, "salary", "income", mon4.getId(), cat1.getId(), 20136 ) ) );
+        insertedTransactions.add( monthTransactionMapper.insertMonthTransaction( connection, null, new MonthTransaction( 0, "salary", "income", mon5.getId(), cat1.getId(), 27444 ) ) );
+        insertedTransactions.add( monthTransactionMapper.insertMonthTransaction( connection, null, new MonthTransaction( 0, "salary", "income", mon6.getId(), cat1.getId(), 22890 ) ) );
+        insertedTransactions.add( monthTransactionMapper.insertMonthTransaction( connection, null, new MonthTransaction( 0, "salad", "expense", mon1.getId(), cat1.getId(), 22890 ) ) );
+        insertedTransactions.add( monthTransactionMapper.insertMonthTransaction( connection, null, new MonthTransaction( 0, "bread", "expense", mon2.getId(), cat1.getId(), 22890 ) ) );
+
+        List<MonthTransaction> dbTransactions = monthTransactionMapper.getAllTransactions( connection, logger );
+
+        for ( int m = 0; m < insertedTransactions.size(); m++ ) {
+            boolean isIdMatching = false,
+                    isNameMatching = false,
+                    isAmountMatching = false,
+                    isCategoryMatching = false,
+                    isMonthMatching = false,
+                    isTypeMatching = false;
+            for ( int i = 0; i < dbTransactions.size(); i++ ) {
+                if ( insertedTransactions.get( m ).getId() == dbTransactions.get( i ).getId() ) {
+                    isIdMatching = true;
+                }
+                if ( insertedTransactions.get( m ).getName().equals( dbTransactions.get( i ).getName() ) ) {
+                    isNameMatching = true;
+                }
+                if ( insertedTransactions.get( m ).getAmount() == dbTransactions.get( i ).getAmount() ) {
+                    isAmountMatching = true;
+                }
+                if ( insertedTransactions.get( m ).getCategoryId() == dbTransactions.get( i ).getCategoryId() ) {
+                    isCategoryMatching = true;
+                }
+                if ( insertedTransactions.get( m ).getMonthId() == dbTransactions.get( i ).getMonthId() ) {
+                    isMonthMatching = true;
+                }
+                if ( insertedTransactions.get( m ).getType().equals( dbTransactions.get( i ).getType() ) ) {
+                    isTypeMatching = true;
+                }
+            }
+            assertEquals( true, isIdMatching );
+            assertEquals( true, isNameMatching );
+            assertEquals( true, isAmountMatching );
+            assertEquals( true, isCategoryMatching );
+            assertEquals( true, isMonthMatching );
+            assertEquals( true, isTypeMatching );
+        }
     }
 
     @Test
