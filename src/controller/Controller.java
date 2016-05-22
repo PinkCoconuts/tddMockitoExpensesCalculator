@@ -239,7 +239,7 @@ public class Controller {
         MonthTransaction monthTransaction = new MonthTransaction( 0, name, type, monthId, categoryId, amount );
         Object object = facade.insertMonthTransaction( logger, monthTransaction );
 
-        if ( object.getClass().isInstance( Boolean.class ) ) {
+        if ( object instanceof Boolean ) {
             if ( ( boolean ) object != false ) {
                 return true;
             }
