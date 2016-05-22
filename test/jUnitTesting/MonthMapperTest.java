@@ -1,8 +1,10 @@
 package jUnitTesting;
 
 import entity.Month;
+import static hamcrestMatchers.CustomAbstractEntityClassMatcher.matches;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -88,9 +90,32 @@ public class MonthMapperTest {
 
     @Test
     public void testGetAllMonths() {
-        List<Month> lm = monthMapper.getMonths( connection, null );
-        assertEquals( month.getId(), lm.get( 0 ).getId() );
-        assertEquals( month.getName(), lm.get( 0 ).getName() );
+        List<Month> months = new ArrayList();
+        months.add( new Month( 1, "Jan 2016" ) );
+        months.add( new Month( 2, "Feb 2016" ) );
+        months.add( new Month( 3, "March 2016" ) );
+
+        List<Month> insertedMonths = new ArrayList();
+        insertedMonths.add( month ); //this object was added in the DB in the setUp() method
+        insertedMonths.add( monthMapper.insertMonth( connection, logger, months.get( 0 ) ) );
+        insertedMonths.add( monthMapper.insertMonth( connection, logger, months.get( 1 ) ) );
+        insertedMonths.add( monthMapper.insertMonth( connection, logger, months.get( 2 ) ) );
+
+        List<Month> dbMonths = monthMapper.getMonths( connection, logger );
+
+        for ( int m = 0; m < insertedMonths.size(); m++ ) {
+            boolean isIdMatching = false, isNameMatching = false;
+            for ( int i = 0; i < dbMonths.size(); i++ ) {
+                if ( insertedMonths.get( m ).getId() == dbMonths.get( i ).getId() ) {
+                    isIdMatching = true;
+                }
+                if ( insertedMonths.get( m ).getName().equals( dbMonths.get( i ).getName() ) ) {
+                    isNameMatching = true;
+                }
+            }
+            assertEquals( isIdMatching, true );
+            assertEquals( isNameMatching, true );
+        }
     }
 
     @Test
