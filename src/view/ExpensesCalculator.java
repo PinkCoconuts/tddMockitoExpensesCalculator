@@ -32,7 +32,6 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         fillMonthsTable( controller.getMonths() );
         fillCategoriesTable( controller.getCategories() );
         this.setLocationRelativeTo( null );
-        //jLayeredPaneViewTransactions.setVisible( false );
         jLayeredPaneAddTransaction.setVisible( false );
         jLayeredPaneViewMonths.setVisible( false );
         jLayeredPaneViewCategories.setVisible( false );
@@ -108,7 +107,6 @@ public class ExpensesCalculator extends javax.swing.JFrame {
 
         @Override
         public Object getValueAt( final int rowIndex, final int columnIndex ) {
-            //return result[ rowIndex ][ columnIndex ];
             JButton button;
             switch ( columnIndex ) {
                 case 6:
@@ -116,8 +114,6 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                     button = new JButton( COLUMN_NAMES[ columnIndex ] );
                     button.addActionListener( new ActionListener() {
                         public void actionPerformed( ActionEvent arg0 ) {
-//                            JOptionPane.showMessageDialog( JOptionPane.getFrameForComponent( button ),
-//                                                           "Edit Button clicked for row " + rowIndex );
                             String transactionId = jTableMonthTransactions.getValueAt( rowIndex, 0 ).toString();
                             String transactionName = jTableMonthTransactions.getValueAt( rowIndex, 1 ).toString();
                             String transactionType = jTableMonthTransactions.getValueAt( rowIndex, 2 ).toString();
@@ -258,7 +254,6 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                     }
                 }
             }
-//            this.fireTableCellUpdated( row, col );
         }
     }
 
