@@ -902,8 +902,6 @@ public class ExpensesCalculator extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBoxMonthsPropertyChange
 
     private void jComboBoxMonthsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxMonthsActionPerformed
-        System.out.println( "Month Clicked : " + jComboBoxMonths.getSelectedItem() );
-
         List<MonthTransaction> monthTransactions;
         monthTransactions = controller.getMonthTransactions(
                 jComboBoxMonths.getSelectedItem().toString(),
@@ -913,8 +911,6 @@ public class ExpensesCalculator extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBoxMonthsActionPerformed
 
     private void jComboBoxCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCategoryActionPerformed
-        System.out.println( "Category Clicked : " + jComboBoxCategory.getSelectedItem().toString() );
-
         List<MonthTransaction> monthTransactions;
         monthTransactions = controller.getMonthTransactions(
                 jComboBoxMonths.getSelectedItem().toString(),
@@ -924,8 +920,6 @@ public class ExpensesCalculator extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBoxCategoryActionPerformed
 
     private void jComboBoTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoTypeActionPerformed
-        System.out.println( "Type Clicked : " + jComboBoType.getSelectedItem() );
-
         List<MonthTransaction> monthTransactions;
         monthTransactions = controller.getMonthTransactions(
                 jComboBoxMonths.getSelectedItem().toString(),
@@ -955,6 +949,9 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         jLayeredPaneAddTransaction.setVisible( false );
         jLayeredPaneViewMonths.setVisible( false );
         jLayeredPaneViewCategories.setVisible( false );
+        jComboBoxMonths.setSelectedItem( "-ALL-");
+        jComboBoxCategory.setSelectedItem( "-ALL-");
+        jComboBoType.setSelectedItem( "-ALL-");
         fillTransactionsTable( controller.getMonthTransactions() );
     }//GEN-LAST:event_jMenuItemViewTransactionsActionPerformed
 
