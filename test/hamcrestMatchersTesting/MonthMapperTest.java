@@ -1,6 +1,5 @@
 package hamcrestMatchersTesting;
 
-import entity.Category;
 import entity.Month;
 import static hamcrestMatchers.CustomAbstractEntityClassMatcher.matches;
 import java.sql.Connection;
