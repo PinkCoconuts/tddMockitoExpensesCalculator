@@ -280,30 +280,37 @@ public class Controller {
     public boolean updateMonthTransactions( String stringID, String name, String month, String category,
             String type, String stringAmount ) {
 
-        int id = Integer.parseInt( stringID );
-        double amount = Double.parseDouble( stringAmount );
-        int monthId = 0, categoryId = 0;
-        for ( Map.Entry<Integer, String> entrySet : monthMap.entrySet() ) {
-            if ( entrySet.getValue().equals( month ) ) {
-                monthId = entrySet.getKey();
-            }
-        }
+        if ( !name.equals( "" ) && !stringAmount.equals( "" ) ) {
+            int id = Integer.parseInt( stringID );
+            try {
+                double amount = Double.parseDouble( stringAmount );
 
-        for ( Map.Entry<Integer, String> entrySet : categoryMap.entrySet() ) {
-            if ( entrySet.getValue().equals( category ) ) {
-                categoryId = entrySet.getKey();
-            }
-        }
+                int monthId = 0, categoryId = 0;
+                for ( Map.Entry<Integer, String> entrySet : monthMap.entrySet() ) {
+                    if ( entrySet.getValue().equals( month ) ) {
+                        monthId = entrySet.getKey();
+                    }
+                }
 
-        MonthTransaction monthTransaction = new MonthTransaction( id, name, type, monthId, categoryId, amount );
-        Object object = facade.updateMonthTransaction( logger, id, monthTransaction );
+                for ( Map.Entry<Integer, String> entrySet : categoryMap.entrySet() ) {
+                    if ( entrySet.getValue().equals( category ) ) {
+                        categoryId = entrySet.getKey();
+                    }
+                }
 
-        if ( object instanceof Boolean ) {
-            if ( ( boolean ) object != false ) {
-                return true;
+                MonthTransaction monthTransaction = new MonthTransaction( id, name, type, monthId, categoryId, amount );
+                Object object = facade.updateMonthTransaction( logger, id, monthTransaction );
+
+                if ( object instanceof Boolean ) {
+                    if ( ( boolean ) object != false ) {
+                        return true;
+                    }
+                } else if ( object != null ) {
+                    return true;
+                }
+            } catch ( NumberFormatException ex ) {
+                return false;
             }
-        } else if ( object != null ) {
-            return true;
         }
         return false;
     }

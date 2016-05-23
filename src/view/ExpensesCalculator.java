@@ -1004,7 +1004,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
             jLabelInsertTransactionStatus.setText(
                     status
                             ? "Month Transaction was updated successfully!"
-                            : "Internal error while updating month transaction"
+                            : "The name and amount can't be empty. The amount must be a number"
             );
         }
     }//GEN-LAST:event_jButtonAddTransactionActionPerformed
