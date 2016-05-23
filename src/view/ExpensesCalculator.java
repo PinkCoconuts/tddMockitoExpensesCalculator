@@ -987,11 +987,11 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                                           jComboBoxMonthsAddTransaction.getSelectedItem().toString(),
                                           jComboBoxCategoryAddTransaction.getSelectedItem().toString(),
                                           jComboBoxTypeAddTransaction.getSelectedItem().toString(),
-                                          Double.parseDouble( jTextFieldAmount.getText() ) );
+                                          jTextFieldAmount.getText() );
             jLabelInsertTransactionStatus.setText(
                     status
                             ? "Month Transaction was inserted successfully!"
-                            : "Internal error while inserting month transaction"
+                            : "The name and amount can't be empty"
             );
         } else if ( jButtonAddTransaction.getText().equals( "Edit" ) ) {
             status = controller.

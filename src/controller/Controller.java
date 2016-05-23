@@ -245,30 +245,33 @@ public class Controller {
     }
 
     public boolean addMonthTransactions( String name, String month, String category,
-            String type, double amount ) {
+            String type, String stringAmount ) {
 
-        int monthId = 0, categoryId = 0;
-        for ( Map.Entry<Integer, String> entrySet : monthMap.entrySet() ) {
-            if ( entrySet.getValue().equals( month ) ) {
-                monthId = entrySet.getKey();
+        if ( !name.equals( "" ) && !stringAmount.equals( "" ) ) {
+            int monthId = 0, categoryId = 0;
+            double amount = Double.parseDouble( stringAmount );
+            for ( Map.Entry<Integer, String> entrySet : monthMap.entrySet() ) {
+                if ( entrySet.getValue().equals( month ) ) {
+                    monthId = entrySet.getKey();
+                }
             }
-        }
 
-        for ( Map.Entry<Integer, String> entrySet : categoryMap.entrySet() ) {
-            if ( entrySet.getValue().equals( category ) ) {
-                categoryId = entrySet.getKey();
+            for ( Map.Entry<Integer, String> entrySet : categoryMap.entrySet() ) {
+                if ( entrySet.getValue().equals( category ) ) {
+                    categoryId = entrySet.getKey();
+                }
             }
-        }
 
-        MonthTransaction monthTransaction = new MonthTransaction( 0, name, type, monthId, categoryId, amount );
-        Object object = facade.insertMonthTransaction( logger, monthTransaction );
+            MonthTransaction monthTransaction = new MonthTransaction( 0, name, type, monthId, categoryId, amount );
+            Object object = facade.insertMonthTransaction( logger, monthTransaction );
 
-        if ( object instanceof Boolean ) {
-            if ( ( boolean ) object != false ) {
+            if ( object instanceof Boolean ) {
+                if ( ( boolean ) object != false ) {
+                    return true;
+                }
+            } else if ( object != null ) {
                 return true;
             }
-        } else if ( object != null ) {
-            return true;
         }
 
         return false;
