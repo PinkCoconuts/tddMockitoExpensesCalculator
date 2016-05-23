@@ -515,9 +515,14 @@
               </Group>
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="105" max="-2" attributes="0"/>
-                  <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="92" max="-2" attributes="0"/>
-                  <Component id="jTextFieldAddMonthName" min="-2" pref="111" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="92" max="-2" attributes="0"/>
+                          <Component id="jTextFieldAddMonthName" min="-2" pref="111" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="jLabelFeedbackAddUpdateMonth" max="32767" attributes="0"/>
+                  </Group>
                   <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jButtonAddMonth" min="-2" max="-2" attributes="0"/>
@@ -539,8 +544,11 @@
                       <Component id="jLabelAddMonthId" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jButtonAddMonth" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="93" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jButtonAddMonth" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabelFeedbackAddUpdateMonth" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="95" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -620,6 +628,8 @@
             <Property name="text" type="java.lang.String" value="for id; do not delete it"/>
           </Properties>
         </Component>
+        <Component class="javax.swing.JLabel" name="jLabelFeedbackAddUpdateMonth">
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JLayeredPane" name="jLayeredPaneViewCategories">
@@ -639,10 +649,18 @@
               </Group>
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace min="-2" pref="104" max="-2" attributes="0"/>
-                  <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="jTextFieldAddCategoryName" min="-2" pref="111" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="jTextFieldAddCategoryName" min="-2" pref="111" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="jLabelFeedbackAddUpdateCategory" min="-2" pref="221" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jButtonAddCategory" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabelCategoryId" min="-2" max="-2" attributes="0"/>
@@ -670,8 +688,11 @@
                           <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <Component id="jButtonAddCategory" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="98" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="jButtonAddCategory" max="32767" attributes="0"/>
+                      <Component id="jLabelFeedbackAddUpdateCategory" max="32767" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="108" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -720,6 +741,8 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="hidden; do not delete it"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelFeedbackAddUpdateCategory">
         </Component>
       </SubComponents>
     </Container>
