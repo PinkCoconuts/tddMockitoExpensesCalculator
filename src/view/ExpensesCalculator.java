@@ -216,6 +216,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                                 controller.deleteMonth( Integer.parseInt(
                                         jTableMonths.getValueAt( rowIndex, 0 ).toString() ) );
                                 fillMonthsTable( controller.getMonths() );
+                                initMonths();
                             }
 
                         }
@@ -305,6 +306,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                                 controller.deleteCategory( Integer.parseInt(
                                         jTableCategories.getValueAt( rowIndex, 0 ).toString() ) );
                                 fillCategoriesTable( controller.getCategories() );
+                                initCategories();
                             }
                         }
                     } );
@@ -1042,6 +1044,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                 fillMonthsTable( controller.getMonths() );
                 jTextFieldAddMonthName.setText( "" );
                 jLabelFeedbackAddUpdateMonth.setText( "The month was inserted successfully" );
+                initMonths();
             } else {
                 jLabelFeedbackAddUpdateMonth.setText( "The month name can't be empty" );
             }
@@ -1050,6 +1053,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                 fillMonthsTable( controller.getMonths() );
                 jTextFieldAddMonthName.setText( "" );
                 jLabelFeedbackAddUpdateMonth.setText( "The month was updated successfully" );
+                initMonths();
             } else {
                 jLabelFeedbackAddUpdateMonth.setText( "The month name can't be empty" );
             }
@@ -1091,6 +1095,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                 fillCategoriesTable( controller.getCategories() );
                 jTextFieldAddCategoryName.setText( "" );
                 jLabelFeedbackAddUpdateCategory.setText( "The category was inserted successfully" );
+                initCategories();
             } else {
                 jLabelFeedbackAddUpdateCategory.setText( "The category name can't be empty" );
             }
@@ -1100,6 +1105,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                 fillCategoriesTable( controller.getCategories() );
                 jTextFieldAddCategoryName.setText( "" );
                 jLabelFeedbackAddUpdateCategory.setText( "The category was updated successfully" );
+                initCategories();
             } else {
                 jLabelFeedbackAddUpdateCategory.setText( "The category name can't be empty" );
             }
