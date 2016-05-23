@@ -251,6 +251,9 @@ public class Controller {
             int monthId = 0, categoryId = 0;
             try {
                 double amount = Double.parseDouble( stringAmount );
+                if ( amount < 0 ) {
+                    return false;
+                }
                 for ( Map.Entry<Integer, String> entrySet : monthMap.entrySet() ) {
                     if ( entrySet.getValue().equals( month ) ) {
                         monthId = entrySet.getKey();
@@ -288,7 +291,9 @@ public class Controller {
             int id = Integer.parseInt( stringID );
             try {
                 double amount = Double.parseDouble( stringAmount );
-
+                if ( amount < 0 ) {
+                    return false;
+                }
                 int monthId = 0, categoryId = 0;
                 for ( Map.Entry<Integer, String> entrySet : monthMap.entrySet() ) {
                     if ( entrySet.getValue().equals( month ) ) {
