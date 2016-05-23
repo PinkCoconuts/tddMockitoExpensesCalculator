@@ -81,7 +81,15 @@ public class Controller {
                 return true;
             }
         }
-
+        if ( logger != null ) {
+            logger.severe( "Error in the controller, in the addCategory method: "
+                    + "\"The category name can't be empty" );
+        } else {
+            System.out.println( "Error in the controller, in the addCategory method: "
+                    + "Logger not initialized"
+                    + "\nError in the addCategory method: "
+                    + "\"The category name can't be empty" );
+        }
         return false;
     }
 
@@ -100,7 +108,15 @@ public class Controller {
                 return true;
             }
         }
-
+        if ( logger != null ) {
+            logger.severe( "Error in the controller, in the updateCategory method: "
+                    + "\"The category name can't be empty" );
+        } else {
+            System.out.println( "Error in the controller, in the updateCategory method: "
+                    + "Logger not initialized"
+                    + "\nError in the updateCategory method: "
+                    + "\"The category name can't be empty" );
+        }
         return false;
     }
 
@@ -161,7 +177,15 @@ public class Controller {
                 return true;
             }
         }
-
+        if ( logger != null ) {
+            logger.severe( "Error in the controller, in the addMonth method: "
+                    + "\"The month name can't be empty" );
+        } else {
+            System.out.println( "Error in the controller, in the addMonth method: "
+                    + "Logger not initialized"
+                    + "\nError in the addMonth method: "
+                    + "\"The month name can't be empty" );
+        }
         return false;
     }
 
@@ -180,7 +204,15 @@ public class Controller {
                 return true;
             }
         }
-
+        if ( logger != null ) {
+            logger.severe( "Error in the controller, in the updateMonth method: "
+                    + "\"The month name can't be empty" );
+        } else {
+            System.out.println( "Error in the controller, in the updateMonth method: "
+                    + "Logger not initialized"
+                    + "\nError in the updateMonth method: "
+                    + "\"The month name can't be empty" );
+        }
         return false;
     }
 
@@ -280,7 +312,15 @@ public class Controller {
                 return false;
             }
         }
-
+        if ( logger != null ) {
+            logger.severe( "Error in the controller, in the addMonthTransactions method: "
+                    + "\"The transaction name and the amount can't be empty" );
+        } else {
+            System.out.println( "Error in the controller, in the addMonthTransactions method: "
+                    + "Logger not initialized"
+                    + "\nError in the addMonthTransactions method: "
+                    + "\"The transaction name and the amount can't be empty" );
+        }
         return false;
     }
 
@@ -320,6 +360,15 @@ public class Controller {
             } catch ( NumberFormatException ex ) {
                 return false;
             }
+        }
+        if ( logger != null ) {
+            logger.severe( "Error in the controller, in the updateMonthTransactions method: "
+                    + "\"The transaction name and the amount can't be empty" );
+        } else {
+            System.out.println( "Error in the controller, in the updateMonthTransactions method: "
+                    + "Logger not initialized"
+                    + "\nError in the updateMonthTransactions method: "
+                    + "\"The transaction name and the amount can't be empty" );
         }
         return false;
     }
