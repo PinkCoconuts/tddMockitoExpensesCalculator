@@ -991,7 +991,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
             jLabelInsertTransactionStatus.setText(
                     status
                             ? "Month Transaction was inserted successfully!"
-                            : "The name and amount can't be empty"
+                            : "The name and amount can't be empty. The amount must be a number"
             );
         } else if ( jButtonAddTransaction.getText().equals( "Edit" ) ) {
             status = controller.
