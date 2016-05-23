@@ -1030,7 +1030,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         jLayeredPaneViewCategories.setVisible( false );
         jTextFieldAddMonthName.setText( "" );
         jButtonAddMonth.setText( "Add month" );
-        jLabelFeedbackAddUpdateMonth.setText( "");
+        jLabelFeedbackAddUpdateMonth.setText( "" );
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jTableMonthsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMonthsMouseClicked
@@ -1054,18 +1054,17 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                 jTextFieldAddMonthName.setText( "" );
                 jLabelFeedbackAddUpdateMonth.setText( "The month was inserted successfully" );
             } else {
-                jLabelFeedbackAddUpdateMonth.setText( "Ups! An error occurred. Please try again later" );
+                jLabelFeedbackAddUpdateMonth.setText( "The month name can't be empty" );
             }
         } else if ( (jButtonAddMonth).getText().equals( "Save changes" ) ) {
             if ( controller.updateMonth( jLabelAddMonthId.getText(), jTextFieldAddMonthName.getText() ) ) {
                 fillMonthsTable( controller.getMonths() );
                 jTextFieldAddMonthName.setText( "" );
                 jLabelFeedbackAddUpdateMonth.setText( "The month was updated successfully" );
-                jButtonAddMonth.setText( "Add month");
+            } else {
+                jLabelFeedbackAddUpdateMonth.setText( "The month name can't be empty" );
             }
-            else{
-                jLabelFeedbackAddUpdateMonth.setText( "Ups! An error occurred. Please try again later" );
-            }
+            jButtonAddMonth.setText( "Add month" );
         }
     }//GEN-LAST:event_jButtonAddMonthActionPerformed
 
@@ -1104,18 +1103,18 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                 jTextFieldAddCategoryName.setText( "" );
                 jLabelFeedbackAddUpdateCategory.setText( "The category was inserted successfully" );
             } else {
-                jLabelFeedbackAddUpdateCategory.setText( "Ups! An error occurred. Please try again later" );
+                jLabelFeedbackAddUpdateCategory.setText( "The category name can't be empty" );
             }
         } else if ( jButtonAddCategory.getText().equals( "Save changes" ) ) {
             if ( controller.updateCategory( jLabelCategoryId.getText(),
                                             jTextFieldAddCategoryName.getText() ) ) {
                 fillCategoriesTable( controller.getCategories() );
                 jTextFieldAddCategoryName.setText( "" );
-                jButtonAddCategory.setText( "Add category" );
                 jLabelFeedbackAddUpdateCategory.setText( "The category was updated successfully" );
             } else {
-                jLabelFeedbackAddUpdateCategory.setText( "Ups! An error occurred. Please try again later" );
+                jLabelFeedbackAddUpdateCategory.setText( "The category name can't be empty" );
             }
+            jButtonAddCategory.setText( "Add category" );
         }
     }//GEN-LAST:event_jButtonAddCategoryActionPerformed
 

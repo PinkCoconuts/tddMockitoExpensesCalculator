@@ -68,33 +68,37 @@ public class Controller {
     }
 
     public boolean addCategory( String categoryName ) {
-        Category category = new Category( 0, categoryName );
+        if ( !categoryName.equals( "" ) ) {
+            Category category = new Category( 0, categoryName );
 
-        Object object = facade.insertCategory( logger, category );
+            Object object = facade.insertCategory( logger, category );
 
-        if ( object instanceof Boolean ) {
-            if ( ( boolean ) object != false ) {
+            if ( object instanceof Boolean ) {
+                if ( ( boolean ) object != false ) {
+                    return true;
+                }
+            } else if ( object != null ) {
                 return true;
             }
-        } else if ( object != null ) {
-            return true;
         }
 
         return false;
     }
 
     public boolean updateCategory( String stringID, String name ) {
-        int id = Integer.parseInt( stringID );
+        if ( !name.equals( "" ) ) {
+            int id = Integer.parseInt( stringID );
 
-        Category category = new Category( id, name );
-        Object object = facade.updateCategory( logger, id, category );
+            Category category = new Category( id, name );
+            Object object = facade.updateCategory( logger, id, category );
 
-        if ( object instanceof Boolean ) {
-            if ( ( boolean ) object != false ) {
+            if ( object instanceof Boolean ) {
+                if ( ( boolean ) object != false ) {
+                    return true;
+                }
+            } else if ( object != null ) {
                 return true;
             }
-        } else if ( object != null ) {
-            return true;
         }
 
         return false;
@@ -144,33 +148,37 @@ public class Controller {
     }
 
     public boolean addMonth( String monthName ) {
-        Month month = new Month( 0, monthName );
+        if ( !monthName.equals( "" ) ) {
+            Month month = new Month( 0, monthName );
 
-        Object object = facade.insertMonth( logger, month );
+            Object object = facade.insertMonth( logger, month );
 
-        if ( object instanceof Boolean ) {
-            if ( ( boolean ) object != false ) {
+            if ( object instanceof Boolean ) {
+                if ( ( boolean ) object != false ) {
+                    return true;
+                }
+            } else if ( object != null ) {
                 return true;
             }
-        } else if ( object != null ) {
-            return true;
         }
 
         return false;
     }
 
     public boolean updateMonth( String stringID, String name ) {
-        int id = Integer.parseInt( stringID );
+        if ( !name.equals( "" ) ) {
+            int id = Integer.parseInt( stringID );
 
-        Month month = new Month( id, name );
-        Object object = facade.updateMonth( logger, id, month );
+            Month month = new Month( id, name );
+            Object object = facade.updateMonth( logger, id, month );
 
-        if ( object instanceof Boolean ) {
-            if ( ( boolean ) object != false ) {
+            if ( object instanceof Boolean ) {
+                if ( ( boolean ) object != false ) {
+                    return true;
+                }
+            } else if ( object != null ) {
                 return true;
             }
-        } else if ( object != null ) {
-            return true;
         }
 
         return false;
