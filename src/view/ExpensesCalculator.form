@@ -10,7 +10,7 @@
     <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
       <Properties>
         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[228, 25]"/>
+          <Dimension value="[230, 25]"/>
         </Property>
       </Properties>
       <SubComponents>
@@ -87,6 +87,9 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+      <Dimension value="[640, 385]"/>
+    </Property>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="menuBar" type="java.lang.String" value="jMenuBar1"/>
@@ -108,10 +111,10 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jLayeredPaneViewTransactions" pref="583" max="32767" attributes="0"/>
-          <Component id="jLayeredPaneAddTransaction" alignment="0" max="32767" attributes="0"/>
-          <Component id="jLayeredPaneViewMonths" alignment="1" pref="583" max="32767" attributes="0"/>
-          <Component id="jLayeredPaneViewCategories" alignment="0" max="32767" attributes="0"/>
+          <Component id="jLayeredPaneViewTransactions" pref="609" max="32767" attributes="0"/>
+          <Component id="jLayeredPaneAddTransaction" alignment="0" pref="609" max="32767" attributes="0"/>
+          <Component id="jLayeredPaneViewMonths" alignment="1" pref="609" max="32767" attributes="0"/>
+          <Component id="jLayeredPaneViewCategories" alignment="0" pref="609" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -124,7 +127,7 @@
               <Component id="jLayeredPaneViewMonths" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLayeredPaneViewCategories" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="61" max="32767" attributes="0"/>
+              <EmptySpace pref="83" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -185,8 +188,8 @@
                       <Component id="jComboBoType" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" min="-2" pref="231" max="-2" attributes="0"/>
-                  <EmptySpace pref="27" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" min="-2" pref="190" max="-2" attributes="0"/>
+                  <EmptySpace pref="62" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -319,6 +322,11 @@
       </SubComponents>
     </Container>
     <Container class="javax.swing.JLayeredPane" name="jLayeredPaneAddTransaction">
+      <Properties>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[540, 360]"/>
+        </Property>
+      </Properties>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -392,7 +400,7 @@
                       <Component id="jButtonAddTransaction" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabelInsertTransactionStatus" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="93" max="32767" attributes="0"/>
+                  <EmptySpace pref="81" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -540,7 +548,7 @@
                       <Component id="jButtonAddMonth" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabelFeedbackAddUpdateMonth" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="95" max="32767" attributes="0"/>
+                  <EmptySpace pref="93" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -625,6 +633,11 @@
       </SubComponents>
     </Container>
     <Container class="javax.swing.JLayeredPane" name="jLayeredPaneViewCategories">
+      <Properties>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[540, 360]"/>
+        </Property>
+      </Properties>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -679,7 +692,7 @@
                       <Component id="jButtonAddCategory" max="32767" attributes="0"/>
                       <Component id="jLabelFeedbackAddUpdateCategory" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="108" max="32767" attributes="0"/>
+                  <EmptySpace pref="98" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
