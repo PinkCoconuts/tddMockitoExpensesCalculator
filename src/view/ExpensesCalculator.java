@@ -398,7 +398,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         jMenuItem1.setText("jMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(640, 385));
+        setPreferredSize(new java.awt.Dimension(600, 385));
 
         jLayeredPaneViewTransactions.setPreferredSize(new java.awt.Dimension(540, 360));
 
