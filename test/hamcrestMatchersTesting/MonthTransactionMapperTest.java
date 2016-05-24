@@ -88,14 +88,13 @@ public class MonthTransactionMapperTest {
         monthTransactionMapper.deleteAllMonthTransactions( connection, null );
 
         //insert a month in the db, whose id will be used for the month transaction
-        Month toInsertmonth = new Month();
-        toInsertmonth.setName( "August 2016" );
+        Month toInsertmonth = new Month( 0, "August 2016" );
         month = monthMapper.insertMonth( connection, null, toInsertmonth );
         List<Month> lm = monthMapper.getMonths( connection, null );
         int monthId = lm.get( 0 ).getId();
 
         //insert a category in the db, whose id will be used for the month transaction
-        Category toInsertcategory = new Category(0, "food");
+        Category toInsertcategory = new Category( 0, "food" );
         category = categoryMapper.insertCategory( connection, logger, toInsertcategory );
         List<Category> cl = categoryMapper.getCategories( connection, logger );
         int categoryId = cl.get( 0 ).getId();

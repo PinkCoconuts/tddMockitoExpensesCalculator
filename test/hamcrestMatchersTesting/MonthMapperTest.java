@@ -72,8 +72,7 @@ public class MonthMapperTest {
 
     @Before
     public void setUp() {
-        month = new Month();
-        month.setName( "July 2016" );
+        month = new Month( 0, "July 2016" );
         monthMapper.deleteAllMonths( connection, null );
         month = monthMapper.insertMonth( connection, null, month );
     }
@@ -117,15 +116,19 @@ public class MonthMapperTest {
 
     @Test
     public void testInsertMonth() {
-        Month monthToInsert = new Month();
-        monthToInsert.setName( "december 2016" );
-        assertThat( monthMapper.insertMonth( connection, null, monthToInsert ),
-                    matches( monthToInsert ) );
+        Month monthToInsert = new Month( 0, "december 2016" );
+        Month insertedMonth = monthMapper.insertMonth( connection, null, monthToInsert );
+
+        Month expectedMonth = new Month( insertedMonth.getId(), monthToInsert.getName() );
+        Month actualMonth = monthMapper.getMonthByID( connection, logger, insertedMonth.getId() );
+
+        assertThat( actualMonth, matches( expectedMonth ) );
     }
 
     @Test
     public void testUpdateMonth() {
-        month.setName( "updated name" );
+        month = new Month( 0, "updated name" );
+
         assertThat( month, matches( monthMapper
                     .updateMonth( connection, null, month.getId(), month ) ) );
     }
