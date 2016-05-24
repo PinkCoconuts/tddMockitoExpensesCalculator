@@ -68,7 +68,7 @@ public class Controller {
     }
 
     public boolean addCategory( String categoryName ) {
-        if ( !categoryName.equals( "" ) && categoryName.matches( "[a-zA-Z]")) {
+        if ( !categoryName.equals( "" ) ) {
             Category category = new Category( 0, categoryName );
 
             Object object = facade.insertCategory( logger, category );
@@ -83,18 +83,18 @@ public class Controller {
         }
         if ( logger != null ) {
             logger.severe( "Error in the controller, in the addCategory method: "
-                    + "\"The category name can't be empty and it must contain letters" );
+                    + "\"The category name can't be empty" );
         } else {
             System.out.println( "Error in the controller, in the addCategory method: "
                     + "Logger not initialized"
                     + "\nError in the addCategory method: "
-                    + "\"The category name can't be empty and it must contain letters" );
+                    + "\"The category name can't be empty" );
         }
         return false;
     }
 
     public boolean updateCategory( String stringID, String name ) {
-        if ( !name.equals( "" ) && name.matches( "[a-zA-Z]")) {
+        if ( !name.equals( "" ) ) {
             int id = Integer.parseInt( stringID );
 
             Category category = new Category( id, name );
@@ -110,12 +110,12 @@ public class Controller {
         }
         if ( logger != null ) {
             logger.severe( "Error in the controller, in the updateCategory method: "
-                    + "\"The category name can't be empty and it must contain letters" );
+                    + "The category name can't be empty" );
         } else {
             System.out.println( "Error in the controller, in the updateCategory method: "
                     + "Logger not initialized"
                     + "\nError in the updateCategory method: "
-                    + "\"The category name can't be empty and it must contain letters" );
+                    + "The category name can't be empty" );
         }
         return false;
     }
@@ -164,7 +164,7 @@ public class Controller {
     }
 
     public boolean addMonth( String monthName ) {
-        if ( !monthName.equals( "" ) && monthName.matches( "[a-zA-Z]")) {
+        if ( !monthName.equals( "" ) ) {
             Month month = new Month( 0, monthName );
 
             Object object = facade.insertMonth( logger, month );
@@ -179,18 +179,18 @@ public class Controller {
         }
         if ( logger != null ) {
             logger.severe( "Error in the controller, in the addMonth method: "
-                    + "\"The month name can't be empty and it must contain letters" );
+                    + "\"The month name can't be empty" );
         } else {
             System.out.println( "Error in the controller, in the addMonth method: "
                     + "Logger not initialized"
                     + "\nError in the addMonth method: "
-                    + "\"The month name can't be empty and it must contain letters" );
+                    + "\"The month name can't be empty" );
         }
         return false;
     }
 
     public boolean updateMonth( String stringID, String name ) {
-        if ( !name.equals( "" ) && name.matches( "[a-zA-Z]")) {
+        if ( !name.equals( "" ) ) {
             int id = Integer.parseInt( stringID );
 
             Month month = new Month( id, name );
@@ -206,12 +206,12 @@ public class Controller {
         }
         if ( logger != null ) {
             logger.severe( "Error in the controller, in the updateMonth method: "
-                    + "The month name can't be empty and it must contain letters" );
+                    + "The month name can't be empty" );
         } else {
             System.out.println( "Error in the controller, in the updateMonth method: "
                     + "Logger not initialized"
                     + "\nError in the updateMonth method: "
-                    + "The month name can't be empty and it must contain letters" );
+                    + "The month name can't be empty" );
         }
         return false;
     }
@@ -279,7 +279,7 @@ public class Controller {
     public boolean addMonthTransactions( String name, String month, String category,
             String type, String stringAmount ) {
 
-        if ( !name.equals( "" ) && !stringAmount.equals( "" ) && name.matches( "[a-zA-Z]") ) {
+        if ( !name.equals( "" ) && !stringAmount.equals( "" ) ) {
             int monthId = 0, categoryId = 0;
             try {
                 double amount = Double.parseDouble( stringAmount );
@@ -332,12 +332,12 @@ public class Controller {
         }
         if ( logger != null ) {
             logger.severe( "Error in the controller, in the addMonthTransactions method: "
-                    + "The transaction name and the amount can't be empty and the transaction name must ontain letters" );
+                    + "The transaction name and the amount can't be empty" );
         } else {
             System.out.println( "Error in the controller, in the addMonthTransactions method: "
                     + "Logger not initialized"
                     + "\nError in the addMonthTransactions method: "
-                    + "The transaction name and the amount can't be empty and the transaction name must ontain letters" );
+                    + "The transaction name and the amount can't be empty" );
         }
         return false;
     }
@@ -345,7 +345,7 @@ public class Controller {
     public boolean updateMonthTransactions( String stringID, String name, String month, String category,
             String type, String stringAmount ) {
 
-        if ( !name.equals( "" ) && !stringAmount.equals( "" ) && name.matches( "[a-zA-Z]") ) {
+        if ( !name.equals( "" ) && !stringAmount.equals( "" ) ) {
             int id = Integer.parseInt( stringID );
             try {
                 double amount = Double.parseDouble( stringAmount );
@@ -399,12 +399,12 @@ public class Controller {
         }
         if ( logger != null ) {
             logger.severe( "Error in the controller, in the updateMonthTransactions method: "
-                    + "\"The transaction name and the amount can't be empty and the name must contain numbers" );
+                    + "\"The transaction name and the amount can't be empty" );
         } else {
             System.out.println( "Error in the controller, in the updateMonthTransactions method: "
                     + "Logger not initialized"
                     + "\nError in the updateMonthTransactions method: "
-                    + "The transaction name and the amount can't be empty and the name must contain numbers" );
+                    + "The transaction name and the amount can't be empty" );
         }
         return false;
     }

@@ -994,7 +994,7 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                                              jTextFieldAmount.getText() );
             jLabelInsertTransactionStatus.setText(
                     status
-                            ? "The transaction was inserted successfully!"
+                            ? "The transaction was updated successfully!"
                             : "Empty fields or invalid amount"
             );
         }
