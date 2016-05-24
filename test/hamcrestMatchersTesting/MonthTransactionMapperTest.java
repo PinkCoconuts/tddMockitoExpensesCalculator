@@ -98,7 +98,7 @@ public class MonthTransactionMapperTest {
         category = categoryMapper.insertCategory( connection, logger, toInsertcategory );
         List<Category> cl = categoryMapper.getCategories( connection, logger );
         int categoryId = cl.get( 0 ).getId();
-        System.out.println( "EXITS YOU ? " + categoryId );
+        
         //insert a month transaction in the db
         monthTransaction = new MonthTransaction( 0, "bread", "food", monthId, categoryId, 5 );
 

@@ -45,11 +45,4 @@ public class MonthTransaction {
     public double getAmount() {
         return amount;
     }
-
-    @Override
-    public String toString() {
-        return "MonthTransaction{" + "id=" + id + ", name=" + name + ", type=" + type
-                + ", monthId=" + monthId + ", categoryId=" + categoryId
-                + ", amount=" + amount + '}';
-    }
 }
