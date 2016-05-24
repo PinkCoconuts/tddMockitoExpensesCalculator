@@ -349,7 +349,16 @@ public class Controller {
             int id = Integer.parseInt( stringID );
             try {
                 double amount = Double.parseDouble( stringAmount );
-                if ( amount < 0 ) {
+                if ( amount <= 0 ) {
+                    if ( logger != null ) {
+                        logger.severe( "Error in the controller, in the updateMonthTransactions method: "
+                                + "The transaction amount must be a positive number" );
+                    } else {
+                        System.out.println( "Error in the controller, in the updateMonthTransactions method: "
+                                + "Logger not initialized"
+                                + "\nError in the updateMonthTransactions method: "
+                                + "The transaction amount must be a positive number" );
+                    }
                     return false;
                 }
                 int monthId = 0, categoryId = 0;
@@ -376,6 +385,15 @@ public class Controller {
                     return true;
                 }
             } catch ( NumberFormatException ex ) {
+                if ( logger != null ) {
+                    logger.severe( "Error in the controller, in the updateMonthTransactions method: "
+                            + "The transaction amount must be a number" );
+                } else {
+                    System.out.println( "Error in the controller, in the updateMonthTransactions method: "
+                            + "Logger not initialized"
+                            + "\nError in the updateMonthTransactions method: "
+                            + "The transaction amount must be a number" );
+                }
                 return false;
             }
         }
@@ -386,7 +404,7 @@ public class Controller {
             System.out.println( "Error in the controller, in the updateMonthTransactions method: "
                     + "Logger not initialized"
                     + "\nError in the updateMonthTransactions method: "
-                    + "\"The transaction name and the amount can't be empty" );
+                    + "The transaction name and the amount can't be empty" );
         }
         return false;
     }
