@@ -981,8 +981,8 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                                           jTextFieldAmount.getText() );
             jLabelInsertTransactionStatus.setText(
                     status
-                                        ? "The transaction was inserted successfully!"
-                                        : "Empty fields or invalid amount"
+                            ? "The transaction was inserted successfully!"
+                            : "Empty fields or invalid amount"
             );
         } else if ( jButtonAddTransaction.getText().equals( "Edit" ) ) {
             status = controller.
@@ -994,8 +994,8 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                                              jTextFieldAmount.getText() );
             jLabelInsertTransactionStatus.setText(
                     status
-                            ? "Month Transaction was updated successfully!"
-                            : "The name and amount can't be empty. The amount must be a positive number"
+                            ? "The transaction was inserted successfully!"
+                            : "Empty fields or invalid amount"
             );
         }
     }//GEN-LAST:event_jButtonAddTransactionActionPerformed
