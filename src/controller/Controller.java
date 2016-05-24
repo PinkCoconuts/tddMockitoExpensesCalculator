@@ -283,7 +283,16 @@ public class Controller {
             int monthId = 0, categoryId = 0;
             try {
                 double amount = Double.parseDouble( stringAmount );
-                if ( amount < 0 ) {
+                if ( amount <= 0 ) {
+                    if ( logger != null ) {
+                        logger.severe( "Error in the controller, in the addMonthTransactions method: "
+                                + "The transaction amount must be a positive number" );
+                    } else {
+                        System.out.println( "Error in the controller, in the addMonthTransactions method: "
+                                + "Logger not initialized"
+                                + "\nError in the addMonthTransactions method: "
+                                + "The transaction amount must be a positive number" );
+                    }
                     return false;
                 }
                 for ( Map.Entry<Integer, String> entrySet : monthMap.entrySet() ) {
@@ -309,17 +318,26 @@ public class Controller {
                     return true;
                 }
             } catch ( NumberFormatException ex ) {
+                if ( logger != null ) {
+                    logger.severe( "Error in the controller, in the addMonthTransactions method: "
+                            + "The transaction amount must be a number" );
+                } else {
+                    System.out.println( "Error in the controller, in the addMonthTransactions method: "
+                            + "Logger not initialized"
+                            + "\nError in the addMonthTransactions method: "
+                            + "The transaction amount must be a number" );
+                }
                 return false;
             }
         }
         if ( logger != null ) {
             logger.severe( "Error in the controller, in the addMonthTransactions method: "
-                    + "\"The transaction name and the amount can't be empty" );
+                    + "The transaction name and the amount can't be empty" );
         } else {
             System.out.println( "Error in the controller, in the addMonthTransactions method: "
                     + "Logger not initialized"
                     + "\nError in the addMonthTransactions method: "
-                    + "\"The transaction name and the amount can't be empty" );
+                    + "The transaction name and the amount can't be empty" );
         }
         return false;
     }
