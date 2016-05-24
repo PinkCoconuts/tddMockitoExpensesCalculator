@@ -31,9 +31,10 @@ public class MonthMapperTest {
     private static Connection connection;
 
     //Database authentication
-    private static String[] databaseHost = { "jdbc:oracle:thin:@127.0.0.1:1521:XE", "jdbc:oracle:thin:@datdb.cphbusiness.dk:1521:dat" };
-    private static String[] databaseUsername = { "bobkoo", "cphbs96", "cphcd77" };
-    private static String[] databasePassword = { "qwerty12345", "cphbs96", "cphcd77" };
+    private static String[] dbHosts = { "jdbc:oracle:thin:@127.0.0.1:1521:XE",
+        "jdbc:oracle:thin:@datdb.cphbusiness.dk:1521:dat" };
+    private static String[] dbUsernames = { "bobkoo", "cphbs96", "cphcd77" };
+    private static String[] dbPasswords = { "qwerty12345", "cphbs96", "cphcd77" };
 
     //logger
     private static String loggerName = "expensesCalculatorTester";
@@ -57,7 +58,8 @@ public class MonthMapperTest {
         logger = performanceLogger.initLogger( loggerName, loggerPath );
 
         //database initialization
-        databaseConnector = new DatabaseConnector( databaseHost[ 1 ], databaseUsername[ 2 ], databasePassword[ 2 ], null );
+        databaseConnector = new DatabaseConnector(
+                dbHosts[ 1 ], dbUsernames[ 2 ], dbPasswords[ 2 ], null );
         connection = databaseConnector.getConnection( logger );
 
         //mapper initialization
@@ -78,8 +80,7 @@ public class MonthMapperTest {
 
     @Before
     public void before() {
-        month = new Month();
-        month.setName( "July 2016" );
+        month = new Month( 0, "July 2016" );
         monthMapper.deleteAllMonths( connection, null );
         month = monthMapper.insertMonth( connection, null, month );
     }
@@ -127,14 +128,20 @@ public class MonthMapperTest {
 
     @Test
     public void testInsertMonth() {
-        Month monthToInsert = new Month();
-        monthToInsert.setName( "december 2016" );
-        assertEquals( monthToInsert, monthMapper.insertMonth( connection, null, monthToInsert ) );
+        Month monthToInsert = new Month( 0, "december 2016" );
+        Month insertedMonth = monthMapper.insertMonth( connection, null, monthToInsert );
+
+        Month expectedMonth = new Month( insertedMonth.getId(), monthToInsert.getName() );
+        Month actualMonth = monthMapper.getMonthByID( connection, logger, insertedMonth.getId() );
+
+        assertEquals( actualMonth.getId(), expectedMonth.getId() );
+        assertEquals( actualMonth.getName(), expectedMonth.getName() );
     }
 
     @Test
     public void testUpdateMonth() {
-        month.setName( "updated name" );
+        month = new Month( 0, "updated name" );
+
         Month um = monthMapper.updateMonth( connection, null, month.getId(), month );
         assertEquals( month.getId(), um.getId() );
         assertEquals( month.getName(), um.getName() );

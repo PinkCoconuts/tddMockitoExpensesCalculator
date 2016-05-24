@@ -25,9 +25,10 @@ public class CategoryMapper_Test {
     private Connection connection = null;
 
     //Database authentication
-    private static String[] databaseHost = { "jdbc:oracle:thin:@127.0.0.1:1521:XE", "jdbc:oracle:thin:@datdb.cphbusiness.dk:1521:dat" };
-    private static String[] databaseUsername = { "bobkoo", "cphbs96", "cphcd77" };
-    private static String[] databasePassword = { "qwerty12345", "cphbs96", "cphcd77" };
+    private static String[] dbHosts = { "jdbc:oracle:thin:@127.0.0.1:1521:XE",
+        "jdbc:oracle:thin:@datdb.cphbusiness.dk:1521:dat" };
+    private static String[] dbUsernames = { "bobkoo", "cphbs96", "cphcd77" };
+    private static String[] dbPasswords = { "qwerty12345", "cphbs96", "cphcd77" };
 
     //logger
     private static String loggerName = "expensesCalculatorTester";
@@ -62,7 +63,8 @@ public class CategoryMapper_Test {
     public void beforeTest() {
         categoryMapper = new CategoryMapper();
 
-        databaseConnector = new DatabaseConnector( databaseHost[ 1 ], databaseUsername[ 2 ], databasePassword[ 2 ], null );
+        databaseConnector = new DatabaseConnector(
+                dbHosts[ 1 ], dbUsernames[ 2 ], dbPasswords[ 2 ], null );
         initializeConnection();
     }
 
@@ -77,9 +79,11 @@ public class CategoryMapper_Test {
     @Test
     public void testInsertCategory() {
         Category category = new Category( 1, "Music" );
-        Category insertedCategory = categoryMapper.insertCategory( connection, logger, category );
+        Category insertedCategory = categoryMapper
+                .insertCategory( connection, logger, category );
 
-        Category dbCategory = categoryMapper.getCategoryByID( connection, logger, insertedCategory.getId() );
+        Category dbCategory = categoryMapper
+                .getCategoryByID( connection, logger, insertedCategory.getId() );
 
         assertEquals( insertedCategory.getId(), dbCategory.getId() );
     }
@@ -87,12 +91,15 @@ public class CategoryMapper_Test {
     @Test
     public void testUpdateCategory() {
         Category category = new Category( 1, "Music" );
-        Category insertedCategory = categoryMapper.insertCategory( connection, logger, category );
+        Category insertedCategory = categoryMapper
+                .insertCategory( connection, logger, category );
 
         Category newCategory = new Category( 1, "Food" );
-        categoryMapper.updateCategory( connection, logger, insertedCategory.getId(), newCategory );
+        categoryMapper.updateCategory( connection, logger,
+                                       insertedCategory.getId(), newCategory );
 
-        Category dbCategory = categoryMapper.getCategoryByID( connection, logger, insertedCategory.getId() );
+        Category dbCategory = categoryMapper
+                .getCategoryByID( connection, logger, insertedCategory.getId() );
 
         assertEquals( insertedCategory.getId(), dbCategory.getId() );
         assertEquals( newCategory.getName(), dbCategory.getName() );
@@ -101,15 +108,19 @@ public class CategoryMapper_Test {
     @Test
     public void testDeleteCategory() {
         Category category = new Category( 1, "Music" );
-        Category insertedCategory = categoryMapper.insertCategory( connection, logger, category );
+        Category insertedCategory = categoryMapper
+                .insertCategory( connection, logger, category );
 
-        Category dbCategory = categoryMapper.getCategoryByID( connection, logger, insertedCategory.getId() );
+        Category dbCategory = categoryMapper
+                .getCategoryByID( connection, logger, insertedCategory.getId() );
 
-        boolean deleteResult = categoryMapper.deleteCategory( connection, logger, dbCategory.getId() );
+        boolean deleteResult = categoryMapper
+                .deleteCategory( connection, logger, dbCategory.getId() );
         boolean deleteExpectedResult = true;
 
         assertEquals( deleteResult, deleteExpectedResult );
-        Category dbCategoryDeleted = categoryMapper.getCategoryByID( connection, logger, insertedCategory.getId() );
+        Category dbCategoryDeleted = categoryMapper
+                .getCategoryByID( connection, logger, insertedCategory.getId() );
         Category expectedCategory = new Category( 0, "" );
         assertEquals( expectedCategory.getId(), dbCategoryDeleted.getId() );
         assertEquals( expectedCategory.getName(), dbCategoryDeleted.getName() );
@@ -118,9 +129,11 @@ public class CategoryMapper_Test {
     @Test
     public void testGetCategoryByID() {
         Category category = new Category( 1, "Music" );
-        Category insertedCategory = categoryMapper.insertCategory( connection, logger, category );
+        Category insertedCategory = categoryMapper
+                .insertCategory( connection, logger, category );
 
-        Category dbCategory = categoryMapper.getCategoryByID( connection, logger, insertedCategory.getId() );
+        Category dbCategory = categoryMapper
+                .getCategoryByID( connection, logger, insertedCategory.getId() );
 
         assertEquals( insertedCategory.getId(), dbCategory.getId() );
         assertEquals( category.getName(), dbCategory.getName() );
@@ -133,20 +146,23 @@ public class CategoryMapper_Test {
         categories.add( new Category( 2, "Food" ) );
         categories.add( new Category( 3, "Bills" ) );
 
-        List<Category> insertedCategories = new ArrayList();
-        insertedCategories.add( categoryMapper.insertCategory( connection, logger, categories.get( 0 ) ) );
-        insertedCategories.add( categoryMapper.insertCategory( connection, logger, categories.get( 1 ) ) );
-        insertedCategories.add( categoryMapper.insertCategory( connection, logger, categories.get( 2 ) ) );
+        List<Category> expected = new ArrayList();
+        expected.add( categoryMapper
+                .insertCategory( connection, logger, categories.get( 0 ) ) );
+        expected.add( categoryMapper
+                .insertCategory( connection, logger, categories.get( 1 ) ) );
+        expected.add( categoryMapper
+                .insertCategory( connection, logger, categories.get( 2 ) ) );
 
-        List<Category> dbCategories = categoryMapper.getCategories( connection, logger );
+        List<Category> actual = categoryMapper.getCategories( connection, logger );
 
-        for ( int m = 0; m < insertedCategories.size(); m++ ) {
+        for ( int m = 0; m < expected.size(); m++ ) {
             boolean isIdMatching = false, isNameMatching = false;
-            for ( int i = 0; i < dbCategories.size(); i++ ) {
-                if ( insertedCategories.get( m ).getId() == dbCategories.get( i ).getId() ) {
+            for ( int i = 0; i < actual.size(); i++ ) {
+                if ( expected.get( m ).getId() == actual.get( i ).getId() ) {
                     isIdMatching = true;
                 }
-                if ( insertedCategories.get( m ).getName().equals( dbCategories.get( i ).getName() ) ) {
+                if ( expected.get( m ).getName().equals( actual.get( i ).getName() ) ) {
                     isNameMatching = true;
                 }
             }

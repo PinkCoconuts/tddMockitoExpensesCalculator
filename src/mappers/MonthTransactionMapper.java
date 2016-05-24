@@ -279,8 +279,11 @@ public class MonthTransactionMapper {
             return ( T ) ( Boolean ) false;
         }
 
-        object.setId( nextId );
-        return ( T ) object;
+        MonthTransaction returnObject
+                = new MonthTransaction( nextId, object.getName(), object.getType(),
+                                        object.getMonthId(), object.getCategoryId(),
+                                        object.getAmount() );
+        return ( T ) returnObject;
     }
 
     /*
@@ -325,8 +328,11 @@ public class MonthTransactionMapper {
             return ( T ) ( Boolean ) false;
         }
 
-        object.setId( monthTransactionID );
-        return ( T ) object;
+        MonthTransaction returnObject
+                = new MonthTransaction( monthTransactionID, object.getName(),
+                                        object.getType(), object.getMonthId(),
+                                        object.getCategoryId(), object.getAmount() );
+        return ( T ) returnObject;
     }
 
     /*

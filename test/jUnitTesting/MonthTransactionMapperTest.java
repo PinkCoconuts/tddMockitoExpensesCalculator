@@ -39,9 +39,10 @@ public class MonthTransactionMapperTest {
     private static Connection connection;
 
     //Database authentication
-    private static String[] databaseHost = { "jdbc:oracle:thin:@127.0.0.1:1521:XE", "jdbc:oracle:thin:@datdb.cphbusiness.dk:1521:dat" };
-    private static String[] databaseUsername = { "bobkoo", "cphbs96", "cphcd77" };
-    private static String[] databasePassword = { "qwerty12345", "cphbs96", "cphcd77" };
+    private static String[] dbHost = { "jdbc:oracle:thin:@127.0.0.1:1521:XE",
+        "jdbc:oracle:thin:@datdb.cphbusiness.dk:1521:dat" };
+    private static String[] dbUsernames = { "bobkoo", "cphbs96", "cphcd77" };
+    private static String[] dbPasswords = { "qwerty12345", "cphbs96", "cphcd77" };
 
     //logger
     private static String loggerName = "expensesCalculatorTester";
@@ -56,7 +57,7 @@ public class MonthTransactionMapperTest {
         logger = performanceLogger.initLogger( loggerName, loggerPath );
 
         //database initialization
-        databaseConnector = new DatabaseConnector( databaseHost[ 1 ], databaseUsername[ 2 ], databasePassword[ 2 ], null );
+        databaseConnector = new DatabaseConnector( dbHost[ 1 ], dbUsernames[ 2 ], dbPasswords[ 2 ], null );
         connection = databaseConnector.getConnection( logger );
 
         //mappers initialization
@@ -79,35 +80,29 @@ public class MonthTransactionMapperTest {
 
     @Before
     public void setUp() {
-//        would be nice to make triggers to delete the month and catgory on month transaction deletion
-//        delete all months and categories
+        //would be nice to make triggers to delete the month and catgory on month transaction deletion
+        //delete all months and categories
         monthMapper.deleteAllMonths( connection, null );
         categoryMapper.deleteAllCategories( connection, logger );
         monthTransactionMapper.deleteAllMonthTransactions( connection, null );
 
-//      insert a month in the db, whose id will be used for the month transaction
-        Month toInsertmonth = new Month();
-        toInsertmonth.setName( "August 2016" );
+        //insert a month in the db, whose id will be used for the month transaction
+        Month toInsertmonth = new Month( 0, "August 2016" );
         month = monthMapper.insertMonth( connection, null, toInsertmonth );
         List<Month> lm = monthMapper.getMonths( connection, null );
         int monthId = lm.get( 0 ).getId();
 
-//      insert a category in the db, whose id will be used for the month transaction
-        Category toInsertcategory = new Category();
-        toInsertcategory.setName( "food" );
+        //insert a category in the db, whose id will be used for the month transaction
+        Category toInsertcategory = new Category( 0, "food" );
         category = categoryMapper.insertCategory( connection, logger, toInsertcategory );
         List<Category> cl = categoryMapper.getCategories( connection, logger );
         int categoryId = cl.get( 0 ).getId();
 
-//      insert a month transaction in the db
-        monthTransaction = new MonthTransaction();
-        monthTransaction.setName( "bread" );
-        monthTransaction.setType( "food" );
-        monthTransaction.setAmount( 5 );
-        monthTransaction.setCategoryId( categoryId );
-        monthTransaction.setMonthId( monthId );
+        //insert a month transaction in the db
+        monthTransaction = new MonthTransaction( 0, "bread", "food", monthId, categoryId, 5 );
 
-        monthTransaction = monthTransactionMapper.insertMonthTransaction( connection, null, monthTransaction );
+        monthTransaction = monthTransactionMapper
+                .insertMonthTransaction( connection, null, monthTransaction );
     }
 
     @After
@@ -128,45 +123,69 @@ public class MonthTransactionMapperTest {
         Category cat3 = categoryMapper.insertCategory( connection, null, new Category( 0, "transportation" ) );
         Category cat4 = categoryMapper.insertCategory( connection, null, new Category( 0, "food" ) );
 
-        List<MonthTransaction> insertedTransactions = new ArrayList();
-        insertedTransactions.add( monthTransactionMapper.insertMonthTransaction( connection, null, new MonthTransaction( 0, "accommodation", "expense", mon1.getId(), cat2.getId(), 7000 ) ) );
-        insertedTransactions.add( monthTransactionMapper.insertMonthTransaction( connection, null, new MonthTransaction( 0, "gas for car", "expense", mon1.getId(), cat2.getId(), 2000 ) ) );
-        insertedTransactions.add( monthTransactionMapper.insertMonthTransaction( connection, null, new MonthTransaction( 0, "apples", "expense", mon1.getId(), cat4.getId(), 1200 ) ) );
-        insertedTransactions.add( monthTransactionMapper.insertMonthTransaction( connection, null, new MonthTransaction( 0, "salaryJan", "income", mon1.getId(), cat1.getId(), 21738 ) ) );
-        insertedTransactions.add( monthTransactionMapper.insertMonthTransaction( connection, null, new MonthTransaction( 0, "salaryFeb", "income", mon2.getId(), cat1.getId(), 28214 ) ) );
-        insertedTransactions.add( monthTransactionMapper.insertMonthTransaction( connection, null, new MonthTransaction( 0, "salaryMar", "income", mon3.getId(), cat1.getId(), 25108 ) ) );
-        insertedTransactions.add( monthTransactionMapper.insertMonthTransaction( connection, null, new MonthTransaction( 0, "salary", "income", mon4.getId(), cat1.getId(), 20136 ) ) );
-        insertedTransactions.add( monthTransactionMapper.insertMonthTransaction( connection, null, new MonthTransaction( 0, "salary", "income", mon5.getId(), cat1.getId(), 27444 ) ) );
-        insertedTransactions.add( monthTransactionMapper.insertMonthTransaction( connection, null, new MonthTransaction( 0, "salary", "income", mon6.getId(), cat1.getId(), 22890 ) ) );
-        insertedTransactions.add( monthTransactionMapper.insertMonthTransaction( connection, null, new MonthTransaction( 0, "salad", "expense", mon1.getId(), cat1.getId(), 22890 ) ) );
-        insertedTransactions.add( monthTransactionMapper.insertMonthTransaction( connection, null, new MonthTransaction( 0, "bread", "expense", mon2.getId(), cat1.getId(), 22890 ) ) );
+        List<MonthTransaction> toInsert = new ArrayList();
+        toInsert.add( new MonthTransaction( 0, "accommodation", "expense", mon1.getId(), cat2.getId(), 7000 ) );
+        toInsert.add( new MonthTransaction( 0, "gas for car", "expense", mon1.getId(), cat2.getId(), 2000 ) );
+        toInsert.add( new MonthTransaction( 0, "apples", "expense", mon1.getId(), cat4.getId(), 1200 ) );
+        toInsert.add( new MonthTransaction( 0, "salaryJan", "income", mon1.getId(), cat1.getId(), 21738 ) );
+        toInsert.add( new MonthTransaction( 0, "salaryFeb", "income", mon2.getId(), cat1.getId(), 28214 ) );
+        toInsert.add( new MonthTransaction( 0, "salaryMar", "income", mon3.getId(), cat1.getId(), 25108 ) );
+        toInsert.add( new MonthTransaction( 0, "salary", "income", mon4.getId(), cat1.getId(), 20136 ) );
+        toInsert.add( new MonthTransaction( 0, "salary", "income", mon5.getId(), cat1.getId(), 27444 ) );
+        toInsert.add( new MonthTransaction( 0, "salary", "income", mon6.getId(), cat1.getId(), 22890 ) );
+        toInsert.add( new MonthTransaction( 0, "salad", "expense", mon1.getId(), cat1.getId(), 22890 ) );
+        toInsert.add( new MonthTransaction( 0, "bread", "expense", mon2.getId(), cat1.getId(), 22890 ) );
 
-        List<MonthTransaction> dbTransactions = monthTransactionMapper.getAllTransactions( connection, logger );
+        List<MonthTransaction> inserted = new ArrayList();
+        inserted.add( monthTransactionMapper
+                .insertMonthTransaction( connection, null, toInsert.get( 0 ) ) );
+        inserted.add( monthTransactionMapper
+                .insertMonthTransaction( connection, null, toInsert.get( 1 ) ) );
+        inserted.add( monthTransactionMapper
+                .insertMonthTransaction( connection, null, toInsert.get( 2 ) ) );
+        inserted.add( monthTransactionMapper
+                .insertMonthTransaction( connection, null, toInsert.get( 3 ) ) );
+        inserted.add( monthTransactionMapper
+                .insertMonthTransaction( connection, null, toInsert.get( 4 ) ) );
+        inserted.add( monthTransactionMapper
+                .insertMonthTransaction( connection, null, toInsert.get( 5 ) ) );
+        inserted.add( monthTransactionMapper
+                .insertMonthTransaction( connection, null, toInsert.get( 6 ) ) );
+        inserted.add( monthTransactionMapper
+                .insertMonthTransaction( connection, null, toInsert.get( 7 ) ) );
+        inserted.add( monthTransactionMapper
+                .insertMonthTransaction( connection, null, toInsert.get( 8 ) ) );
+        inserted.add( monthTransactionMapper
+                .insertMonthTransaction( connection, null, toInsert.get( 9 ) ) );
+        inserted.add( monthTransactionMapper
+                .insertMonthTransaction( connection, null, toInsert.get( 10 ) ) );
 
-        for ( int m = 0; m < insertedTransactions.size(); m++ ) {
+        List<MonthTransaction> actual = monthTransactionMapper.getAllTransactions( connection, logger );
+
+        for ( int m = 0; m < inserted.size(); m++ ) {
             boolean isIdMatching = false,
                     isNameMatching = false,
                     isAmountMatching = false,
                     isCategoryMatching = false,
                     isMonthMatching = false,
                     isTypeMatching = false;
-            for ( int i = 0; i < dbTransactions.size(); i++ ) {
-                if ( insertedTransactions.get( m ).getId() == dbTransactions.get( i ).getId() ) {
+            for ( int i = 0; i < actual.size(); i++ ) {
+                if ( inserted.get( m ).getId() == actual.get( i ).getId() ) {
                     isIdMatching = true;
                 }
-                if ( insertedTransactions.get( m ).getName().equals( dbTransactions.get( i ).getName() ) ) {
+                if ( inserted.get( m ).getName().equals( actual.get( i ).getName() ) ) {
                     isNameMatching = true;
                 }
-                if ( insertedTransactions.get( m ).getAmount() == dbTransactions.get( i ).getAmount() ) {
+                if ( inserted.get( m ).getAmount() == actual.get( i ).getAmount() ) {
                     isAmountMatching = true;
                 }
-                if ( insertedTransactions.get( m ).getCategoryId() == dbTransactions.get( i ).getCategoryId() ) {
+                if ( inserted.get( m ).getCategoryId() == actual.get( i ).getCategoryId() ) {
                     isCategoryMatching = true;
                 }
-                if ( insertedTransactions.get( m ).getMonthId() == dbTransactions.get( i ).getMonthId() ) {
+                if ( inserted.get( m ).getMonthId() == actual.get( i ).getMonthId() ) {
                     isMonthMatching = true;
                 }
-                if ( insertedTransactions.get( m ).getType().equals( dbTransactions.get( i ).getType() ) ) {
+                if ( inserted.get( m ).getType().equals( actual.get( i ).getType() ) ) {
                     isTypeMatching = true;
                 }
             }
@@ -181,10 +200,20 @@ public class MonthTransactionMapperTest {
 
     @Test
     public void testUpdateMonthTransaction() {
-        monthTransaction.setAmount( 20.3 );
-        monthTransaction.setType( "drinks" );
-        monthTransaction.setName( "coke" );
-        MonthTransaction actualMonthTransaction = monthTransactionMapper.updateMonthTransaction( connection, null, monthTransaction.getId(), monthTransaction );
+        List<Category> cl = categoryMapper.getCategories( connection, logger );
+        int categoryId = cl.get( 0 ).getId();
+
+        List<Month> lm = monthMapper.getMonths( connection, null );
+        int monthId = lm.get( 0 ).getId();
+
+        monthTransaction = new MonthTransaction( 0, "coke", "drinks", categoryId, monthId, 20.3 );
+
+        MonthTransaction actualMonthTransaction = monthTransactionMapper
+                .updateMonthTransaction( connection, null, monthTransaction.getId(),
+                                         monthTransaction );
+
+        assertThat( actualMonthTransaction, matches( monthTransaction ) );
+
         assertEquals( monthTransaction.getId(), actualMonthTransaction.getId() );
         assertEquals( monthTransaction.getMonthId(), actualMonthTransaction.getMonthId() );
         assertEquals( monthTransaction.getName(), actualMonthTransaction.getName() );
@@ -196,28 +225,45 @@ public class MonthTransactionMapperTest {
     @Test
     public void testInsertMonthTransaction() {
 
-        MonthTransaction newMonthTransaction = new MonthTransaction();
-        newMonthTransaction.setAmount( 10 );
-        newMonthTransaction.setCategoryId( category.getId() );
-        newMonthTransaction.setMonthId( month.getId() );
-        newMonthTransaction.setName( "coke" );
-        newMonthTransaction.setType( "drinks" );
+        MonthTransaction toInsert
+                = new MonthTransaction( 0, "coke", "drinks", month.getId(),
+                                        category.getId(), 10 );
 
-        MonthTransaction mt = monthTransactionMapper.insertMonthTransaction( connection, null, newMonthTransaction );
+        MonthTransaction inserted = monthTransactionMapper
+                .insertMonthTransaction( connection, null, toInsert );
 
-        MonthTransaction insertedMonthTransaction = monthTransactionMapper.getTransactionsByID( connection, null, mt.getId() );
+        MonthTransaction expected
+                = new MonthTransaction( inserted.getId(), "coke", "drinks",
+                                        month.getId(), category.getId(), 10 );
 
-        assertEquals( mt.getId(), insertedMonthTransaction.getId() );
+        MonthTransaction actual = monthTransactionMapper
+                .getTransactionsByID( connection, null, inserted.getId() );
+
+        assertEquals( actual.getId(), expected.getId() );
+        assertEquals( actual.getName(), expected.getName() );
+        assertEquals( actual.getType(), expected.getType() );
+        assertEquals( actual.getMonthId(), expected.getMonthId() );
+        assertEquals( actual.getCategoryId(), expected.getCategoryId() );
+        /*
+         * Assert Equals for Doubles includes epsilon meaning :
+         * Epsilon is the value that the 2 numbers can be off by. So it will assert 
+         * to true as long as Math.abs(expected - actual) < epsilon
+         * Source : 
+         * http://stackoverflow.com/questions/5686755/meaning-of-epsilon-argument-of-assertequals-for-double-values
+         */
+        assertEquals( actual.getAmount(), expected.getAmount(), 0.1 );
     }
 
     @Test
     public void testDeleteMonthTransaction() {
-        assertEquals( true, monthTransactionMapper.deleteMonthTransaction( connection, null, monthTransaction.getId() ) );
+        assertEquals( true, monthTransactionMapper
+                      .deleteMonthTransaction( connection, null, monthTransaction.getId() ) );
     }
 
     @Test
     public void testDeleteAllMonthTransactions() {
-        assertEquals( true, monthTransactionMapper.deleteAllMonthTransactions( connection, null ) );
+        assertEquals( true, monthTransactionMapper
+                      .deleteAllMonthTransactions( connection, null ) );
     }
 
     @Test
@@ -234,17 +280,30 @@ public class MonthTransactionMapperTest {
         Category cat3 = categoryMapper.insertCategory( connection, null, new Category( 0, "transportation" ) );
         Category cat4 = categoryMapper.insertCategory( connection, null, new Category( 0, "food" ) );
 
-        monthTransactionMapper.insertMonthTransaction( connection, null, new MonthTransaction( 0, "accommodation", "expense", mon1.getId(), cat2.getId(), 7000 ) );
-        monthTransactionMapper.insertMonthTransaction( connection, null, new MonthTransaction( 0, "gas for car", "expense", mon1.getId(), cat2.getId(), 2000 ) );
-        monthTransactionMapper.insertMonthTransaction( connection, null, new MonthTransaction( 0, "apples", "expense", mon1.getId(), cat4.getId(), 1200 ) );
-        monthTransactionMapper.insertMonthTransaction( connection, null, new MonthTransaction( 0, "salaryJan", "income", mon1.getId(), cat1.getId(), 21738 ) );
-        monthTransactionMapper.insertMonthTransaction( connection, null, new MonthTransaction( 0, "salaryFeb", "income", mon2.getId(), cat1.getId(), 28214 ) );
-        monthTransactionMapper.insertMonthTransaction( connection, null, new MonthTransaction( 0, "salaryMar", "income", mon3.getId(), cat1.getId(), 25108 ) );
-        monthTransactionMapper.insertMonthTransaction( connection, null, new MonthTransaction( 0, "salary", "income", mon4.getId(), cat1.getId(), 20136 ) );
-        monthTransactionMapper.insertMonthTransaction( connection, null, new MonthTransaction( 0, "salary", "income", mon5.getId(), cat1.getId(), 27444 ) );
-        monthTransactionMapper.insertMonthTransaction( connection, null, new MonthTransaction( 0, "salary", "income", mon6.getId(), cat1.getId(), 22890 ) );
-        monthTransactionMapper.insertMonthTransaction( connection, null, new MonthTransaction( 0, "salad", "expense", mon1.getId(), cat1.getId(), 22890 ) );
-        monthTransactionMapper.insertMonthTransaction( connection, null, new MonthTransaction( 0, "bread", "expense", mon2.getId(), cat1.getId(), 22890 ) );
+        List<MonthTransaction> toInsert = new ArrayList();
+        toInsert.add( new MonthTransaction( 0, "accommodation", "expense", mon1.getId(), cat2.getId(), 7000 ) );
+        toInsert.add( new MonthTransaction( 0, "gas for car", "expense", mon1.getId(), cat2.getId(), 2000 ) );
+        toInsert.add( new MonthTransaction( 0, "apples", "expense", mon1.getId(), cat4.getId(), 1200 ) );
+        toInsert.add( new MonthTransaction( 0, "salaryJan", "income", mon1.getId(), cat1.getId(), 21738 ) );
+        toInsert.add( new MonthTransaction( 0, "salaryFeb", "income", mon2.getId(), cat1.getId(), 28214 ) );
+        toInsert.add( new MonthTransaction( 0, "salaryMar", "income", mon3.getId(), cat1.getId(), 25108 ) );
+        toInsert.add( new MonthTransaction( 0, "salary", "income", mon4.getId(), cat1.getId(), 20136 ) );
+        toInsert.add( new MonthTransaction( 0, "salary", "income", mon5.getId(), cat1.getId(), 27444 ) );
+        toInsert.add( new MonthTransaction( 0, "salary", "income", mon6.getId(), cat1.getId(), 22890 ) );
+        toInsert.add( new MonthTransaction( 0, "salad", "expense", mon1.getId(), cat1.getId(), 22890 ) );
+        toInsert.add( new MonthTransaction( 0, "bread", "expense", mon2.getId(), cat1.getId(), 22890 ) );
+
+        monthTransactionMapper.insertMonthTransaction( connection, null, toInsert.get( 0 ) );
+        monthTransactionMapper.insertMonthTransaction( connection, null, toInsert.get( 1 ) );
+        monthTransactionMapper.insertMonthTransaction( connection, null, toInsert.get( 2 ) );
+        monthTransactionMapper.insertMonthTransaction( connection, null, toInsert.get( 3 ) );
+        monthTransactionMapper.insertMonthTransaction( connection, null, toInsert.get( 4 ) );
+        monthTransactionMapper.insertMonthTransaction( connection, null, toInsert.get( 5 ) );
+        monthTransactionMapper.insertMonthTransaction( connection, null, toInsert.get( 6 ) );
+        monthTransactionMapper.insertMonthTransaction( connection, null, toInsert.get( 7 ) );
+        monthTransactionMapper.insertMonthTransaction( connection, null, toInsert.get( 8 ) );
+        monthTransactionMapper.insertMonthTransaction( connection, null, toInsert.get( 9 ) );
+        monthTransactionMapper.insertMonthTransaction( connection, null, toInsert.get( 10 ) );
 
         List<MonthTransaction> lmt1 = monthTransactionMapper.getAllTransactions( connection, null, 0, 0, "" );
         assertEquals( 12, lmt1.size() );
