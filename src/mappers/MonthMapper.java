@@ -172,8 +172,8 @@ public class MonthMapper {
             return ( T ) ( Boolean ) false;
         }
 
-        Month returnMonth = new Month( nextId, object.getName() );
-        return ( T ) returnMonth;
+        Month returnObject = new Month( nextId, object.getName() );
+        return ( T ) returnObject;
     }
 
     /*
@@ -213,8 +213,8 @@ public class MonthMapper {
             return ( T ) ( Boolean ) false;
         }
 
-        Month returnMonth = new Month( monthId, object.getName() );
-        return ( T ) returnMonth;
+        Month returnObject = new Month( monthId, object.getName() );
+        return ( T ) returnObject;
     }
 
     /*

@@ -31,9 +31,10 @@ public class MonthMapperTest {
     private static Connection connection;
 
     //Database authentication
-    private static String[] databaseHost = { "jdbc:oracle:thin:@127.0.0.1:1521:XE", "jdbc:oracle:thin:@datdb.cphbusiness.dk:1521:dat" };
-    private static String[] databaseUsername = { "bobkoo", "cphbs96", "cphcd77" };
-    private static String[] databasePassword = { "qwerty12345", "cphbs96", "cphcd77" };
+    private static String[] dbHosts = { "jdbc:oracle:thin:@127.0.0.1:1521:XE",
+        "jdbc:oracle:thin:@datdb.cphbusiness.dk:1521:dat" };
+    private static String[] dbUsernames = { "bobkoo", "cphbs96", "cphcd77" };
+    private static String[] dbPasswords = { "qwerty12345", "cphbs96", "cphcd77" };
 
     //logger
     private static String loggerName = "expensesCalculatorTester";
@@ -57,7 +58,8 @@ public class MonthMapperTest {
         logger = performanceLogger.initLogger( loggerName, loggerPath );
 
         //database initialization
-        databaseConnector = new DatabaseConnector( databaseHost[ 1 ], databaseUsername[ 2 ], databasePassword[ 2 ], null );
+        databaseConnector = new DatabaseConnector(
+                dbHosts[ 1 ], dbUsernames[ 2 ], dbPasswords[ 2 ], null );
         connection = databaseConnector.getConnection( logger );
 
         //mapper initialization

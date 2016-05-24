@@ -20,10 +20,4 @@ public class Month {
     public String getName() {
         return name;
     }
-
-    @Override
-    public String toString() {
-        return "Month{" + "id=" + id + ", name=" + name + '}';
-    }
-
 }
