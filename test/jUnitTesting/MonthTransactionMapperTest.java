@@ -80,7 +80,6 @@ public class MonthTransactionMapperTest {
 
     @Before
     public void setUp() {
-        //would be nice to make triggers to delete the month and catgory on month transaction deletion
         //delete all months and categories
         monthMapper.deleteAllMonths( connection, null );
         categoryMapper.deleteAllCategories( connection, logger );
