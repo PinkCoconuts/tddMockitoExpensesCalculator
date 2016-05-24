@@ -42,7 +42,9 @@ public class MonthTransactionAddSteps {
     @Then("the result should be '(.+)'")
     public void verifyAmountOfBooksFound(final String expectedResult) {
         if (result == true) {
-            assertEquals("Month Transaction was inserted successfully!", expectedResult);
+            assertEquals(expectedResult, "Month Transaction was inserted successfully!");
+        } else {
+            assertEquals(expectedResult, "Ups! An error occurred. Please try again later");
         }
     }
 
