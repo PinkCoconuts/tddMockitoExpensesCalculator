@@ -951,9 +951,9 @@ public class ExpensesCalculator extends javax.swing.JFrame {
         jLayeredPaneAddTransaction.setVisible( false );
         jLayeredPaneViewMonths.setVisible( false );
         jLayeredPaneViewCategories.setVisible( false );
-        jComboBoxMonths.setSelectedItem( "-ALL-");
-        jComboBoxCategory.setSelectedItem( "-ALL-");
-        jComboBoType.setSelectedItem( "-ALL-");
+        jComboBoxMonths.setSelectedItem( "-ALL-" );
+        jComboBoxCategory.setSelectedItem( "-ALL-" );
+        jComboBoType.setSelectedItem( "-ALL-" );
         fillTransactionsTable( controller.getMonthTransactions() );
     }//GEN-LAST:event_jMenuItemViewTransactionsActionPerformed
 
@@ -981,8 +981,8 @@ public class ExpensesCalculator extends javax.swing.JFrame {
                                           jTextFieldAmount.getText() );
             jLabelInsertTransactionStatus.setText(
                     status
-                            ? "Month Transaction was inserted successfully!"
-                            : "The name and amount can't be empty. The amount must be a positive number"
+                                        ? "The transaction was inserted successfully!"
+                                        : "Empty fields or invalid amount"
             );
         } else if ( jButtonAddTransaction.getText().equals( "Edit" ) ) {
             status = controller.
