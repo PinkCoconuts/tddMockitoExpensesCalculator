@@ -79,7 +79,7 @@ public class CategoryMapper {
                 category = new Category( rs.getInt( 1 ), rs.getString( 2 ) );
             } else {
                 //Defeat testing null error in an easy way
-                category = new Category(0, "");
+                category = new Category( 0, "" );
             }
 
             rs.close();
@@ -105,7 +105,7 @@ public class CategoryMapper {
      * boolean false if errors
      */
     public <T> T insertCategory( Connection connection, Logger logger, Category object ) {
-        
+
         int nextId = 0;
 
         String SQLString = "select CATEGORY_ID_SEQ.nextval from dual";
@@ -174,9 +174,9 @@ public class CategoryMapper {
             }
             return ( T ) ( Boolean ) false;
         }
-        
-        object.setId( nextId );
-        return ( T ) object;
+
+        Category returnObject = new Category( nextId, object.getName() );
+        return ( T ) returnObject;
     }
 
     /*
@@ -214,8 +214,8 @@ public class CategoryMapper {
             return ( T ) ( Boolean ) false;
         }
 
-        object.setId( categoryId );
-        return ( T ) object;
+        Category returnObject = new Category( categoryId, object.getName() );
+        return ( T ) returnObject;
     }
 
     /*

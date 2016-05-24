@@ -102,7 +102,7 @@ public class CategoryMapperTest {
 
         Category dbCategory = categoryMapper
                 .getCategoryByID( connection, logger, insertedCategory.getId() );
-        newCategory.setId( dbCategory.getId() );
+        newCategory = new Category( dbCategory.getId(), "Food" );
         assertThat( dbCategory, matches( newCategory ) );
     }
 
